@@ -1,5 +1,5 @@
 ---
-title: C++ prime plus zh第5版 阅读笔记（进行中）
+title: 《C++ prime plus 中文第5版》 读书笔记（进行中）
 date: 2021-01-11 09:02:33
 categories:
 - C++
@@ -41,17 +41,13 @@ tags:
 
 - 使用前提：包含头文件 string，并使用名称空间 std （using namespace std）
 - 特性
-
 - - 可以使用C-风格字符串初始化：string str = "Dejavu"
   - 可以使用 cin >> 存储键盘输入： cin >> str 
   - 可以使用 cout << 显示 string 对象： cout << str
   - 可以使用数组表示法访问 string 对象中的字符：count << str[2]
   - 支持原本数组表示不支持的操作：**对象赋值，拼接**
-
-- - - 在 string 类出现以前，如果需要对 C-style 字符串进行这些操作，一般使用 `strcpy()` 函数和 `strcat()` 函数；但是**这两个函数容易出现目标数组过小导致内存覆盖的危险（string 类具有自动调节大小的功能所以可以避免这类危险）**，如果需要在字符数组上规避这类问题，可以使用库提供的类似函数 `strncat()` 和 `strncpy()`，它们接受指出目标数组最大允许长度的第三个参数从而保证安全，但是也使得变成更加复杂。
-
-- - 使用 `str.size()` 形式的表示方法来确定字符串查长度，相较于 C-style 字符串的 `strlen(char1)` 形式的表示方法
-
+  - 在 string 类出现以前，如果需要对 C-style 字符串进行这些操作，一般使用 `strcpy()` 函数和 `strcat()` 函数；但是**这两个函数容易出现目标数组过小导致内存覆盖的危险（string 类具有自动调节大小的功能所以可以避免这类危险）**，如果需要在字符数组上规避这类问题，可以使用库提供的类似函数 `strncat()` 和 `strncpy()`，它们接受指出目标数组最大允许长度的第三个参数从而保证安全，但是也使得变成更加复杂
+    - 使用 `str.size()` 形式的表示方法来确定字符串查长度，相较于 C-style 字符串的 `strlen(char1)` 形式的表示方法
 - 在 I/O 细节上 string 类 与 C-style 字符串的一些区别，观察下面的程序
 
 ```
@@ -94,8 +90,9 @@ Length of string in str after input: 13
 
 上述结果可以得出以下结论：
 
-- - 在数组初始化之前，`strlen(char1)` 返回值为27，因为函数 strlen() 根据数组第一个元素直到遇到空字符的长度计算字符串长度，而未初始化的数组中第一个空字符出现的位置随机，导致**数组长度随机；**而 `str.size()` 的返回值为0，因为未初始化的 string 对象长度被自动设置为 0。
-  - 观察将一行输入到数组中的代码： `cin.getline(char1, 20)` 这说明函数 getline() 是 istream 类的一个**类方法**（cin 是一个 istream 对象）。而输入到 string 对象中的代码： getline(cin, str) 说明 getline() 不是类方法，而是将 cin 作为参数，指出到哪里去查找输入。那么为什么 **前一个 getline 是istream 的类方法，而另一个不是？** 因为 istream 类在引入 string 类之前很久就有，所以 istream 的设计考虑到了 double int 等c++基本类型而没有考虑 string 类型。但是 **为什么** **`cin >> str`** **和** **`cin >> x`** **都是可行的？**因为后者是 istream 类的一个成员函数，而前面处理 string 对象的代码是 使用 string 类的一个**友元函数。**有关友元函数以及这种技术为何可行，**将在第 11 章介绍**
+- 在数组初始化之前，`strlen(char1)` 返回值为27，因为函数 strlen() 根据数组第一个元素直到遇到空字符的长度计算字符串长度，而未初始化的数组中第一个空字符出现的位置随机，导致**数组长度随机；**而 `str.size()` 的返回值为0，因为未初始化的 string 对象长度被自动设置为 0。
+
+- 观察将一行输入到数组中的代码： `cin.getline(char1, 20)` 这说明函数 getline() 是 istream 类的一个**类方法**（cin 是一个 istream 对象）。而输入到 string 对象中的代码： getline(cin, str) 说明 getline() 不是类方法，而是将 cin 作为参数，指出到哪里去查找输入。那么为什么 **前一个 getline 是istream 的类方法，而另一个不是？** 因为 istream 类在引入 string 类之前很久就有，所以 istream 的设计考虑到了 double int 等c++基本类型而没有考虑 string 类型。但是 **为什么** **`cin >> str`** **和** **`cin >> x`** **都是可行的？**因为后者是 istream 类的一个成员函数，而前面处理 string 对象的代码是 使用 string 类的一个**友元函数。**有关友元函数以及这种技术为何可行，**将在第 11 章介绍**
 
 ### 4.4 结构（struct）简介
 
