@@ -1,6 +1,6 @@
 ---
-title: 使用 Hexo + Github Pages + Tarvis 自动部署自己博客
-date: 2021-01-11 09:02:33
+title: 使用 Hexo + Github Pages + Tarvis 自动部署个人博客
+date: 2021-03-05 14:55:08
 tags:
 - hexo
 - CI/CD
@@ -63,7 +63,7 @@ $ hexo server # 或简写 hexo s，用于启动本地服务器
 
 这时候命令行也会提示我们 Hexo is running at  `http://localhost:4000`，即 hexo 的默认部署端口为4000，点击进入就能看到我们的博客应该大概启动起来像这样：
 
-![image-20210305103544546](\images\image-20210305103544546.png)
+![](https://raw.githubusercontent.com/SyameimaruKibou/ImageBox/main/img/image-20210305103544546.png)
 
 > 这里是用了我已经操作过的界面，可能有点不同但基本应该长这样
 
@@ -89,7 +89,7 @@ hexo本质上来说就是一个，所以我们可以把这些文件分成两部�
 
 到目前为止我们的操作就可以概述为这样的流程：
 
-![image-20210305111320680](\images\image-20210305111320680.png)
+![](https://raw.githubusercontent.com/SyameimaruKibou/ImageBox/main/img/image-20210305111320680.png)
 
 所以如果要云端部署（让其他人可以通过互联网访问我们的博客），最关键的就是需要把我们输出的静态页面部署到可以连通互联网的远程服务器而不是本地的localhost上。
 
