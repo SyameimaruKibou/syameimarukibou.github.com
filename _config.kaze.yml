@@ -210,3 +210,5 @@ cdn:
   lozad: /js/lib/lozad.min.js
   prism: /js/lib/prism/
   busuanzi: /js/lib/busuanzi.min.js
+
+auto_spacing: true
