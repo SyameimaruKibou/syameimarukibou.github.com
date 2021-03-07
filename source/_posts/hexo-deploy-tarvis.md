@@ -139,4 +139,4 @@ deploy:
 
 第二个坑原因类似但是表现不一样：一次云端部署之后，我发现我在 kaze 主题源文件中修改的样式没有生效（~~我调大了原layout的头像大小~~），我很快意识到又和 ```/node_modules```有关：传上 github 的源代码不包括 node 依赖，这些依赖会在 travis CI 中通过 npm install 重新下载，这就包括了 kaze 本体，所以我对原layout的修改也被重置了。
 
-之后我把 ``` /node_modules/hexo-theme-kaze```  这里的 kaze 本体直接移动到了 ```/themes``` 文件夹下，然后改名为 kaze ，之后又修改了 package.json 去掉了这项依赖（~~因为改完语法错了差点翻车~~），之后的部署就没有问题了
+之后我把 ``` /node_modules/hexo-theme-kaze```  这里的 kaze 本体直接移动到了 ```/themes``` 文件夹下，然后改名为 kaze ，之后又修改了 package.json 去掉了这项依赖（~~因为改完语法错了差点翻车~~），之后的部署就没有问题了（~~最后刷新了好几遍头像大小还是没变，刚刚更新了文章刷新之后又变了，怀疑是因为浏览器缓存~~）

@@ -68,7 +68,7 @@ footer:
   # pv / uv statistics config
   #------------------------
   statistics:
-    enable: false
+    enable: true
     type: busuanzi # now version only supports busuanzi
     pv:
       enable: true
