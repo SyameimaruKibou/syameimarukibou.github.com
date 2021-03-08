@@ -4,7 +4,7 @@ title: Kibou's blog
 author: Kibou
 logo_img: /img/logo.png # put the logo on the ${blog_path}/source/img/${picname}.png or use urls
 author_img: /img/author_icon.png
-author_description: 因为相信而竭尽全力的普通人
+author_description: 因为相信而竭尽全力的普通人 <p class="author-description"><a href="/about">关于我</a></p>
 #------------------------
 # Navbar config
 #------------------------
