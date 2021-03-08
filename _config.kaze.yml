@@ -87,8 +87,8 @@ scrollUpAnimation: true
 # comment config
 #------------------------
 comment:
-  enable: false
-  type: valine # valine | gitalk | livere | disqus | we recommend valine
+  enable: true
+  type: livere # valine | gitalk | livere | disqus | we recommend valine
   # gitalk config details can see in https://github.com/gitalk/gitalk/blob/master/readme-cn.md
   valine:
     appId:
@@ -117,7 +117,7 @@ comment:
     # en | zh-CN | zh-TW
     language: navigator.language || navigator.userLanguage
   livere:
-    uid:
+    uid: MTAyMC81Mjg5OS8yOTM3Ng==
 
 #------------------------
 # latex config
