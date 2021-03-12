@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.png">
+  <title>Kibou's blog</title>
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn-city.livere.com/js/embed.dist.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+  
+  
+  <link href="/js/lib/prism/prism-tomorrow.min.css" rel="stylesheet" data-prism="prism-tomorrow">
+  
+  
+  
+<link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.png">
+      
+      <span class="navbar-logo-dsc">Kibou's blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">首页 </a>
+    
+    <a href="/archives" class="navbar-menu-item">归档 </a>
+    
+    <a href="/tags" class="navbar-menu-item">标签 </a>
+    
+    <a href="/categories" class="navbar-menu-item">分类 </a>
+    
+    <a href="/about" class="navbar-menu-item">关于 </a>
+    
+    <a href="/links" class="navbar-menu-item">友链 </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+  </div>
+</nav>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      转载：起源引擎中的多人游戏网络技术
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2021-03-05T15:01:43.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2021-03-05</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/编程思想/" class="post-meta-link">编程思想</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>5.3k 字</span>
+    
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/gaming-server/" class="post-meta-link">gaming server</a>
+      
+    </div>
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <blockquote>
+<p>原文链接：<a target="_blank" rel="noopener" href="https://developer.valvesoftware.com/wiki/Source_Multiplayer_Networking">https://developer.valvesoftware.com/wiki/Source_Multiplayer_Networking</a></p>
+<p>由机翻润化</p>
+</blockquote>
+<p>基于<a target="_blank" rel="noopener" href="https://developer.valvesoftware.com/wiki/Source_Engine">起源引擎</a>制作的游戏使用一个<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Client-server">Client-Server</a>网络系统结构。通常，服务器是一个运行服务端的专用主机，并且对于游戏模拟，游戏规则和玩家输入处理具有权威性。一个客户端是一台连接到服务器的玩家的计算机。客户端和服务端通过高频率（通常每秒20到30次）互相发送小的数据包进行通信。客户端从服务端接收关于游戏世界状态的数据，并根据这些数据生成视频和音频输出。客户端也会获取来自输入设备（键盘，鼠标，麦克风等等）的数据，并且将这些数据发送给服务器进行进一步的处理。客户端只会与服务器直接通信，并且不会与其他客户端直接通信（就像P2P那样）。相较于单人游戏，多人游戏需要处理很多基于数据包通信而导致的新问题。</p>
+<p>由于网络宽带有限，因此服务器无法在每一次世界更新的时候立即给所有客户端发送更新数据包。相反，服务器会以恒定速率生成内部世界状态的快照，广播给客户端。网络数据包在服务端和客户端之间传输需要花费一定量的时间（也就是ping时间的一半），这意味着客户端时间总是比服务器时间晚一点。此外，客户端输入数据包在返回的途中也被延迟，因为服务器正在处理时间上延迟的用户命令。此外，每个客户端都有不同的网络延迟，该延迟会由于其他背景流量和客户端的帧速率而随时间而变化。服务器和客户端之间的这些时间差异会导致逻辑问题，并且随着网络延迟的增加而变得更加严重。在快节奏的动作游戏中，即使延迟几毫秒也可能导致游戏延迟，并很难打到其他玩家或与移动物体互动。除了带宽限制和网络延迟外，信息还会由于网络数据包丢失而丢失。</p>
+<p><img src="https://developer.valvesoftware.com/w/images/e/ea/Networking1.gif" alt="Time differences between client and server" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://developer.valvesoftware.com/w/images/e/ea/Networking1.gif" class="lozad post-image"></p>
+<p>为了解决由这些网络问题引起的问题，起源引擎服务器采用了一些诸如数据压缩和滞后补偿等对客户端不可见的技术。客户端也会进行预测（Prediction）和插值（Interpolation）来改善游戏体验。</p>
+<h2 id="基本网络"><a href="#基本网络" class="headerlink" title="基本网络"></a>基本网络</h2><p>服务器以离散的时间步长（称为“<strong>ticks</strong>”）来模拟游戏。默认情况下，时间步长为15ms，因此模拟了每秒66.666 … 的ticks声，但mod可以指定自己的<a target="_blank" rel="noopener" href="https://developer.valvesoftware.com/wiki/Tickrate">tickrate</a>。在每次ticks期间，服务器都会处理传入的用户命令，运行物理模拟步骤，检查游戏规则并更新所有对象状态。模拟刻度线之后，服务器将决定是否有任何客户端需要世界更新，并在必要时拍摄当前世界状态的快照。较高的tickrate可提高仿真精度，但同时也需要更多的CPU能力和服务器和客户端上的可用带宽。服务器管理员可以使用-tickrate 命令行参数，尽管不建议采用这种方式进行tickrate更改，因为如果更改tickrate，则mod可能无法按设计工作。</p>
+<blockquote>
+<p>注意：在-tickrate命令行参数上不可用CSS，DoD S，TF2，L4D和L4D2因为改变tickrate导致服务器定时问题。在CSS，DoD S和TF2中，tickrate 设置为66；在L4D和L4D2中，tickrate 设置为30。</p>
+</blockquote>
+<p>客户端通常只有有限数量的可用带宽。在最坏的情况下，具有调制解调器连接的播放器接收的速度不能超过5至7 KB /秒。如果服务器尝试以更高的数据速率向他们发送更新，则将不可避免地丢失数据包。因此，客户端必须通过设置控制台变量rate（以字节/秒为单位）来告知服务器其传入的带宽容量。对于客户端来说，这是最重要的网络变量，必须正确设置它才能获得最佳的游戏体验。客户端可以通过更改请求快照速率cl_updaterate（默认值为20），但是服务器发送的更新绝不会超过模拟ticks或超过请求的客户端rate限制。服务器管理员可以使用sv_minrate和限制客户端请求的数据速率值sv_maxrate（以字节/秒为单位）。快照速率也可以通过sv_minupdaterate和限制sv_maxupdaterate（两者均为快照/秒）。</p>
+<p>客户端从采样输入设备创建的用户命令具有与服务器运行时相同的刻度速率。用户命令基本上是当前键盘和鼠标状态的快照。但是，客户端没有以每秒钟一定的数据包速率（通常为30）向每个用户命令发送新的数据包到服务器。这意味着在同一数据包内传输两个或更多用户命令。客户可以使用来提高命令速率cl_cmdrate。这将提高响应速度，但也需要更多的传出带宽。</p>
+<p>游戏数据使用增量压缩进行压缩以减少网络负载。这意味着服务器不会每次发送完整的世界快照，而只会发送自上次确认更新以来发生的更改（增量快照）。在客户端和服务器之间发送每个数据包时，将附加确认号以跟踪其数据流。通常，完整（非增量）快照仅在游戏开始或客户端丢失大量数据包几秒钟后才发送。客户端可以使用该cl_fullupdate命令手动请求完整快照。</p>
+<p>响应性，即游戏环境中用户输入与其可见反馈之间的时间，取决于许多因素，包括服务器/客户端CPU负载，模拟ticks频率，数据速率和快照更新设置，但主要取决于网络数据包传输时间。客户端发送用户命令，服务器响应该命令和客户端收到服务器响应之间的时间称为等待时间或ping。（或往返时间）。玩多人在线游戏时，低延迟是一项重要优势。诸如预测和滞后补偿之类的技术试图将这种优势最小化，并为连接速度较慢的玩家提供公平的游戏机会。如果有必要的带宽和CPU能力，则调整网络设置可以帮助获得更好的体验。我们建议保留默认设置，因为不正确的更改可能会带来比实际好处更多的负面影响。</p>
+<h2 id="支持Tickrate的服务器"><a href="#支持Tickrate的服务器" class="headerlink" title="支持Tickrate的服务器"></a>支持Tickrate的服务器</h2><p>tickrate 可以通过使用 <code>-tickrate</code> 参数 来更改</p>
+<ul>
+<li>反恐精英全球攻势</li>
+<li>半条命2：死亡竞赛</li>
+</ul>
+<p>无法更改以下服务器的tickrate，因为更改此时间会导致服务器计时问题。</p>
+<p>Tickrate 值为66</p>
+<ul>
+<li>反恐精英：来源</li>
+<li>失败日：来源</li>
+<li>团队要塞2</li>
+</ul>
+<p>Tickrate 值为30</p>
+<ul>
+<li>求生之路</li>
+<li>求生之路 2</li>
+</ul>
+<h2 id="实体插值"><a href="#实体插值" class="headerlink" title="实体插值"></a>实体插值</h2><p>默认情况下，客户端每秒接收约20个快照（snapshot）。如果仅将世界上的对象（实体）渲染到服务器接收的位置，则移动的对象和动画将显得不连贯和抖动。丢包也会引起明显的故障。解决此问题的技巧是及时返回进行渲染，因此可以在两个最近接收的快照之间连续插值位置和动画。每秒有20个快照，新更新大约每50毫秒到达一次。如果客户端渲染时间向后移了50毫秒，则可以始终在最后收到的快照和该快照之前的快照之间插入实体。</p>
+<p>信号源默认为100毫秒（cl_interp 0.1）的插值周期（“ lerp” ）；这样，即使丢失了一个快照，也始终会有两个有效的快照可以插值。下图显示了传入的世界快照的到达时间：</p>
+<p><img src="https://developer.valvesoftware.com/w/images/4/49/Interpolation.gif" alt="Interpolation timeline" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://developer.valvesoftware.com/w/images/4/49/Interpolation.gif" class="lozad post-image"></p>
+<p>客户端上收到的最后一个快照是在勾号344或10.30秒处。基于此快照和客户端帧速率，客户端时间继续增加。如果渲染了新的视频帧，则渲染时间为当前客户端时间10.32减去视图插值延迟0.1秒。在我们的示例中为10.22，并且使用快照340和342之间的正确分数对所有实体及其动画进行插值。</p>
+<p>由于我们的插值延迟为100毫秒，因此即使由于数据包丢失而丢失快照342，插值也将有效。然后，插值可以使用快照340和344。如果连续删除了多个快照，则插值将无法完美工作，因为它用完了历史缓冲区中的快照。在那种情况下，渲染器使用外插（cl_extrapolate 1）并根据到目前为止的已知历史尝试对实体进行简单的线性外插。仅对0.25秒的数据包丢失（cl_extrapolate_amount）进行推断，因为此后预测误差将变得太大。</p>
+<p>实体插值在默认情况下（cl_interp 0.1）会导致100毫秒的恒定视图“滞后” ，即使您在侦听服务器（服务器和客户端在同一台计算机上）上播放也是如此。这并不意味着您在射击其他玩家时就必须瞄准目标，因为服务器端滞后补偿了解客户端实体插值并可以纠正此错误。</p>
+<blockquote>
+<p>Tips：最近的Source游戏都有cl_interp_ratiocvar。使用此功能，您可以通过将其设置cl_interp为0，然后增加的值cl_updaterate（其有用限制取决于服务器tickrate）来轻松安全地减少插值周期。您可以使用来检查您的最终收入net_graph 1。</p>
+</blockquote>
+<blockquote>
+<p>注意：如果打开sv_showhitboxes（在Source 2009中不可用），则将看到服务器时间绘制的播放器hitbox，这意味着在播放期之前它们早于渲染的播放器模型。这是完全正常的！</p>
+</blockquote>
+<h2 id="输入预测"><a href="#输入预测" class="headerlink" title="输入预测"></a>输入预测</h2><p>假设播放器的网络延迟为150毫秒，然后开始前进。+FORWARD按下键的信息存储在用户命令中，并发送到服务器。在那里，用户命令由移动代码处理，并且玩家的角色在游戏世界中向前移动。下次快照更新会将世界状态更改传输给所有客户端。因此，玩家开始行走后会看到自己的移动变化，延迟了150毫秒。这种延迟适用于所有玩家的动作，例如移动，射击武器等，并且随着延迟的增加而变得更糟。</p>
+<p>玩家输入和相应的视觉反馈之间的延迟会产生一种奇怪的，不自然的感觉，并使其难以精确移动或瞄准。客户端输入预测（cl_predict 1）是消除此延迟并让玩家的动作更加即时的一种方法。本地客户端无需等待服务器更新您自己的位置，而只是预测自己的用户命令的结果。因此，客户端运行完全相同的代码和服务器将使用的规则来处理用户命令。预测完成后，本地播放器将立即移至新位置，而服务器仍会在旧位置看到他。</p>
+<p>150毫秒后，客户端将收到服务器快照，其中包含基于他先前预测的用户命令所做的更改。然后，客户将服务器位置与其预测位置进行比较。如果它们不同，则发生预测错误。这表明客户端在处理用户命令时没有有关其他实体和环境的正确信息。然后，由于服务器对客户端预测具有最终权限，因此客户端必须纠正其自身位置。如果cl_showerror 1打开，则客户可以看到何时发生预测错误。预测错误校正可能会非常明显，并且可能导致客户的视线不稳定。通过在短时间内逐步纠正此错误（cl_smoothtime），可以顺利纠正错误。可以使用来关闭预测误差平滑cl_smooth 0。</p>
+<p>只有本地玩家和仅受其影响的实体才能进行预测，因为预测是通过使用客户端的按键对玩家最终的位置进行“最佳猜测”来进行的。预测其他参与者将需要在没有数据的情况下从字面上预测未来，因为无法立即从他们那里获得按键。</p>
+<h2 id="滞后补偿"><a href="#滞后补偿" class="headerlink" title="滞后补偿"></a>滞后补偿</h2><p>Source SDK中提供了所有用于滞后补偿和视图插值的源代码。有关实施细节，请参见<a target="_blank" rel="noopener" href="https://developer.valvesoftware.com/wiki/Lag_compensation">滞后补偿</a>。</p>
+<p>假设某个玩家在客户时间10.5向目标射击。触发信息被打包到用户命令中并发送到服务器。当数据包通过网络时，服务器将继续模拟世界，目标可能已移至其他位置。用户命令在服务器时间10.6到达，即使播放器正好对准目标，服务器也不会检测到命中。通过服务器端滞后补偿可以纠正此错误。</p>
+<p>滞后补偿系统将所有最近玩家位置的历史记录保留一秒钟。如果执行了用户命令，则服务器估计该命令的创建时间如下：</p>
+<p>命令执行时间=当前服务器时间-数据包延迟-客户端视图<a target="_blank" rel="noopener" href="https://developer.valvesoftware.com/wiki/Interpolation">插值</a></p>
+<p>然后，服务器将所有其他播放器（仅播放器）移回命令执行时的位置。执行用户命令并正确检测到命中。处理完用户命令后，玩家将恢复到原始位置。</p>
+<blockquote>
+<p>注意：由于实体插值包含在公式中，因此如果不启用实体插值，可能会导致不良结果。</p>
+</blockquote>
+<p>在侦听服务器上，您可以启用sv_showimpacts 1以查看不同的服务器和客户端hitbox：</p>
+<p><img src="https://developer.valvesoftware.com/w/images/c/ca/Lag_compensation.jpg" alt="Visualisation of lag compensation: server and client hitboxes" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://developer.valvesoftware.com/w/images/c/ca/Lag_compensation.jpg" class="lozad post-image"></p>
+<p>该屏幕快照是net_fakelag在服务器确认点击后立即在具有200毫秒延迟（使用）的侦听服务器上拍摄的。红色的命中框显示了客户端在100毫秒+插入间隔之前的目标位置。此后，在用户命令传输到服务器时，目标继续向左移动。用户命令到达后，服务器将根据估计的命令执行时间恢复目标位置（蓝色命中框）。服务器跟踪镜头并确认命中（客户端看到血液效果）。</p>
+<p>客户端和服务器的Hitbox不完全匹配，因为时间测量中的精度误差很小。即使是几毫秒的微小差异，对于快速移动的物体也会造成几英寸的误差。多人命中检测并不是像素完美的，并且基于tickrate和移动物体的速度具有已知的精度限制。</p>
+<p>问题出现了，为什么服务器上的命中检测如此复杂？对玩家位置进行反向跟踪并处理命中率检测中的精度错误，可以通过客户端的方式更轻松地实现像素精度。客户端只会通过“命中”消息告诉服务器，哪个玩家被击中以及在何处。我们不能仅仅因为游戏服务器就不能在如此重要的决定上信任客户就允许这样做。即使客户端是“干净的”并且受到<a target="_blank" rel="noopener" href="https://developer.valvesoftware.com/wiki/Valve_Anti-Cheat">Valve Anti-Cheat</a>的保护，在将数据包路由到游戏服务器时仍可以在第三台计算机上对其进行修改。这些“欺骗代理”可以将“命中”消息注入网络数据包，而不会被VAC检测到（“中间人”攻击）。</p>
+<p>与真实世界相比，网络等待时间和滞后补偿会产生似乎不合逻辑的悖论。例如，您可能已经被一个已经掩盖的攻击者击中，甚至再也看不到它。发生的事情是服务器将您的播放器命中箱移回了过去，在那里您仍然受到攻击者的攻击。由于数据包速度相对较慢，通常无法解决此不一致问题。在现实世界中，您不会注意到此问题，因为光（数据包）的传播速度如此之快，您和周围的每个人都可以看到与现在相同的世界。</p>
+<h2 id="网络图"><a href="#网络图" class="headerlink" title="网络图"></a>网络图</h2><p>Source引擎提供了一些工具来检查您的客户端连接速度和质量。最受欢迎的一种是网络图，可以使用net_graph 2（或+graph）启用它。传入的数据包由从右向左移动的细线表示。每行的高度反映了数据包的大小。如果行之间出现间隙，则说明数据包丢失或到达混乱状态。这些行将根据其包含的数据类型进行颜色编码。</p>
+<p><img src="https://developer.valvesoftware.com/w/images/9/96/Net_graph.jpg" alt="net_graph output" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://developer.valvesoftware.com/w/images/9/96/Net_graph.jpg" class="lozad post-image"></p>
+<p>在网络图下，第一行显示了您当前每秒渲染的帧数，平均延迟时间和的当前值cl_updaterate。第二行显示最后一个传入数据包（快照）的大小（字节），平均传入带宽和每秒接收的数据包。第三行显示仅用于传出数据包（用户命令）的相同数据。</p>
+<h2 id="最佳化"><a href="#最佳化" class="headerlink" title="最佳化"></a>最佳化</h2><p>默认网络设置旨在在Internet上的专用服务器上播放。这些设置经过平衡，可以很好地适用于大多数客户端/服务器硬件和网络配置。对于Internet游戏，唯一应在客户端上调整的控制台变量是“速率(rate)”，该变量定义网络连接的可用字节/秒带宽。调制解调器的“速率”的良好值为4500，ISDN为6000，DSL 为10000及更高。</p>
+<p>在服务器和所有客户端都具有必要的可用硬件资源的高性能网络环境中，可以调整带宽和tickrate设置以获得更高的游戏精度。提高服务器tickrate通常可以提高移动和射击精度，但会带来更高的CPU成本。运行tickrate为100的源服务器产生的CPU负载是默认tickrate 66的1.5倍。这可能导致严重的计算滞后，尤其是当很多人同时射击时。不建议运行tickrate高于66的游戏服务器来为紧急情况保留必要的CPU资源。</p>
+<blockquote>
+<p>注意：无法更改CSS，DoD S TF2，L4D和L4D2的tickrate，因为更改tickrate会导致服务器计时问题。在CSS，DoD S和TF2中，tickrate设置为66；在L4D和L4D2中，tickrate设置为30。</p>
+</blockquote>
+<p>如果游戏服务器以更高的tickrate运行，则客户端（如果有必要的带宽（速率）可用）可以提高其快照更新速率（cl_updaterate）和用户命令速率（cl_cmdrate）。快照更新速率受服务器tickrate限制，服务器每ticksticks不能发送多于一个的更新。因此，对于ticks速率为66的服务器，cl_updaterate的最高客户端值为66。如果提高快照速率并遇到数据包丢失或阻塞，则必须再次将其关闭。随着cl_updaterate的增加，您还可以降低视图插值延迟（cl_interp）。默认的插值延迟是0.1秒，这是从默认的cl_updaterate 20派生而来的。视图插值延迟使移动的玩家比固定的玩家具有较小的优势，因为移动的玩家可以更早地看到目标。这种影响是不可避免的，但是可以通过减少视图插值延迟来减小。如果两个玩家都在移动，则视图延迟延迟会同时影响两个玩家，并且没有人有优势。</p>
+<p>这是快照速率和视图插值延迟之间的关系，如下所示：</p>
+<p><strong>interpolation period = max( cl_interp, cl_interp_ratio / cl_updaterate )</strong></p>
+<p>“ Max（x，y）”表示“其中较高者”。您可以将其设置cl_interp为0，但仍然有安全的插值量。然后，您可以增加cl_updaterate来进一步减少插入间隔，但不要超过tickrate（66）或用超出其处理能力的更多数据填充连接。</p>
+<h2 id="提示"><a href="#提示" class="headerlink" title="提示"></a>提示</h2><p><strong>除非您百分百确定自己在做什么，否则请勿更改控制台设置</strong></p>
+<p>如果服务器或网络无法处理负载，则大多数“高性能”设置都会产生完全相反的效果。</p>
+<p><strong>不要关闭视图插值和/或滞后补偿</strong></p>
+<p>它不会提高运动或拍摄精度。</p>
+<p><strong>一个客户端的优化设置可能不适用于其他客户端</strong></p>
+<p>不要仅使用其他客户端的设置而不对您的系统进行验证。</p>
+<p><strong>如果您跟随“第一人称”中的玩家在游戏或<a target="_blank" rel="noopener" href="https://developer.valvesoftware.com/wiki/SourceTV">SourceTV</a>中作为旁观者，您将无法完全看到该玩家所看到的</strong></p>
+<p>观众看到了没有滞后补偿的游戏世界。</p>
+<h2 id="扩展资料"><a href="#扩展资料" class="headerlink" title="扩展资料"></a>扩展资料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://developer.valvesoftware.com/wiki/Prediction">Prediction</a>, <a target="_blank" rel="noopener" href="https://developer.valvesoftware.com/wiki/Interpolation">Interpolation</a>, <a target="_blank" rel="noopener" href="https://developer.valvesoftware.com/wiki/Lag_compensation">Lag compensation</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.valvesoftware.com/wiki/Latency_Compensating_Methods_in_Client/Server_In-game_Protocol_Design_and_Optimization">Latency Compensating Methods in Client/Server In-game Protocol Design and Optimization</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.valvesoftware.com/wiki/TF2_Network_Graph">TF2 Network Graph</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.valvesoftware.com/wiki/Networking_Entities">Networking Entities</a> (for programmers)</li>
+<li><a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Lag">Lag on Wikipedia</a></li>
+</ul>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://syameimarukibou.github.io/about">Kibou</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://syameimarukibou.github.io/2021/03/05/source-gaming-network/">https://syameimarukibou.github.io/2021/03/05/source-gaming-network/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  
+  <div class="nav-item-next">
+    <a href="/2021/03/05/hexo-deploy-tarvis/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">使用 Hexo + Github Pages + Tarvis 自动部署个人博客 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="lv-container" data-id="city" data-uid="MTAyMC81Mjg5OS8yOTM3Ng==">
+    <script>
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') {
+          return;
+        }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.defer = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  </div>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%BD%91%E7%BB%9C"><span class="toc-text">基本网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%AF%E6%8C%81Tickrate%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-text">支持Tickrate的服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BD%93%E6%8F%92%E5%80%BC"><span class="toc-text">实体插值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E9%A2%84%E6%B5%8B"><span class="toc-text">输入预测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BB%9E%E5%90%8E%E8%A1%A5%E5%81%BF"><span class="toc-text">滞后补偿</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%9B%BE"><span class="toc-text">网络图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E4%BD%B3%E5%8C%96"><span class="toc-text">最佳化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%90%E7%A4%BA"><span class="toc-text">提示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A9%E5%B1%95%E8%B5%84%E6%96%99"><span class="toc-text">扩展资料</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/author_icon.png" class="author-img">
+
+<p class="author-name">Kibou</p>
+<p class="author-description">因为相信而竭尽全力的普通人 <p class="author-description"><a href="/about">关于我</a></p></p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>4</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>3</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>6</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%BD%91%E7%BB%9C"><span class="toc-text">基本网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%AF%E6%8C%81Tickrate%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-text">支持Tickrate的服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BD%93%E6%8F%92%E5%80%BC"><span class="toc-text">实体插值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E9%A2%84%E6%B5%8B"><span class="toc-text">输入预测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BB%9E%E5%90%8E%E8%A1%A5%E5%81%BF"><span class="toc-text">滞后补偿</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%9B%BE"><span class="toc-text">网络图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E4%BD%B3%E5%8C%96"><span class="toc-text">最佳化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%90%E7%A4%BA"><span class="toc-text">提示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A9%E5%B1%95%E8%B5%84%E6%96%99"><span class="toc-text">扩展资料</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/编程思想">
+        <div class="categories-list-item">
+          编程思想
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C++">
+        <div class="categories-list-item">
+          C++
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/算法练习">
+        <div class="categories-list-item">
+          算法练习
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\C++" title="C++"><div class="tags-list-item">C++</div></a>
+    
+    <a href="\tags\gaming server" title="gaming server"><div class="tags-list-item">gaming server</div></a>
+    
+    <a href="\tags\读书笔记" title="读书笔记"><div class="tags-list-item">读书笔记</div></a>
+    
+    <a href="\tags\CI/CD" title="CI/CD"><div class="tags-list-item">CI/CD</div></a>
+    
+    <a href="\tags\hexo" title="hexo"><div class="tags-list-item">hexo</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%BD%91%E7%BB%9C"><span class="toc-text">基本网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%AF%E6%8C%81Tickrate%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-text">支持Tickrate的服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BD%93%E6%8F%92%E5%80%BC"><span class="toc-text">实体插值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E9%A2%84%E6%B5%8B"><span class="toc-text">输入预测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BB%9E%E5%90%8E%E8%A1%A5%E5%81%BF"><span class="toc-text">滞后补偿</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%9B%BE"><span class="toc-text">网络图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E4%BD%B3%E5%8C%96"><span class="toc-text">最佳化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%90%E7%A4%BA"><span class="toc-text">提示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A9%E5%B1%95%E8%B5%84%E6%96%99"><span class="toc-text">扩展资料</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-03-05</div>
+        <a href="/2021/03/05/source-gaming-network/"><div class="recent-posts-item-content">转载：起源引擎中的多人游戏网络技术</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-03-05</div>
+        <a href="/2021/03/05/hexo-deploy-tarvis/"><div class="recent-posts-item-content">使用 Hexo + Github Pages + Tarvis 自动部署个人博客</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-02-24</div>
+        <a href="/2021/02/24/leetcode-note-raw/"><div class="recent-posts-item-content">LeetCode刷题笔记（归档中）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-01-11</div>
+        <a href="/2021/01/11/C++-prime-plus-zh-note(ongoing)/"><div class="recent-posts-item-content">《C++ prime plus 中文第5版》 读书笔记（进行中）</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2021
+        </span>
+        <a href="/" class="footer-link">Kibou's blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+
+  
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
+
+</html>
