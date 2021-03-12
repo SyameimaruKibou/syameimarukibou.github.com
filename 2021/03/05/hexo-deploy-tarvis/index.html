@@ -146,7 +146,7 @@
 <article class="card card-content">
   <header>
     <h1 class="post-title">
-      使用 Hexo + Github Pages + Tarvis 自动部署个人博客
+      使用 Hexo + Github Pages + Travis 自动部署个人博客
     </h1>
   </header>
   <div class="post-meta post-show-meta">
@@ -157,7 +157,7 @@
     
     
     <span class="dot"></span>
-    <span>2.2k 字</span>
+    <span>2.9k 字</span>
     
   </div>
   
@@ -199,10 +199,12 @@
 <p>安装完成后进行初始化操作以及基本内容下载</p>
 <pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">$ hexo init &lt;folder> <span class="token comment"># 初始化hexo结构</span>
 $ cd &lt;folder> <span class="token comment"># 移动到文件夹</span>
-$ npm install <span class="token comment"># 下载依赖</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+$ npm install <span class="token comment"># 下载必要依赖</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>folder 指的是我们希望放置我们的 hexo 博客本体的文件夹位置，如果不存在，hexo 会根据给定的 folder 自动在该目录下创建，我一般命名为 hexo_blog</p>
+<p>npm install 会为我们下载并配置一个 hello_world 式使用一个默认主题的 hexo 项目，这使得我们的博客马上就可以投入使用，只需要再简单创建一篇文章即可</p>
 <p>完成后，尝试通过指令生成一篇文章</p>
 <pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">$ hexo new <span class="token namespace">[layout]</span> &lt;title><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>[layout]可以不填，这时直接使用默认的 layout，仅需指定标题即可</p>
+<p>[layout]可以不填，这时直接使用默认的 layout（即post），仅需指定标题即可</p>
 <p>这时候我们就可以赶紧来看一下我们博客的效果：</p>
 <pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">$ hexo generate <span class="token comment">#或简写 hexo g，用于生成网页静态页面</span>
 $ hexo server <span class="token comment"># 或简写 hexo s，用于启动本地服务器</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
@@ -228,7 +230,8 @@ $ hexo server <span class="token comment"># 或简写 hexo s，用于启动本�
 <p>一种思路就是：一个是在个人云服务器（阿里云腾讯云等）上再安装一份hexo，然后在云服务器完整地进行以上的一套流程（编写文章 -&gt; hexo -g -&gt; hexo -s），然后就可以在本地访问我们的页面内容 </p>
 <p>当然这样就相当麻烦，写完文章不但要手动上传到服务器，还需要再在服务器进行渲染等操作，不符合我们写博客的要求。</p>
 <p>于是我们可以使用 GitHub Pages 完成我们的需求。简单来说，GitHub Pages 为我们提供免费的静态网页文件托管与解析服务，将我们渲染好的界面上传到指定的git仓库上（要求我们使用 username.github.io 作为仓库名，username是自己的github用户名），我们就能通过互联网访问我们生成好的博客界面。</p>
-<h3 id="使用Github-Pages"><a href="#使用Github-Pages" class="headerlink" title="使用Github Pages"></a>使用Github Pages</h3><p>hexo为我们提供了快速方便的一键部署功能，只要设置好配置就能通过一条指令（<code>hexo deploy</code>）完成部署过程（相当于代替我们完成了 git push 的过程）</p>
+<h3 id="使用Github-Pages"><a href="#使用Github-Pages" class="headerlink" title="使用Github Pages"></a>使用Github Pages</h3><p><strong>通过hexo配置一键部署</strong>：hexo为我们提供了快速方便的一键部署功能，只要设置好配置就能通过一条指令（<code>hexo deploy</code>或<code>hexo d</code>）完成部署过程</p>
+<p>实际上，hexo d 就相当于代替我们完成了<strong>将本地生成的静态网页 git push -force 上了我们 Pages 托管的 git 仓库</strong>的过程。</p>
 <p>由于相当于使用 git 进行 push 操作，本地 git 需要有操作远程操作的权限（设置 SSH-key）。如果没有在本地配置过 SSH-key 则需要先进行 SSH-key 配置。SSH-key 的设置网上有很多教程，这里不再重复。</p>
 <p>设置好后，在 hexo 项目下的 _config.yml 修改 deploy 项配置即可，如下：</p>
 <pre class="line-numbers language-yml" data-language="yml"><code class="language-yml">deploy:
@@ -241,7 +244,16 @@ $ hexo server <span class="token comment"># 或简写 hexo s，用于启动本�
 </blockquote>
 <p>有时需要在 hexo deploy 前执行 hexo clean 清除缓存。</p>
 <p>完成之后，在浏览器中输入 <code>username.github.io</code>应该就能看到和本地看到的效果一样的网页效果。</p>
-<h3 id="使用-Tarvis-CI-自动部署"><a href="#使用-Tarvis-CI-自动部署" class="headerlink" title="使用 Tarvis CI 自动部署"></a>使用 Tarvis CI 自动部署</h3><p><del>马上就更</del></p>
+<h3 id="使用-Travis-CI-自动部署"><a href="#使用-Travis-CI-自动部署" class="headerlink" title="使用 Travis CI 自动部署"></a>使用 Travis CI 自动部署</h3><p>到这里为止 hexo 的基本配置与操作已经完成。对于我现在的协作使用体验来说，使用 <code>hexo d</code> 一键配置相比 Travis  其实已经足够方便，使用 Tarvis CI 进行部署仅仅只是因为我个人想要从中学习体验一些 CI 过程。</p>
+<p>Travis CI 的部署过程 比起 <code>hexo d</code> ，相当于更进一步代替我们进行本地的 <code>hexo g</code> 的过程：我们这次将自己的 hexo 项目的<strong>源代码</strong>（不是静态页面）上传到 github 上，然后 Tarvis CI 会自动监测指定 github 仓库的变化，Tarvis CI 会为我们启动一个精简的云端Linux系统，根据部署配置文件（.travis.yml）和源代码，<strong>然后 Tarvis CI 在云端的机器上进行 hexo 项目基本构建以及静态页面生成，然后帮我们再部署到 Pages 托管的仓库上。</strong></p>
+<p>所以也可以看得出来，相比云端监听并启动服务代替我们生成静态页面再传回 github pages 的仓库，其实本地的渲染和 git push 要明显更快一些。当然，理解 Travis 这个运作过程可以帮助我们理解一些自动化测试与部署的思想</p>
+<p>为了完成这个过程我们要进行这些步骤：</p>
+<ol>
+<li>注册 Travis CI 账号，和自己的 github 账号关联，并开放存放hexo博客的仓库的权限</li>
+<li>在自己的 hexo 项目下创建 _travis.yml 配置文件，并输入配置项</li>
+<li>将自己的 hexo 项目本体上传到 github 上，注意和 Pages 托管的【保存静态页面文件】的仓库区分开（一般可以选择在同一个仓库下创建两个分支，一个分支存放源代码，一个分支存放静态页面</li>
+<li>由于 Travis CI 运行结束后需要将静态页面 git push 到 Pages 托管的仓库，需要为 Travis CI 运行过程中提供 允许访问我们仓库的 token </li>
+</ol>
 <h3 id="踩坑记录"><a href="#踩坑记录" class="headerlink" title="踩坑记录"></a>踩坑记录</h3><h4 id="kaze主题的使用"><a href="#kaze主题的使用" class="headerlink" title="kaze主题的使用"></a>kaze主题的使用</h4><p>使用 kaze 这个主题时候踩了两次坑，<del>基本都是因为其官方文档的“直接通过 npm 安装”的建议引起的</del></p>
 <p>第一个坑是配置文件的坑（<code>_config.yml</code>）：如果直接用 npm 安装，它直接会将本体安装在本地的 <code> /node_modules</code> 下而不是<code>/themes</code>文件夹下，导致一开始没找到它的默认配置文件（在它本体目录下：<code>/hexo-theme-kaze/_config.yml</code>），而我根据hexo文档直接在hexo根目录建立_config.[theme].yml 无法覆盖它的任何内容，导致一开始的布局无法更改。</p>
 <blockquote>
@@ -313,7 +325,7 @@ $ hexo server <span class="token comment"># 或简写 hexo s，用于启动本�
 
 <div class="card card-content toc-card" id="mobiletoc">
   <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-text">背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hexo-%E5%9F%BA%E6%9C%AC%E5%AE%89%E8%A3%85"><span class="toc-text">hexo 基本安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hexo-%E8%BF%9C%E7%A8%8B%E9%83%A8%E7%BD%B2%EF%BC%9AGitHub-Page-Travis-CI-%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA"><span class="toc-text">hexo 远程部署：GitHub Page + Travis CI 自动构建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Github-Pages"><span class="toc-text">使用Github Pages</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-Tarvis-CI-%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2"><span class="toc-text">使用 Tarvis CI 自动部署</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95"><span class="toc-text">踩坑记录</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#kaze%E4%B8%BB%E9%A2%98%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">kaze主题的使用</span></a></li></ol></li></ol></li></ol>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-text">背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hexo-%E5%9F%BA%E6%9C%AC%E5%AE%89%E8%A3%85"><span class="toc-text">hexo 基本安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hexo-%E8%BF%9C%E7%A8%8B%E9%83%A8%E7%BD%B2%EF%BC%9AGitHub-Page-Travis-CI-%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA"><span class="toc-text">hexo 远程部署：GitHub Page + Travis CI 自动构建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Github-Pages"><span class="toc-text">使用Github Pages</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-Travis-CI-%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2"><span class="toc-text">使用 Travis CI 自动部署</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95"><span class="toc-text">踩坑记录</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#kaze%E4%B8%BB%E9%A2%98%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">kaze主题的使用</span></a></li></ol></li></ol></li></ol>
 </div></main>
           <aside class="left-column">
             
@@ -346,7 +358,7 @@ $ hexo server <span class="token comment"># 或简写 hexo s，用于启动本�
   <article class="display-when-two-columns spacer">
     <div class="card card-content toc-card">
       <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-text">背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hexo-%E5%9F%BA%E6%9C%AC%E5%AE%89%E8%A3%85"><span class="toc-text">hexo 基本安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hexo-%E8%BF%9C%E7%A8%8B%E9%83%A8%E7%BD%B2%EF%BC%9AGitHub-Page-Travis-CI-%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA"><span class="toc-text">hexo 远程部署：GitHub Page + Travis CI 自动构建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Github-Pages"><span class="toc-text">使用Github Pages</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-Tarvis-CI-%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2"><span class="toc-text">使用 Tarvis CI 自动部署</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95"><span class="toc-text">踩坑记录</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#kaze%E4%B8%BB%E9%A2%98%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">kaze主题的使用</span></a></li></ol></li></ol></li></ol>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-text">背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hexo-%E5%9F%BA%E6%9C%AC%E5%AE%89%E8%A3%85"><span class="toc-text">hexo 基本安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hexo-%E8%BF%9C%E7%A8%8B%E9%83%A8%E7%BD%B2%EF%BC%9AGitHub-Page-Travis-CI-%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA"><span class="toc-text">hexo 远程部署：GitHub Page + Travis CI 自动构建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Github-Pages"><span class="toc-text">使用Github Pages</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-Travis-CI-%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2"><span class="toc-text">使用 Travis CI 自动部署</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95"><span class="toc-text">踩坑记录</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#kaze%E4%B8%BB%E9%A2%98%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">kaze主题的使用</span></a></li></ol></li></ol></li></ol>
     </div>
   </article>
   
@@ -411,7 +423,7 @@ $ hexo server <span class="token comment"># 或简写 hexo s，用于启动本�
   
   <article class="card card-content toc-card">
     <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-text">背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hexo-%E5%9F%BA%E6%9C%AC%E5%AE%89%E8%A3%85"><span class="toc-text">hexo 基本安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hexo-%E8%BF%9C%E7%A8%8B%E9%83%A8%E7%BD%B2%EF%BC%9AGitHub-Page-Travis-CI-%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA"><span class="toc-text">hexo 远程部署：GitHub Page + Travis CI 自动构建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Github-Pages"><span class="toc-text">使用Github Pages</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-Tarvis-CI-%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2"><span class="toc-text">使用 Tarvis CI 自动部署</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95"><span class="toc-text">踩坑记录</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#kaze%E4%B8%BB%E9%A2%98%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">kaze主题的使用</span></a></li></ol></li></ol></li></ol>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-text">背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hexo-%E5%9F%BA%E6%9C%AC%E5%AE%89%E8%A3%85"><span class="toc-text">hexo 基本安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hexo-%E8%BF%9C%E7%A8%8B%E9%83%A8%E7%BD%B2%EF%BC%9AGitHub-Page-Travis-CI-%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA"><span class="toc-text">hexo 远程部署：GitHub Page + Travis CI 自动构建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Github-Pages"><span class="toc-text">使用Github Pages</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-Travis-CI-%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2"><span class="toc-text">使用 Travis CI 自动部署</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95"><span class="toc-text">踩坑记录</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#kaze%E4%B8%BB%E9%A2%98%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">kaze主题的使用</span></a></li></ol></li></ol></li></ol>
   </article>
   
   
@@ -427,7 +439,7 @@ $ hexo server <span class="token comment"># 或简写 hexo s，用于启动本�
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2021-03-05</div>
-        <a href="/2021/03/05/hexo-deploy-tarvis/"><div class="recent-posts-item-content">使用 Hexo + Github Pages + Tarvis 自动部署个人博客</div></a>
+        <a href="/2021/03/05/hexo-deploy-tarvis/"><div class="recent-posts-item-content">使用 Hexo + Github Pages + Travis 自动部署个人博客</div></a>
       </div>
     
       <div class="recent-posts-item">
