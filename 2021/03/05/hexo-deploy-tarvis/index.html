@@ -192,17 +192,20 @@
 <li><a target="_blank" rel="noopener" href="http://git-scm.com/">Git</a></li>
 </ul>
 <p>前置程序安装完成后，用 npm （Node.js 已经附带，如果提示无指令的话可以检查系统变量）就可以直接全局安装 hexo</p>
-<pre class="highlight"><span class="line"><span class="variable">$</span> npm install <span class="literal">-g</span> hexo<span class="literal">-cli</span></span><br></pre>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">$ npm install <span class="token operator">-</span>g hexo<span class="token operator">-</span><span class="token function">cli</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <blockquote>
 <p>hexo-cli 代表支持简单交互的 hexo 脚手架，现在 hexo-cli 已经包含了 hexo 本体，所以不需要再像以前一样先 install hexo 再 install hexo-cli</p>
 </blockquote>
 <p>安装完成后进行初始化操作以及基本内容下载</p>
-<pre class="highlight"><span class="line"><span class="variable">$</span> hexo init &lt;folder&gt; <span class="comment"># 初始化hexo结构</span></span><br><span class="line"><span class="variable">$</span> <span class="built_in">cd</span> &lt;folder&gt; <span class="comment"># 移动到文件夹</span></span><br><span class="line"><span class="variable">$</span> npm install <span class="comment"># 下载依赖</span></span><br></pre>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">$ hexo init &lt;folder> <span class="token comment"># 初始化hexo结构</span>
+$ cd &lt;folder> <span class="token comment"># 移动到文件夹</span>
+$ npm install <span class="token comment"># 下载依赖</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>完成后，尝试通过指令生成一篇文章</p>
-<pre class="highlight"><span class="line"><span class="variable">$</span> hexo new [<span class="type">layout</span>] &lt;title&gt;</span><br></pre>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">$ hexo new <span class="token namespace">[layout]</span> &lt;title><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>[layout]可以不填，这时直接使用默认的 layout，仅需指定标题即可</p>
 <p>这时候我们就可以赶紧来看一下我们博客的效果：</p>
-<pre class="highlight"><span class="line"><span class="variable">$</span> hexo generate <span class="comment">#或简写 hexo g，用于生成网页静态页面</span></span><br><span class="line"><span class="variable">$</span> hexo server <span class="comment"># 或简写 hexo s，用于启动本地服务器</span></span><br></pre>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">$ hexo generate <span class="token comment">#或简写 hexo g，用于生成网页静态页面</span>
+$ hexo server <span class="token comment"># 或简写 hexo s，用于启动本地服务器</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>这时候命令行也会提示我们 Hexo is running at  <code>http://localhost:4000</code>，即 hexo 的默认部署端口为4000，点击进入就能看到我们的博客应该大概启动起来像这样：</p>
 <p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/syameimarukibou/imagebox/img/image-20210305103544546.png" class="lozad post-image"src="https://cdn.jsdelivr.net/gh/syameimarukibou/imagebox/img/image-20210305103544546.png"></p>
 <blockquote>
@@ -211,7 +214,13 @@
 <p>到这里基本的本地 hexo 安装和演示基本就完成了</p>
 <h2 id="hexo-远程部署：GitHub-Page-Travis-CI-自动构建"><a href="#hexo-远程部署：GitHub-Page-Travis-CI-自动构建" class="headerlink" title="hexo 远程部署：GitHub Page + Travis CI 自动构建"></a>hexo 远程部署：GitHub Page + Travis CI 自动构建</h2><p>在进行下一步部署之前我们来梳理一下 hexo 的结构来确定我们的需求</p>
 <p>就对 hexo 的文件结构来说，在不考虑其他内容的情况下 hexo 的关键内容有这些：</p>
-<pre class="highlight"><span class="line">.</span><br><span class="line">├── _config.yml		#hexo的基本配置文件 </span><br><span class="line">├── package.json	#hexo依赖的内容</span><br><span class="line">├── scaffolds		#决定新建文件的模板文件夹			</span><br><span class="line">├── source			#用户资源存放处，主要是文章和图片资源等</span><br><span class="line">├── themes			#主题，决定文章如何被渲染</span><br><span class="line">└── public			#最终渲染出的博客页面，博客页面的关键</span><br></pre>
+<pre class="line-numbers language-none"><code class="language-none">.
+├── _config.yml		#hexo的基本配置文件 
+├── package.json	#hexo依赖的内容
+├── scaffolds		#决定新建文件的模板文件夹			
+├── source			#用户资源存放处，主要是文章和图片资源等
+├── themes			#主题，决定文章如何被渲染
+└── public			#最终渲染出的博客页面，博客页面的关键<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>hexo本质上来说就是一个，所以我们可以把这些文件分成两部分：hexo配置，主题与源资源文件（**/public以外<strong>的部分），最终渲染出的静态页面（</strong>/public** 部分，即我们最终在<code>http://localhost:4000</code>看到的页面）。</p>
 <p>到目前为止我们的操作就可以概述为这样的流程：</p>
 <p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/syameimarukibou/imagebox/img/image-20210305111320680.png" class="lozad post-image"src="https://cdn.jsdelivr.net/gh/syameimarukibou/imagebox/img/image-20210305111320680.png"></p>
@@ -222,7 +231,11 @@
 <h3 id="使用Github-Pages"><a href="#使用Github-Pages" class="headerlink" title="使用Github Pages"></a>使用Github Pages</h3><p>hexo为我们提供了快速方便的一键部署功能，只要设置好配置就能通过一条指令（<code>hexo deploy</code>）完成部署过程（相当于代替我们完成了 git push 的过程）</p>
 <p>由于相当于使用 git 进行 push 操作，本地 git 需要有操作远程操作的权限（设置 SSH-key）。如果没有在本地配置过 SSH-key 则需要先进行 SSH-key 配置。SSH-key 的设置网上有很多教程，这里不再重复。</p>
 <p>设置好后，在 hexo 项目下的 _config.yml 修改 deploy 项配置即可，如下：</p>
-<pre class="highlight"><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">&lt;repository</span> <span class="string">url&gt;</span> <span class="comment">#git@github.com:SyameimaruKibou/syameimarukibou.github.io</span></span><br><span class="line">  <span class="attr">branch:</span> [<span class="string">branch</span>]	<span class="comment">#master</span></span><br><span class="line">  <span class="attr">message:</span> [<span class="string">message</span>]</span><br></pre>
+<pre class="line-numbers language-yml" data-language="yml"><code class="language-yml">deploy:
+  type: git
+  repo: &lt;repository url&gt; #git@github.com:SyameimaruKibou&#x2F;syameimarukibou.github.io
+  branch: [branch]	#master
+  message: [message]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
 <p>注意 repo 与 branch：由于我们通过 SSH-key 进行鉴权，所以 repo url 应该输入 ssh 形式的 url 而不是https形式的url（https需要每次输入账户密码）；对于branch，Pages 默认解析 username.github.io 下的 master 分支，那么要注意 branch 的选择，一般填 master， 而 hexo 对 github 默认值为 gh-pages</p>
 </blockquote>
@@ -377,9 +390,9 @@
     
     <a href="\tags\CI/CD" title="CI/CD"><div class="tags-list-item">CI/CD</div></a>
     
-    <a href="\tags\读书笔记" title="读书笔记"><div class="tags-list-item">读书笔记</div></a>
-    
     <a href="\tags\gaming server" title="gaming server"><div class="tags-list-item">gaming server</div></a>
+    
+    <a href="\tags\读书笔记" title="读书笔记"><div class="tags-list-item">读书笔记</div></a>
     
     <a href="\tags\C++" title="C++"><div class="tags-list-item">C++</div></a>
     

@@ -233,7 +233,41 @@
 </li>
 <li>在 I/O 细节上 string 类 与 C-style 字符串的一些区别，观察下面的程序</li>
 </ul>
-<pre class="highlight"><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line">#include &lt;cstring&gt;</span><br><span class="line">int main()&#123;</span><br><span class="line">    using namespace std;</span><br><span class="line">    char char1[20];</span><br><span class="line">    string str;</span><br><span class="line">    cout &lt;&lt; &quot;Length of string in char1 before input: &quot;</span><br><span class="line">        &lt;&lt; strlen(char1) &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; &quot;Length of string in str before input: &quot;</span><br><span class="line">        &lt;&lt; str.size() &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; &quot;Enter a line of text:\n&quot;;</span><br><span class="line">    cin.getline(char1, 20);     &#x2F;&#x2F;indicate maximum length</span><br><span class="line">    cout &lt;&lt; &quot;You entered: &quot; &lt;&lt; char1 &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; &quot;Enter another line of text:\n&quot;;</span><br><span class="line">    getline(cin, str);</span><br><span class="line">    cout &lt;&lt; &quot;You entered: &quot; &lt;&lt; str &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; &quot;Length of string in char1 after input: &quot;</span><br><span class="line">        &lt;&lt; strlen(char1) &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; &quot;Length of string in str after input: &quot;</span><br><span class="line">        &lt;&lt; str.size() &lt;&lt; endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;*</span><br><span class="line">输出结果：</span><br><span class="line">Length of string in char1 before input: 27</span><br><span class="line">Length of string in str before input: 0</span><br><span class="line">Enter a line of text:</span><br><span class="line">peanut butter</span><br><span class="line">You entered: peanut butter</span><br><span class="line">Enter another line of text:</span><br><span class="line">blueberry jam</span><br><span class="line">Length of string in char1 after input: 13</span><br><span class="line">Length of string in str after input: 13</span><br></pre>
+<pre class="line-numbers language-none"><code class="language-none">#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;cstring&gt;
+int main()&#123;
+    using namespace std;
+    char char1[20];
+    string str;
+    cout &lt;&lt; &quot;Length of string in char1 before input: &quot;
+        &lt;&lt; strlen(char1) &lt;&lt; endl;
+    cout &lt;&lt; &quot;Length of string in str before input: &quot;
+        &lt;&lt; str.size() &lt;&lt; endl;
+    cout &lt;&lt; &quot;Enter a line of text:\n&quot;;
+    cin.getline(char1, 20);     &#x2F;&#x2F;indicate maximum length
+    cout &lt;&lt; &quot;You entered: &quot; &lt;&lt; char1 &lt;&lt; endl;
+    cout &lt;&lt; &quot;Enter another line of text:\n&quot;;
+    getline(cin, str);
+    cout &lt;&lt; &quot;You entered: &quot; &lt;&lt; str &lt;&lt; endl;
+    cout &lt;&lt; &quot;Length of string in char1 after input: &quot;
+        &lt;&lt; strlen(char1) &lt;&lt; endl;
+    cout &lt;&lt; &quot;Length of string in str after input: &quot;
+        &lt;&lt; str.size() &lt;&lt; endl;
+    return 0;
+&#125;
+
+&#x2F;*
+输出结果：
+Length of string in char1 before input: 27
+Length of string in str before input: 0
+Enter a line of text:
+peanut butter
+You entered: peanut butter
+Enter another line of text:
+blueberry jam
+Length of string in char1 after input: 13
+Length of string in str after input: 13<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>上述结果可以得出以下结论：</p>
 <ul>
 <li><p>在数组初始化之前，<code>strlen(char1)</code> 返回值为27，因为函数 strlen() 根据数组第一个元素直到遇到空字符的长度计算字符串长度，而未初始化的数组中第一个空字符出现的位置随机，导致<strong>数组长度随机；</strong>而 <code>str.size()</code> 的返回值为0，因为未初始化的 string 对象长度被自动设置为 0。</p>
@@ -589,7 +623,17 @@
 <li>C++编译器允许用<strong>通用类型来指定函数参数</strong>进行编程（模板特性也被称为 <strong>参数化类型(parameterized types)</strong> ）</li>
 <li>语法：</li>
 </ul>
-<pre class="highlight"><span class="line">template &lt;class Any&gt;</span><br><span class="line">void Swap (Any &amp;a, Any &amp;b);</span><br><span class="line">&#x2F;&#x2F; ...</span><br><span class="line">template &lt;class Any&gt;</span><br><span class="line">&#x2F;&#x2F; 或者使用 template &lt;typename Any&gt;</span><br><span class="line">void Swap (Any &amp;a, Any &amp;b)&#123;</span><br><span class="line">    Any temp;</span><br><span class="line">    temp &#x3D; a;</span><br><span class="line">    a &#x3D; b;</span><br><span class="line">    b &#x3D; temp;</span><br><span class="line">&#125;</span><br></pre>
+<pre class="line-numbers language-none"><code class="language-none">template &lt;class Any&gt;
+void Swap (Any &amp;a, Any &amp;b);
+&#x2F;&#x2F; ...
+template &lt;class Any&gt;
+&#x2F;&#x2F; 或者使用 template &lt;typename Any&gt;
+void Swap (Any &amp;a, Any &amp;b)&#123;
+    Any temp;
+    temp &#x3D; a;
+    a &#x3D; b;
+    b &#x3D; temp;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
 <li><p><strong>注：C++函数模板与Java泛型的对比：</strong></p>
 </li>
@@ -606,7 +650,18 @@
 <li>对于某种需要特定处理的参数类型，<strong>可以提供一个具体化函数定义——称为显式具体化（explicit specialization）</strong></li>
 <li>具体化机制随着C++的演变不断变化，这里介绍C++标准定义的形式（第三代具体化（ISO/ANSI C++标准））</li>
 </ul>
-<pre class="highlight"><span class="line">&#x2F;&#x2F; 对于给定的函数名，可以有</span><br><span class="line">&#x2F;&#x2F; 非模板函数、模板函数和显式具体化模板以及它们的重载版本</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; non-template function prototype</span><br><span class="line">void Swap (job &amp;, job &amp;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; template prototype</span><br><span class="line">template &lt;class Any&gt;</span><br><span class="line">void Swap (Any &amp;, Any &amp;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; explicit specialization for the job type</span><br><span class="line">template &lt;&gt; void Swap&lt;job&gt; (job &amp;, job &amp;)</span><br></pre>
+<pre class="line-numbers language-none"><code class="language-none">&#x2F;&#x2F; 对于给定的函数名，可以有
+&#x2F;&#x2F; 非模板函数、模板函数和显式具体化模板以及它们的重载版本
+
+&#x2F;&#x2F; non-template function prototype
+void Swap (job &amp;, job &amp;);
+
+&#x2F;&#x2F; template prototype
+template &lt;class Any&gt;
+void Swap (Any &amp;, Any &amp;);
+
+&#x2F;&#x2F; explicit specialization for the job type
+template &lt;&gt; void Swap&lt;job&gt; (job &amp;, job &amp;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
 <li>如果有多个原型(prototype)，编译器选择原型时，优先级为：<strong>非模板版本&gt;&gt; 显式具体化 &gt;&gt; 模板版本</strong></li>
 </ul>
@@ -670,7 +725,15 @@
 <h4 id="完全匹配"><a href="#完全匹配" class="headerlink" title="完全匹配"></a>完全匹配</h4><p>进行完全匹配时，C++允许某些无关紧要的转换，比如从 int 到 int&amp; 等，见下表</p>
 <p><img src="https://cdn.nlark.com/yuque/0/2020/png/2481276/1607996022973-27a9aee3-9a6a-47b3-aa9a-b07de05fa4a5.png" alt="image.png" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.nlark.com/yuque/0/2020/png/2481276/1607996022973-27a9aee3-9a6a-47b3-aa9a-b07de05fa4a5.png" class="lozad post-image"></p>
 <p>假设有这样的的函数代码</p>
-<pre class="highlight"><span class="line">struct blot &#123;int a; char b[10]; &#125;;</span><br><span class="line">blot ink &#x3D; &#123;25, &quot;spots&quot;&#125;;</span><br><span class="line">&#x2F;&#x2F; ...</span><br><span class="line">recycle(ink);</span><br><span class="line">&#x2F;&#x2F; can&#39;t match a suitable function</span><br><span class="line">void recycle (blot);            &#x2F;&#x2F; #1</span><br><span class="line">void recycle (const blot);      &#x2F;&#x2F; #2</span><br><span class="line">void recycle (blot &amp;);          &#x2F;&#x2F; #3</span><br><span class="line">void recycle (const blot &amp;);    &#x2F;&#x2F; #4</span><br></pre>
+<pre class="line-numbers language-none"><code class="language-none">struct blot &#123;int a; char b[10]; &#125;;
+blot ink &#x3D; &#123;25, &quot;spots&quot;&#125;;
+&#x2F;&#x2F; ...
+recycle(ink);
+&#x2F;&#x2F; can&#39;t match a suitable function
+void recycle (blot);            &#x2F;&#x2F; #1
+void recycle (const blot);      &#x2F;&#x2F; #2
+void recycle (blot &amp;);          &#x2F;&#x2F; #3
+void recycle (const blot &amp;);    &#x2F;&#x2F; #4<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>可以看出下面所有的原型都是匹配的，即不存在最佳的可行函数，则编译器无法完成重载解析。</p>
 <p>但是如果只定义 #3 和 #4，则可以匹配成功，会优先选择 #3 ，<strong>因为指向非 const 数据的指针和引用优先与非 const 的指针和引用参数匹配</strong>。</p>
 <h1 id="第9章-内存模型与名称空间"><a href="#第9章-内存模型与名称空间" class="headerlink" title="第9章 内存模型与名称空间"></a>第9章 内存模型与名称空间</h1><h2 id="9-1-单独编译"><a href="#9-1-单独编译" class="headerlink" title="9.1 单独编译"></a>9.1 单独编译</h2><ul>
@@ -828,7 +891,18 @@
 </ul>
 </li>
 </ul>
-<pre class="highlight"><span class="line">namespace Jack &#123;</span><br><span class="line">    double pail;</span><br><span class="line">    void fetch();</span><br><span class="line">    int pal;</span><br><span class="line">    struct Well &#123; ... &#125;;</span><br><span class="line">&#125;</span><br><span class="line">namespace Jill &#123;</span><br><span class="line">    double bucket(double n) &#123; ... &#125;</span><br><span class="line">    double fetch();</span><br><span class="line">    int pal;</span><br><span class="line">    struct Hill &#123; ... &#125;;</span><br><span class="line">&#125;</span><br></pre>
+<pre class="line-numbers language-none"><code class="language-none">namespace Jack &#123;
+    double pail;
+    void fetch();
+    int pal;
+    struct Well &#123; ... &#125;;
+&#125;
+namespace Jill &#123;
+    double bucket(double n) &#123; ... &#125;
+    double fetch();
+    int pal;
+    struct Hill &#123; ... &#125;;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
 <li><ul>
 <li>名称空间可以全局，也可以位于另一个名称空间，但是不能位于代码块中（所以默认下 namespace 种声明的名称链接性为 外部 （除非引用了常量））</li>
@@ -870,7 +944,24 @@
 <h1 id="第10章-对象和类"><a href="#第10章-对象和类" class="headerlink" title="第10章 对象和类"></a>第10章 对象和类</h1><h2 id="10-2-抽象与类"><a href="#10-2-抽象与类" class="headerlink" title="10.2 抽象与类"></a>10.2 抽象与类</h2><ul>
 <li>一个类的范例：</li>
 </ul>
-<pre class="highlight"><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cstring&gt;</span><br><span class="line"></span><br><span class="line">class Stock</span><br><span class="line">&#123;</span><br><span class="line">private:</span><br><span class="line">    char company[30];</span><br><span class="line">    int shares;</span><br><span class="line">    double share_val;</span><br><span class="line">    double total_val;</span><br><span class="line">    void set_tot() &#123; total_val &#x3D; shares * share_val; &#125;</span><br><span class="line">public:</span><br><span class="line">    void acquire(const char * co, int n, double pr);</span><br><span class="line">    void buy(int num, double price);</span><br><span class="line">    void sell(int num, double price);</span><br><span class="line">    void update(double price);</span><br><span class="line">    void show();</span><br><span class="line">&#125;;</span><br></pre>
+<pre class="line-numbers language-none"><code class="language-none">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+
+class Stock
+&#123;
+private:
+    char company[30];
+    int shares;
+    double share_val;
+    double total_val;
+    void set_tot() &#123; total_val &#x3D; shares * share_val; &#125;
+public:
+    void acquire(const char * co, int n, double pr);
+    void buy(int num, double price);
+    void sell(int num, double price);
+    void update(double price);
+    void show();
+&#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
 <li>成员函数可以就地定义，也可以用原型表示。（对于描述函数接口而言，原型足够）</li>
 <li>类设计尽量将<strong>公有接口和实现细节</strong>分开</li>
@@ -892,7 +983,11 @@
 <li><p>对类成员函数的实现可以单独放在一个文件中，也可以位于类声明所在的文件中。（最好的方法是将类声明放在头文件中，而将类成员函数定义在一个单独源代码文件中）</p>
 </li>
 </ul>
-<pre class="highlight"><span class="line">void Stock::acquire(const char * co, int n, double pr) &#123;</span><br><span class="line">    std::strncpy(company, co, 29);</span><br><span class="line">    company[29] &#x3D; &#39;\0&#39;;</span><br><span class="line">    &#x2F;&#x2F; ...</span><br><span class="line">&#125;</span><br></pre>
+<pre class="line-numbers language-none"><code class="language-none">void Stock::acquire(const char * co, int n, double pr) &#123;
+    std::strncpy(company, co, 29);
+    company[29] &#x3D; &#39;\0&#39;;
+    &#x2F;&#x2F; ...
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="内联方法"><a href="#内联方法" class="headerlink" title="内联方法"></a>内联方法</h4><ul>
 <li>定义位于类声明中的函数将自动称为内联函数</li>
 <li>通常将短小的成员函数作为内联函数</li>
@@ -957,7 +1052,49 @@
 </ul>
 </li>
 </ul>
-<pre class="highlight"><span class="line">&#x2F;&#x2F; mytime1.h</span><br><span class="line">#ifndef MYTIME1_H_</span><br><span class="line">#define MYTIME1_H_</span><br><span class="line"></span><br><span class="line">class Time</span><br><span class="line">&#123;</span><br><span class="line">private:</span><br><span class="line">    int hours;</span><br><span class="line">    int minutes;</span><br><span class="line">public:</span><br><span class="line">    Time ();</span><br><span class="line">    Time (int h, int m &#x3D; 0);</span><br><span class="line">    void AddMin (int m);</span><br><span class="line">    void AddHr (int h);</span><br><span class="line">    void Reset (int h &#x3D; 0, int m &#x3D; 0);</span><br><span class="line">    Time operator+ (const Time &amp; t) const;</span><br><span class="line">    void Show () const;</span><br><span class="line">&#125;;</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; mytime1.cpp</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &quot;mytime1.h&quot;</span><br><span class="line"></span><br><span class="line">Time::Time ()</span><br><span class="line">&#123;</span><br><span class="line">    hours &#x3D; minutes &#x3D; 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Time::Time (int h, int m)</span><br><span class="line">&#123;</span><br><span class="line">    hours &#x3D; h;</span><br><span class="line">    minuts &#x3D; m;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Time Time::operator+ (const Time &amp; t) const</span><br><span class="line">&#123;</span><br><span class="line">    Time sum;</span><br><span class="line">    sum.minutes &#x3D; minutes + t.minutes;</span><br><span class="line">    sum.hours &#x3D; hours + t.hours + sum.minutes &#x2F; 60;</span><br><span class="line">    sum.minutes %&#x3D; 60;</span><br><span class="line">    return sum;</span><br><span class="line">&#125;</span><br></pre>
+<pre class="line-numbers language-none"><code class="language-none">&#x2F;&#x2F; mytime1.h
+#ifndef MYTIME1_H_
+#define MYTIME1_H_
+
+class Time
+&#123;
+private:
+    int hours;
+    int minutes;
+public:
+    Time ();
+    Time (int h, int m &#x3D; 0);
+    void AddMin (int m);
+    void AddHr (int h);
+    void Reset (int h &#x3D; 0, int m &#x3D; 0);
+    Time operator+ (const Time &amp; t) const;
+    void Show () const;
+&#125;;
+#endif
+
+&#x2F;&#x2F; mytime1.cpp
+#include &lt;iostream&gt;
+#include &quot;mytime1.h&quot;
+
+Time::Time ()
+&#123;
+    hours &#x3D; minutes &#x3D; 0;
+&#125;
+
+Time::Time (int h, int m)
+&#123;
+    hours &#x3D; h;
+    minuts &#x3D; m;
+&#125;
+
+Time Time::operator+ (const Time &amp; t) const
+&#123;
+    Time sum;
+    sum.minutes &#x3D; minutes + t.minutes;
+    sum.hours &#x3D; hours + t.hours + sum.minutes &#x2F; 60;
+    sum.minutes %&#x3D; 60;
+    return sum;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="11-2-2-重载限制"><a href="#11-2-2-重载限制" class="headerlink" title="11.2.2 重载限制"></a>11.2.2 重载限制</h3><ul>
 <li>重载后的操作符必须至少有一个操作数是用户定义类型（防止用户重载标准类型）</li>
 <li>不能违反操作符原本的句法规则（将二元操作符改为一元等）</li>
@@ -1149,9 +1286,9 @@
     
     <a href="\tags\CI/CD" title="CI/CD"><div class="tags-list-item">CI/CD</div></a>
     
-    <a href="\tags\读书笔记" title="读书笔记"><div class="tags-list-item">读书笔记</div></a>
-    
     <a href="\tags\gaming server" title="gaming server"><div class="tags-list-item">gaming server</div></a>
+    
+    <a href="\tags\读书笔记" title="读书笔记"><div class="tags-list-item">读书笔记</div></a>
     
     <a href="\tags\C++" title="C++"><div class="tags-list-item">C++</div></a>
     
