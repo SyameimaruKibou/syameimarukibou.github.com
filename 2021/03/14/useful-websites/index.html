@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.png">
+  <title>Kibou's blog</title>
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn-city.livere.com/js/embed.dist.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+  
+  
+  <link href="/js/lib/prism/prism-tomorrow.min.css" rel="stylesheet" data-prism="prism-tomorrow">
+  
+  
+  
+<link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.png">
+      
+      <span class="navbar-logo-dsc">Kibou's blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">首页 </a>
+    
+    <a href="/archives" class="navbar-menu-item">归档 </a>
+    
+    <a href="/tags" class="navbar-menu-item">标签 </a>
+    
+    <a href="/categories" class="navbar-menu-item">分类 </a>
+    
+    <a href="/about" class="navbar-menu-item">关于 </a>
+    
+    <a href="/links" class="navbar-menu-item">友链 </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+  </div>
+</nav>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      实用网站与应用分享（一）
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2021-03-13T17:16:37.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2021-03-14</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/实用工具/" class="post-meta-link">实用工具</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>952 字</span>
+    
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/实用工具/" class="post-meta-link">实用工具</a>
+      
+    </div>
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <p>分享一些在我上网冲浪过程中收藏过或者有在实际使用的实用应用/插件/网站（更新中）</p>
+<h2 id="1-搜索-Everything"><a href="#1-搜索-Everything" class="headerlink" title="1. 搜索 Everything"></a>1. 搜索 Everything</h2><p><img src="https://cdn.jsdelivr.net/gh/syameimarukibou/imagebox/img/image-20210314234933653.png" alt="image-20210314234933653" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/syameimarukibou/imagebox/img/image-20210314234933653.png" class="lozad post-image"></p>
+<p><strong>描述：一个本地文件快速搜索器</strong></p>
+<p>一个极简且方便的本地文件搜索应用，安装并配置完成后搜索自己电脑上的文件基本没有响应时间就能出搜索结果，也很难出现搜不到的情况（原理我猜测应该是空间换时间，对磁盘上所有文件创建了前缀树），比windows资源管理器自带的搜索快很多。</p>
+<h2 id="2-Sublime-Text-3"><a href="#2-Sublime-Text-3" class="headerlink" title="2. Sublime Text 3"></a>2. Sublime Text 3</h2><p><img src="https://cdn.jsdelivr.net/gh/syameimarukibou/imagebox/img/image-20210315000050370.png" alt="image-20210315000050370" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/syameimarukibou/imagebox/img/image-20210315000050370.png" class="lozad post-image"></p>
+<p><strong>描述：一个启动很快的代码查看器</strong></p>
+<p>作为一个前后端都经常有在接触的人，经常会为了看一个项目某个部分一会儿打开这个IDE一会儿打开那个IDE的情况，有时只是想点开一个xml配置文件稍微改动一下，或者说单纯只是从网上下到了一个大神的项目想分析下结构，这种时候IDE就很笨重，但是用记事本打开又很不方便</p>
+<p>这时候 Sublime Text 的优势就体现出来了，由于它本身并不是任何语言的一个 IDE （Sublime 可以加上插件作为 IDEA ，但是我没有使用这种方式），所以启动非常快，相当于一个带代码格式化和代码高亮的记事本，当我只是想看看某个项目文件的代码的时候，或者我只想改一下某个配置文件时，我一般就直接用 Sublime 打开了，很方便（而且还可以加入系统上下文，对任何文件直接用右键选择“用 Sublime”打开）</p>
+<h2 id="3-devhints-io"><a href="#3-devhints-io" class="headerlink" title="3. devhints.io"></a>3. devhints.io</h2><p><img src="https://cdn.jsdelivr.net/gh/syameimarukibou/imagebox/img/image-20210315001224927.png" alt="image-20210315001224927" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/syameimarukibou/imagebox/img/image-20210315001224927.png" class="lozad post-image"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/syameimarukibou/imagebox/img/image-20210315001712267.png" alt="image-20210315001712267" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/syameimarukibou/imagebox/img/image-20210315001712267.png" class="lozad post-image"></p>
+<p><strong>描述：一个程序员用的各种语言的语法速查站</strong></p>
+<p>虽然我们平时编程到一半的时候遇到某个语法突然想不起一般都是直接去百度或者一直挂着那个语言的文档，但是这个网站给了你一个更集中方便的选择，它支持几乎各种语言的语法速查。</p>
+<h2 id="4-OneTab"><a href="#4-OneTab" class="headerlink" title="4. OneTab"></a>4. OneTab</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/syameimarukibou/imagebox/img/image-20210315002111339.png" class="lozad post-image"src="https://cdn.jsdelivr.net/gh/syameimarukibou/imagebox/img/image-20210315002111339.png"></p>
+<p><strong>描述：一个高效的网站归档暂存的 chrome 插件</strong></p>
+<p>作为程序员，想学习一个内容或者改一个bug的时候打开一连串网页是常态，但是当你不得不暂时得“挂起”手头学习的内容的时候，这一连串的网页如何处理又是问题，如果就这么放着不管过两天又会埋藏进历史记录的深海中。</p>
+<p>Chrome 上的插件 OneTab 提供了一个很好的选择，一键就能将当前chrome包含的所有页面打包集中收集在 OneTab 页面里，方便我们随时挂起当前任务和继续以前的任务的需求</p>
+<h2 id="5-Postman"><a href="#5-Postman" class="headerlink" title="5. Postman"></a>5. Postman</h2><p><img src="https://cdn.jsdelivr.net/gh/syameimarukibou/imagebox/img/image-20210315004107926.png" alt="image-20210315004107926" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/syameimarukibou/imagebox/img/image-20210315004107926.png" class="lozad post-image"></p>
+<p><strong>描述：一个方便强大的API调试和http请求工具</strong></p>
+<p>说来惭愧，我去年调试自己的后端接口的时候还是另外写了一个 java 的 http 请求类然后硬修改 java 代码来进行调试的</p>
+<p>Postman 提供了一个比这个方便的多的 Api 调用的可视化操作工具，可以方便的进行参数的增删，请求头的修改和 body 的输入等，比浏览器输入和自写请求工具类方便得多。</p>
+<h2 id="6-Termius"><a href="#6-Termius" class="headerlink" title="6. Termius"></a>6. Termius</h2><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/syameimarukibou/imagebox/img/image-20210315004623316.png" class="lozad post-image"src="https://cdn.jsdelivr.net/gh/syameimarukibou/imagebox/img/image-20210315004623316.png"></p>
+<p><strong>描述：一个启动很快的全平台SSH软件</strong></p>
+<p>Termius 的 UI 比 XShell 现代很多，启动非常快，如果已经配置过主机，从启动到连接基本就是秒级别。</p>
+<p>如果使用付费还可以使用 SFTP 等各种功能，但是免费版本身作为一个 SSH 客户端来说基本使用已经很足够了</p>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://syameimarukibou.github.io/about">Kibou</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://syameimarukibou.github.io/2021/03/14/useful-websites/">https://syameimarukibou.github.io/2021/03/14/useful-websites/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  
+  <div class="nav-item-next">
+    <a href="/2021/03/14/interview-points/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">Java/后端方向 面试常见知识点整理（未完成） </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="lv-container" data-id="city" data-uid="MTAyMC81Mjg5OS8yOTM3Ng==">
+    <script>
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') {
+          return;
+        }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.defer = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  </div>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%90%9C%E7%B4%A2-Everything"><span class="toc-text">1. 搜索 Everything</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Sublime-Text-3"><span class="toc-text">2. Sublime Text 3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-devhints-io"><span class="toc-text">3. devhints.io</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-OneTab"><span class="toc-text">4. OneTab</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Postman"><span class="toc-text">5. Postman</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-Termius"><span class="toc-text">6. Termius</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/author_icon.png" class="author-img">
+
+<p class="author-name">Kibou</p>
+<p class="author-description">因为相信而竭尽全力的普通人 <p class="author-description"><a href="/about">关于我</a></p></p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>6</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>5</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>12</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%90%9C%E7%B4%A2-Everything"><span class="toc-text">1. 搜索 Everything</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Sublime-Text-3"><span class="toc-text">2. Sublime Text 3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-devhints-io"><span class="toc-text">3. devhints.io</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-OneTab"><span class="toc-text">4. OneTab</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Postman"><span class="toc-text">5. Postman</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-Termius"><span class="toc-text">6. Termius</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/编程思想">
+        <div class="categories-list-item">
+          编程思想
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C++">
+        <div class="categories-list-item">
+          C++
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/算法练习">
+        <div class="categories-list-item">
+          算法练习
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/面试经验">
+        <div class="categories-list-item">
+          面试经验
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/实用工具">
+        <div class="categories-list-item">
+          实用工具
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\hexo" title="hexo"><div class="tags-list-item">hexo</div></a>
+    
+    <a href="\tags\CI/CD" title="CI/CD"><div class="tags-list-item">CI/CD</div></a>
+    
+    <a href="\tags\gaming server" title="gaming server"><div class="tags-list-item">gaming server</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\读书笔记" title="读书笔记"><div class="tags-list-item">读书笔记</div></a>
+    
+    <a href="\tags\C++" title="C++"><div class="tags-list-item">C++</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\编程思想" title="编程思想"><div class="tags-list-item">编程思想</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\MySQL" title="MySQL"><div class="tags-list-item">MySQL</div></a>
+    
+    <a href="\tags\Redis" title="Redis"><div class="tags-list-item">Redis</div></a>
+    
+    <a href="\tags\实用工具" title="实用工具"><div class="tags-list-item">实用工具</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%90%9C%E7%B4%A2-Everything"><span class="toc-text">1. 搜索 Everything</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Sublime-Text-3"><span class="toc-text">2. Sublime Text 3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-devhints-io"><span class="toc-text">3. devhints.io</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-OneTab"><span class="toc-text">4. OneTab</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Postman"><span class="toc-text">5. Postman</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-Termius"><span class="toc-text">6. Termius</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-03-14</div>
+        <a href="/2021/03/14/useful-websites/"><div class="recent-posts-item-content">实用网站与应用分享（一）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-03-14</div>
+        <a href="/2021/03/14/interview-points/"><div class="recent-posts-item-content">Java/后端方向 面试常见知识点整理（未完成）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-03-05</div>
+        <a href="/2021/03/05/hexo-deploy-tarvis/"><div class="recent-posts-item-content">使用 Hexo + Github Pages + Travis 自动部署个人博客</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-02-24</div>
+        <a href="/2021/02/24/leetcode-note-raw/"><div class="recent-posts-item-content">LeetCode刷题笔记（归档中）</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2021
+        </span>
+        <a href="/" class="footer-link">Kibou's blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+
+  
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
+
+</html>
