@@ -200,7 +200,7 @@
   <div id="section" class="post-content">
     <blockquote>
 <p>前言：</p>
-<p>由个人整理而得，内容来自于参考书籍+各大网络博客+牛客面经等并加上一些个人的简化与理解，仅作为个人知识收集与学习用，如果涉及知识权问题会及时删除（联系email: <a href="mailto:&#x7a;&#104;&#x61;&#x6e;&#x67;&#x6b;&#x69;&#98;&#x6f;&#117;&#50;&#x38;&#51;&#64;&#x66;&#111;&#120;&#x6d;&#x61;&#x69;&#x6c;&#x2e;&#99;&#111;&#x6d;">&#x7a;&#104;&#x61;&#x6e;&#x67;&#x6b;&#x69;&#98;&#x6f;&#117;&#50;&#x38;&#51;&#64;&#x66;&#111;&#120;&#x6d;&#x61;&#x69;&#x6c;&#x2e;&#99;&#111;&#x6d;</a>）</p>
+<p>由个人整理而得，内容来自于参考书籍+各大网络博客+牛客面经等并加上一些个人的简化与理解，仅作为个人知识收集与学习用，如果涉及知识权问题会及时删除（联系email: <a href="mailto:&#x7a;&#x68;&#x61;&#x6e;&#x67;&#107;&#x69;&#x62;&#x6f;&#117;&#x32;&#56;&#51;&#x40;&#x66;&#111;&#x78;&#109;&#97;&#105;&#108;&#x2e;&#99;&#x6f;&#x6d;">&#x7a;&#x68;&#x61;&#x6e;&#x67;&#107;&#x69;&#x62;&#x6f;&#117;&#x32;&#56;&#51;&#x40;&#x66;&#111;&#x78;&#109;&#97;&#105;&#108;&#x2e;&#99;&#x6f;&#x6d;</a>）</p>
 <p>对于有参考的内容，尽可能地在理解后使用个人语言进行了简化，以知识点的理解为主，缺乏准确性</p>
 <p>推荐活用右侧【目录大纲】功能方便快速查阅（移动版的位置在悬浮按钮上）</p>
 <p>👇参考了这些大牛的个人博客和内容：</p>
@@ -420,7 +420,7 @@
 <h4 id="free-内存"><a href="#free-内存" class="headerlink" title="free 内存"></a>free 内存</h4><p>显示<strong>系统内存</strong>情况</p>
 <h4 id="proc-meminfo-内存"><a href="#proc-meminfo-内存" class="headerlink" title="/proc/meminfo 内存"></a>/proc/meminfo 内存</h4><p>存储了比 free 更丰富的内存状态的接口</p>
 <h4 id="vmstat-基本状态"><a href="#vmstat-基本状态" class="headerlink" title="vmstat 基本状态"></a>vmstat 基本状态</h4><p>显示<strong>动态服务器状态值</strong>（CPU,内存，硬盘IO读写）</p>
-<h4 id="pgrep-进程"><a href="#pgrep-进程" class="headerlink" title="pgrep 进程"></a>pgrep 进程</h4><p>查询<strong>指定进程信息</strong></p>
+<h4 id="pgrep-进程"><a href="#pgrep-进程" class="headerlink" title="pgrep 进程"></a>pgrep 进程</h4><p>查询<strong>指定进程信息</strong>，默认输入进程名输出进程Pid</p>
 <h4 id="lsof-i-网络"><a href="#lsof-i-网络" class="headerlink" title="lsof -i 网络"></a>lsof -i 网络</h4><p>查看<strong>所有连接</strong>。一般用用 losf -i:port 来显示指定端口被占用的信息</p>
 <h4 id="netstat-网络"><a href="#netstat-网络" class="headerlink" title="netstat 网络"></a>netstat 网络</h4><p><code>netstat -tunlp</code>：查看所有【 (-t)tcp (-u)udp (-n)不显示别名 (-l)正在listen的 (-p)建立相关链接的程序名】 的<strong>连接</strong>。加上 | grep (port) 可以显示指定端口的情况</p>
 <p><code>df -h</code>：查看<strong>磁盘状态</strong></p>
@@ -901,6 +901,20 @@ sed &#39;2,3d&#39; data.txt #删除文件中2，3行<span aria-hidden="true" cla
   <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
   <div class="categories-list">
     
+      <a href="/categories/算法练习">
+        <div class="categories-list-item">
+          算法练习
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/实用工具">
+        <div class="categories-list-item">
+          实用工具
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
       <a href="/categories/编程思想">
         <div class="categories-list-item">
           编程思想
@@ -915,23 +929,9 @@ sed &#39;2,3d&#39; data.txt #删除文件中2，3行<span aria-hidden="true" cla
         </div>
       </a>
     
-      <a href="/categories/算法练习">
-        <div class="categories-list-item">
-          算法练习
-          <span class="categories-list-item-badge">1</span>
-        </div>
-      </a>
-    
       <a href="/categories/面试经验">
         <div class="categories-list-item">
           面试经验
-          <span class="categories-list-item-badge">1</span>
-        </div>
-      </a>
-    
-      <a href="/categories/实用工具">
-        <div class="categories-list-item">
-          实用工具
           <span class="categories-list-item-badge">1</span>
         </div>
       </a>
@@ -945,29 +945,29 @@ sed &#39;2,3d&#39; data.txt #删除文件中2，3行<span aria-hidden="true" cla
   <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
   <div class="tags-list">
     
-    <a href="\tags\hexo" title="hexo"><div class="tags-list-item">hexo</div></a>
-    
-    <a href="\tags\CI/CD" title="CI/CD"><div class="tags-list-item">CI/CD</div></a>
-    
-    <a href="\tags\gaming server" title="gaming server"><div class="tags-list-item">gaming server</div></a>
-    
-    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
-    
-    <a href="\tags\读书笔记" title="读书笔记"><div class="tags-list-item">读书笔记</div></a>
-    
-    <a href="\tags\C++" title="C++"><div class="tags-list-item">C++</div></a>
-    
-    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
-    
-    <a href="\tags\编程思想" title="编程思想"><div class="tags-list-item">编程思想</div></a>
-    
-    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    <a href="\tags\Redis" title="Redis"><div class="tags-list-item">Redis</div></a>
     
     <a href="\tags\MySQL" title="MySQL"><div class="tags-list-item">MySQL</div></a>
     
-    <a href="\tags\Redis" title="Redis"><div class="tags-list-item">Redis</div></a>
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\编程思想" title="编程思想"><div class="tags-list-item">编程思想</div></a>
+    
+    <a href="\tags\C++" title="C++"><div class="tags-list-item">C++</div></a>
+    
+    <a href="\tags\gaming server" title="gaming server"><div class="tags-list-item">gaming server</div></a>
+    
+    <a href="\tags\读书笔记" title="读书笔记"><div class="tags-list-item">读书笔记</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
     
     <a href="\tags\实用工具" title="实用工具"><div class="tags-list-item">实用工具</div></a>
+    
+    <a href="\tags\CI/CD" title="CI/CD"><div class="tags-list-item">CI/CD</div></a>
+    
+    <a href="\tags\hexo" title="hexo"><div class="tags-list-item">hexo</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
     
   </div>
 </div>
