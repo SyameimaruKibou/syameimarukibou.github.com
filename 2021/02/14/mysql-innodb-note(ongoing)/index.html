@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.png">
+  <title>Kibou's blog</title>
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn-city.livere.com/js/embed.dist.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+  
+  
+  <link href="/js/lib/prism/prism-tomorrow.min.css" rel="stylesheet" data-prism="prism-tomorrow">
+  
+  
+  
+<link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.png">
+      
+      <span class="navbar-logo-dsc">Kibou's blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">首页 </a>
+    
+    <a href="/archives" class="navbar-menu-item">归档 </a>
+    
+    <a href="/tags" class="navbar-menu-item">标签 </a>
+    
+    <a href="/categories" class="navbar-menu-item">分类 </a>
+    
+    <a href="/about" class="navbar-menu-item">关于 </a>
+    
+    <a href="/links" class="navbar-menu-item">友链 </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+  </div>
+</nav>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      《MySQL技术内幕 InnoDB存储引擎 第2版》 读书笔记
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2021-02-14T10:28:23.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2021-02-14</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/MySQL/" class="post-meta-link">MySQL</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>4.1k 字</span>
+    
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/读书笔记/" class="post-meta-link">读书笔记</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/MySQL/" class="post-meta-link">MySQL</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/InnoDB/" class="post-meta-link">InnoDB</a>
+      
+    </div>
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <h1 id="《MySQL技术内幕-InnoDB存储引擎-第2版》-读书笔记（进行中）"><a href="#《MySQL技术内幕-InnoDB存储引擎-第2版》-读书笔记（进行中）" class="headerlink" title="《MySQL技术内幕 InnoDB存储引擎 第2版》 读书笔记（进行中）"></a>《MySQL技术内幕 InnoDB存储引擎 第2版》 读书笔记（进行中）</h1><h2 id="第1章-MySQL体系结构与存储引擎"><a href="#第1章-MySQL体系结构与存储引擎" class="headerlink" title="第1章 MySQL体系结构与存储引擎"></a>第1章 MySQL体系结构与存储引擎</h2><h3 id="MySQL主要体系结构"><a href="#MySQL主要体系结构" class="headerlink" title="MySQL主要体系结构"></a>MySQL主要体系结构</h3><ul>
+<li>连接池组件</li>
+<li>管理服务与工具</li>
+<li>SQL接口组件</li>
+<li>查询分析器组件</li>
+<li>优化器组件</li>
+<li>缓冲（Cache）组件</li>
+<li>插件式存储引擎</li>
+<li>物理文件</li>
+</ul>
+<h3 id="主要存储引擎介绍"><a href="#主要存储引擎介绍" class="headerlink" title="主要存储引擎介绍"></a>主要存储引擎介绍</h3><h4 id="InnoDB"><a href="#InnoDB" class="headerlink" title="InnoDB"></a>InnoDB</h4><ul>
+<li>支持事务，面向<strong>在线事务处理（OLTP）</strong>应用。行锁，非锁定读</li>
+<li>支持外键</li>
+<li>实现 SQL 四种隔离级别（默认重复读），使用next-key lock 避免幻读</li>
+<li>数据放在逻辑表空间存储。默认聚集式存储，即每张表都按照主键顺序存放（没有主键会生成 6 字节的 ROWID）</li>
+<li>其他特性：insert buffer，double write，adapative hash index，read ahead</li>
+</ul>
+<h4 id="MyISAM"><a href="#MyISAM" class="headerlink" title="MyISAM"></a>MyISAM</h4><ul>
+<li>不支持事务。锁级别为表锁</li>
+<li>索引与文件存放分离</li>
+<li>缓存只缓存索引</li>
+</ul>
+<h4 id="NDB"><a href="#NDB" class="headerlink" title="NDB"></a>NDB</h4><ul>
+<li>集群设计</li>
+<li>数据全部位于内存，哈希索引</li>
+<li>（问题）连接操作在MySQL层</li>
+</ul>
+<h4 id="Memory"><a href="#Memory" class="headerlink" title="Memory"></a>Memory</h4><ul>
+<li>数据位于内存，哈希索引</li>
+<li>表锁降低了并发性</li>
+</ul>
+<h4 id="Archive"><a href="#Archive" class="headerlink" title="Archive"></a>Archive</h4><ul>
+<li>仅支持 INSERT SELECT</li>
+<li>数据压缩后再存储，比例可达1:10；适合归档数据，日志存放</li>
+<li>支持行锁，但本身并不事务安全</li>
+</ul>
+<h4 id="Maria"><a href="#Maria" class="headerlink" title="Maria"></a>Maria</h4><ul>
+<li>为了取代原有的MyISAM</li>
+<li>支持了缓存数据，行锁，MVCC，支持事务</li>
+</ul>
+<h3 id="MySQL-连接方式"><a href="#MySQL-连接方式" class="headerlink" title="MySQL 连接方式"></a>MySQL 连接方式</h3><ul>
+<li>TCP/IP套接字：</li>
+</ul>
+<p>最通用的连接方式</p>
+<p><strong>安全：</strong>对于每个用户可以通过权限来分别定制用户允许登入的各个网段，以及各个网段下的不同访问控制权限</p>
+<ul>
+<li>命名管道/共享内存</li>
+</ul>
+<p>在 win 平台，同服务的两个需要通讯的进程可以使用命名管道（通过 –enable-named-pipe）启用。MySQL 4.1以后也可以使用共享内存</p>
+<ul>
+<li>UNIX 域套接字</li>
+</ul>
+<p>在 linux 和 UNIX 环境下，同服务的两个进程可以使用。</p>
+<h2 id="第2章-InnoDB存储引擎概述"><a href="#第2章-InnoDB存储引擎概述" class="headerlink" title="第2章 InnoDB存储引擎概述"></a>第2章 InnoDB存储引擎概述</h2><h3 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h3><p>MySQL 5.1 -&gt; InnoDB 1.0 + InnoDB Plugin</p>
+<p>MySQL 5.5 -&gt; InnoDB 1.1.x（Linux AIO，多回滚）</p>
+<p>MySQL 5.6 -&gt; InnoDB 1.2.x（全文索引，实时索引添加）</p>
+<h3 id="体系架构"><a href="#体系架构" class="headerlink" title="体系架构"></a>体系架构</h3><p><strong>多个后台线程 + InnoDB引擎内存池 + 文件</strong></p>
+<h4 id="后台线程"><a href="#后台线程" class="headerlink" title="后台线程"></a>后台线程</h4><ul>
+<li><strong>Master Thread</strong></li>
+</ul>
+<p>核心的后台线程，主要负责将缓冲池中<strong>数据异步刷新</strong>到磁盘，保证数据一致性（<strong>脏页刷新，合并插入缓存，UNDO页的回收</strong>）</p>
+<ul>
+<li><strong>IO Thread</strong></li>
+</ul>
+<p>InnoDB 大量使用 AIO 处理写 IO 请求。</p>
+<p>InnoDB 下的 IO Thread 主要有 <strong>write，read，insert buffer，log IO thread</strong> 四种。现在版本默认的启用的线程数量为（4write，4read，1insert buffer，1log IO thread）共10个（可以通过 SHOW ENGINE INNODB STATUS查看），读写线程数量都可以分别用 <code>innodb_read_io_threads</code> 和  <code>innodb_write_io_threads</code> 设置</p>
+<ul>
+<li><strong>Purge Thread</strong></li>
+</ul>
+<p>负责<strong>回收 undo 页</strong></p>
+<p>默认在 Master Thread 中完成，1.1 开始可以通过配置启用独立的 Purge Thread（只能为1个）</p>
+<p>1.2 开始支持多个 Purge Thread</p>
+<ul>
+<li><strong>Page Cleaner Thread</strong></li>
+</ul>
+<p>从1.2 引入，负责 <strong>脏页刷新</strong> 操作，为了减轻 Master Thread 的工作而引入</p>
+<h4 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h4><p><img src="https://cdn.jsdelivr.net/gh/syameimarukibou/imagebox/img/image-20210319105744012.png" alt="image-20210319105744012" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/syameimarukibou/imagebox/img/image-20210319105744012.png" class="lozad post-image"></p>
+<h5 id="缓冲池"><a href="#缓冲池" class="headerlink" title="缓冲池"></a><strong>缓冲池</strong></h5><p>InnoDB 基于磁盘存储，按页管理记录。为了弥补磁盘速度的鸿沟，使用缓冲池技术来提高数据库的整体性能</p>
+<p>缓冲池同样以页方式管理，读取时如果数据命中直接使用该页，如果没有则需要去磁盘取。</p>
+<p>对于数据库页的修改，<strong>首先修改缓存池中的页，然后再以一定的频率刷新到磁盘</strong>。刷新回磁盘的发生并不在每次页更新时触发，而是通过一种 checkpoint 机制</p>
+<p>缓冲池大小可以通过 <code>innodb_buffer_pool_size</code> 来设置</p>
+<p>缓冲池可能包括这些数据页：<strong>索引页、数据页、undo页、插入缓冲、自适应哈希索引、数据字典信息</strong>，索引和数据页占其中的主要一部分</p>
+<p>1.0.x版本开始支持启用<strong>多个缓冲池示例</strong>，通过<code>innodb_buffer_pool_instances</code>来配置，默认值 1</p>
+<ul>
+<li><strong>LRU list，Free List，Flush List</strong> 与 InnoDB 缓冲池管理机制</li>
+</ul>
+<p>InnoDB 的缓冲池页通过 LRU 算法管理，不同的是，存在 <strong>midpoint insertion strategy</strong> 机制，新读取的页不会放到首位，而是先放在 <strong>midpoint 位置</strong>（原因是避免一些操作引入大量页，但是又只在这一次使用）</p>
+<p>这个过程涉及两个参数：<code>innodb_old_blocks_pct</code> <code>innodb_old_blocks_time</code> ，分别代表 新页插入 LRU List 的位置 和 新页经过多少时间才能被加入 LRU 热端</p>
+<p>如果 <code>innodb_old_blocks_time</code> 计时结束新页仍存在而使得新页被加入热端，那么这个操作称为 page made young ，否则称为 page not made young，可以通过  SHOW ENGINE INNODB STATUS 查看。</p>
+<p>除此之外通过另一个重要参数也可以观察缓冲池的运行效果情况——**<code>Buffer pool hit rate</code>**，通常该值不应该小于 95%，如果低于该值，用户需要观察是否存在全表扫描引起的 LRU 列表污染问题</p>
+<blockquote>
+<p>SHOW ENGINE INNODB STATUS 显示的不是当前状态，而是某个时间范围内的状态。</p>
+<p>在输出首部会显示类似 per second seconde averages calculated from the last 60 seconds 的信息，代表下面的数据是过去 60 秒内的数据库状态</p>
+</blockquote>
+<ul>
+<li><strong>压缩页</strong></li>
+</ul>
+<p>InnoDB 从 1.0.x 开始支持压缩页，可以将原本 16KB 的页压缩为 1KB,2KB,4KB,8KB。非 16KB 的页通过 unzip_LRU 列表管理。</p>
+<p>可以在 information_schema 架构通过设置 compressed_size &lt;&gt; 0 条件来查找未压缩的表的情况</p>
+<ul>
+<li><strong>脏页</strong></li>
+</ul>
+<p>LRU 列表中被修改的页称为脏页，会被记载在 Flush 列表中（但是同样存在在 LRU 列表中），会被数据库通过 CHECKPOINT 机制刷新回磁盘</p>
+<p>脏页数量也可以通过 SHOW ENGINE INNODB STATUS 查看，形式类似于<code>Modified db pages 32903</code>，代表脏页数量。在 information_schema 架构下没有专门的表显示脏页数量与类型，不过可以通过设置 oldest_modification &gt; 0 条件来进行查询</p>
+<h5 id="重做日志缓冲"><a href="#重做日志缓冲" class="headerlink" title="重做日志缓冲"></a><strong>重做日志缓冲</strong></h5><p>InnoDB 的重做日志存在两个可能的位置：<strong>内存下的重做日志缓冲（redo log buffer）和磁盘上的重做日志文件</strong>。不需要太大（保证每秒产生的事务量在这个大小之内），默认 8M</p>
+<p>重做日志缓冲会按一定频率冲刷到日志文件，发生刷新的触发情况主要有这三种：</p>
+<ul>
+<li><strong>Master Thread 每一秒</strong>将 redo log buffer 冲刷到文件</li>
+<li><strong>每个事务提交</strong>，将 redo log buffer 冲刷到文件</li>
+<li><strong>redo log buffer 的剩余空间小于1/2时</strong>，将redo log buffer 冲刷到文件</li>
+</ul>
+<h5 id="额外内存池"><a href="#额外内存池" class="headerlink" title="额外内存池"></a>额外内存池</h5><p>InnoDB 通过内存堆（heap）管理内存。</p>
+<p>在对一些数据结构本身的内存进行分配时，需要从额外的内存池进行申请（缓存池本身的帧缓冲和缓冲控制对象（buffer control block）都需要这些空间</p>
+<p>在申请了很大的 InnoDB 缓冲池时，也应考虑增加该值</p>
+<h3 id="Checkpoint-技术"><a href="#Checkpoint-技术" class="headerlink" title="Checkpoint 技术"></a>Checkpoint 技术</h3><p>checkpoint 技术决定了缓冲池数据和磁盘数据的协调关系</p>
+<p>当数据库宕机后，数据库不需要重做所有日志，因为 <strong>CheckPoint 之前的页都已经刷新回磁盘</strong></p>
+<p>InnoDB 引擎中，Checkpoint 发生的事件、条件和脏页的选择都非常复杂。</p>
+<p>在 InnoDB 内部，存在两种 Checkpoint ，分别为：</p>
+<ul>
+<li>Sharp Checkpoint </li>
+<li>Fuzzy Checkpoint </li>
+</ul>
+<p><strong>Sharp Checkpoint</strong> 发生在数据库关闭时，它会将所有脏页刷新回磁盘，这是默认的工作方式，即参数 innodb_fast_shutdown = 1</p>
+<p>当然这种方式不适合运行时使用，所以InnoDB运行中一般使用 <strong>Fuzzy Checkpoint</strong> 进行页的刷新，即只刷新一部分脏页而不是全部。</p>
+<p>InnoDB 中可能发生如下集中情况的 Fuzzy Checkpoint：</p>
+<ul>
+<li><strong>Master Thread Checkpoint</strong>：主线程以差不多以每秒或每十秒刷新一定比例脏页回磁盘，异步进行</li>
+<li><strong>FLUSH_LRU_LIST Checkpoint</strong>：保证LRU列表至少有一定的空闲页也可供使用，如果没有，会将 LRU 列表尾端页移除，如果移除的页中含有脏页，那么会触发 checkpoint 。这个过程在MySQL 5.6(InnoDB 1.2) 以上会被分给 Page Cleaner 线程检查，不会阻塞用户线程</li>
+<li><strong>Async/Sync Flush Checkpoint</strong>：如果重做日志不可用（重做日志记载的LSN 和上次刷新到磁盘的 LSN 差距较大，那么如果再不checkpoint会导致宕机后redo恢复过程太长），当 age 大于 75% 的容量时触发async flush，当 age 大于 90% 时 触发 sync flush。同样，现在被放到了单独的 Page Cleaner 线程，不会阻塞用户线程</li>
+<li><strong>Dirty Page too much Checkpoint</strong>：脏页多过一定比例时触发，通过 <code>innodb_max_dirty_page_pct</code> 参数设置，比如设为 75 时，当缓冲池脏页超过 75% 时，将触发 checkpoint</li>
+</ul>
+<h3 id="Master-Thread-工作方式"><a href="#Master-Thread-工作方式" class="headerlink" title="Master Thread 工作方式"></a>Master Thread 工作方式</h3><h4 id="InnoDB-1-0-x-版本之前的-Master-Thread"><a href="#InnoDB-1-0-x-版本之前的-Master-Thread" class="headerlink" title="InnoDB 1.0.x 版本之前的 Master Thread"></a>InnoDB 1.0.x 版本之前的 Master Thread</h4><p>最高线程优先级</p>
+<p>包括多个循环（loop）：<strong>主循环（loop）、后台循环（backgroup loop）、刷新循环（flush loop）、暂停循环（suspend loop）</strong></p>
+<h5 id="主循环"><a href="#主循环" class="headerlink" title="主循环"></a>主循环</h5><p>分为每秒操作和每十秒（约）操作：</p>
+<ul>
+<li>每秒的操作包括：<ul>
+<li>刷新redo日志缓冲到磁盘（即使事务未提交）【总是】；</li>
+<li>（如果IO频率小）合并插入缓冲【可能】；</li>
+<li>（如果大于 dirty_page_pc） 至多刷新 100 个脏页【可能】；</li>
+<li>没有用户活动则切换到background loop【可能】</li>
+</ul>
+</li>
+<li>每10秒操作包括：<ul>
+<li>（如果io频率小）刷新100个脏页到磁盘【可能】；</li>
+<li>合并至多5个插入缓冲【总是】；</li>
+<li>将日志缓冲刷新到磁盘【总是】;</li>
+<li>删除无用的Undo页【总是】；</li>
+<li>刷新100个或者10%脏页到磁盘【总是】。</li>
+</ul>
+</li>
+</ul>
+<h5 id="后台循环和刷新循环"><a href="#后台循环和刷新循环" class="headerlink" title="后台循环和刷新循环"></a>后台循环和刷新循环</h5><p>在没有用户活动或者数据库关闭时切换到后台循环</p>
+<p>执行这些操作：删除无用的Undo页【总是】；合并20个插入缓冲【总是】；跳回主循环【总是】不断刷新100个页直到符合条件【可能。跳转到 flush loop】</p>
+<p>如果在 flush_loop 页没有工作了，那么引擎会切换到 suspend loop，挂起 Master Thread 直到事情的发生</p>
+<h4 id="InnoDB-1-2-x-版本之前的-Master-Thread"><a href="#InnoDB-1-2-x-版本之前的-Master-Thread" class="headerlink" title="InnoDB 1.2.x 版本之前的 Master Thread"></a>InnoDB 1.2.x 版本之前的 Master Thread</h4><p><strong>关于【提高主动刷新脏页数和频率】的改进：</strong></p>
+<p><strong><code>innodb_io_capacity</code></strong> 的引入：引入了该参数，可以控制刷新脏页时的行为（默认的100：1. merge Insert buffer 的数量将变为该值的5%；2. 缓冲区刷新脏页时，脏页数量为该值，默认的<code>innodb_io_capacity</code> 值为 200。</p>
+<p><strong><code>innodb_max_dirty_pages_pct</code>**下限默认值降低：该值默认值的90，使得产生 90（90%）的脏页时才刷新 100 个脏页，对于较大内存时对服务器压力较大。该值从1.0.x开始被调节为了 **75</strong></p>
+<p><strong>innodb_adaptive_flushing</strong> 脏页自适应刷新：使得innodb不再仅当大于 dirty_page_pc 才刷新脏页，而是根据 redo log 自适应调节</p>
+<p><strong>innodb_purge_batch_size</strong> 可调节回收 Undo 页数量</p>
+<h4 id="InnoDB-1-2-x-版本的-Master-Thread"><a href="#InnoDB-1-2-x-版本的-Master-Thread" class="headerlink" title="InnoDB 1.2.x 版本的 Master Thread"></a>InnoDB 1.2.x 版本的 Master Thread</h4><p>主要改动是：1. 根据情况自动选择原本的每10秒操作和每秒操作；2. 分离出一个 Page Cleaner Thread 处理刷新脏页操作</p>
+<h3 id="InnoDB关键特性"><a href="#InnoDB关键特性" class="headerlink" title="InnoDB关键特性"></a>InnoDB关键特性</h3><p>InnoDB 以下关键特性，的其中三个都是为了合并多次磁盘操作为一次增加磁盘IO效率；另外一个是安全；另外一个是适应性调节</p>
+<h4 id="Insert-Buffer-插入缓冲"><a href="#Insert-Buffer-插入缓冲" class="headerlink" title="Insert Buffer 插入缓冲"></a>Insert Buffer 插入缓冲</h4><h5 id="Insert-Buffer"><a href="#Insert-Buffer" class="headerlink" title="Insert Buffer"></a>Insert Buffer</h5><p>当插入或更新非聚集索引时，将导致原本顺序存放的数据可能变得不再顺序，导致<strong>查询非聚集索引时产生离散读写</strong>，这可能会影响查找效率</p>
+<p>插入操作时，如果对应非聚集索引页不在内存中，不直接插入，而是先放入到 Insert Buffer 对象，期待多个插入能合并到一个索引页</p>
+<p>插入缓冲的使用的条件是：索引是辅助索引/索引非唯一，这种情况下InnoDB引擎才会启用 Insert Buffer。</p>
+<p>代价是，宕机时内存中可能会有大量 Insert Buffer ，导致恢复时间变长</p>
+<p>除此之外，1.0.x 版本之后还引入了 Change Buffer，使得缓冲的适用范围扩展到了所有 DML 操作</p>
+<p>这种情况下，一条 update 记录可能分为两个过程：1.将标记标记为删除（change buffer） 2. 真正删除记录（purge buffer）</p>
+<p>4.1 版本之后，所有表的InsertBuffer被管理在一个B+树之下</p>
+<h4 id="Async-IO-异步写"><a href="#Async-IO-异步写" class="headerlink" title="Async IO 异步写"></a>Async IO 异步写</h4><p>大多数db系统都适用AIO，InnoDB也是如此</p>
+<p>好处是可以增加多个IO请求的总体效率，同时还可以<strong>Merge多个IO为一个IO</strong></p>
+<p>从 InnoDB 1.1.x 开始支持内核级别 AIO （<strong>Native AIO</strong>），但是需要操作系统支持（Linux，Windows都可以，Mac OSX系统则未提供）</p>
+<p>InnoDB中，read ahead方式读取，脏页的刷新都是通过 AIO 完成</p>
+<h4 id="Flush-Neighbor-Page-刷新邻接页"><a href="#Flush-Neighbor-Page-刷新邻接页" class="headerlink" title="Flush Neighbor Page 刷新邻接页"></a>Flush Neighbor Page 刷新邻接页</h4><p>刷新一个脏页时，监测该页<strong>所在区（extent）</strong>所在的所有页，如果脏页则一起刷新</p>
+<h4 id="Apative-Hash-Index-自适应哈希索引-AHI"><a href="#Apative-Hash-Index-自适应哈希索引-AHI" class="headerlink" title="Apative Hash Index 自适应哈希索引 AHI"></a>Apative Hash Index 自适应哈希索引 AHI</h4><p>生产环境中B+树的高度为3<del>4层，需要3</del>4次查询，而哈希正常情况的复杂度为O(1)</p>
+<p>触发条件：对某个索引页以连续的模式（where a=xxx）访问了100次；页通过该页访问了（页记录*16）次</p>
+<p>开启之后，可以通过<code>SHOW ENGINE INNODB STATUS</code> 查看AHI的运行效果，hash searches/s 和 non=hash searches/s 的比例可以反映哈希索引的效率</p>
+<h4 id="Double-Write-两次写"><a href="#Double-Write-两次写" class="headerlink" title="Double Write 两次写"></a>Double Write 两次写</h4><p>主要是为了提升数据页可靠性。</p>
+<p>仅仅依赖 redo log，如果<strong>写页时发生断裂（内存页数据丢失，磁盘页写到一半受损）</strong>，导致页本身的 checksum 等信息丢失（这个页到底是redolog上的哪个页？！），那么无法通过 redolog 修正。所以需要对写页这一步进行类似缓冲备份的的处理</p>
+<p>该机制包含两部分存储：磁盘上（2M*1）和内存（1M*2）中。刷新脏页时，先复制到内存的 doublewrite buffer，然后buffer分两次，每次1MB刷到磁盘上的 doublewrite 段，写满后，再从buffer写入对应idb。</p>
+<p>如果断裂发生在doublewrite，那么idb是干净的，可以redo恢复。如果断裂发生在idb，那么通过doublewrite备份覆盖idb，然后再redo恢复</p>
+<h2 id="第4章-表"><a href="#第4章-表" class="headerlink" title="第4章 表"></a>第4章 表</h2><h3 id="4-2-InnoDB-逻辑存储结构"><a href="#4-2-InnoDB-逻辑存储结构" class="headerlink" title="4.2 InnoDB 逻辑存储结构"></a>4.2 InnoDB 逻辑存储结构</h3><p><img src="https://cdn.jsdelivr.net/gh/syameimarukibou/imagebox/img/image-20210320232001122.png" alt="image-20210320232001122" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/syameimarukibou/imagebox/img/image-20210320232001122.png" class="lozad post-image"></p>
+<h4 id="表空间-Tablespace"><a href="#表空间-Tablespace" class="headerlink" title="表空间 Tablespace"></a>表空间 Tablespace</h4><p>表空间可以看作 InnoDB 引擎逻辑结构最高层，存放所有数据</p>
+<p>默认情况下 InnoDB 有一个共享表空间 ibdata1，所有数据放在该表空间内，如果启用 <code>innodb_file_per_table</code>，则每张表内数据可以单独放到一个表空间内（但是独立表空间仅包含数据，索引，插入缓冲bitmap页）</p>
+<h4 id="段-Sagment"><a href="#段-Sagment" class="headerlink" title="段 Sagment"></a>段 Sagment</h4><p>表空间是由各个段组成的，常见的段有数据段、索引段、回滚段等</p>
+<p>由于之前说过 InnoDB 引擎是<strong>索引组织（index organized），数据即索引，索引即数据</strong>。也就是说，数据段就是B+树的<strong>叶子节点（对应 Leaf node segment）</strong>，索引段即 B+ 树的<strong>非叶子节点（对应 Non-left node segment）</strong>。</p>
+<p>段的管理由引擎自身完成</p>
+<h4 id="区-Extent"><a href="#区-Extent" class="headerlink" title="区 Extent"></a>区 Extent</h4><p>区是由<strong>连续页</strong>组成的空间，任何条件下每个区的大小都是 <strong>1MB</strong></p>
+<p>为了保证区中页的连续性，InnoDB 存储引擎一次从磁盘申请 4~5 个区</p>
+<p>默认情况下一个页的大小为 16KB，则一个区中有 <strong>64 个连续页</strong></p>
+<p>引入压缩页之后，每个页的大小可以为 2K、4K、8K，此时对应的区包含的页数也会增加</p>
+<p>但是对于不满 1MB 的表，每个段会开始时会先用32页大小的碎片页存放数据，用完之后再是对64个连续页的申请</p>
+<h4 id="页-Page"><a href="#页-Page" class="headerlink" title="页 Page"></a>页 Page</h4><p><strong>页</strong>是 InnoDB <strong>磁盘管理的最小单位</strong>，默认为 16KB，可压缩</p>
+<p>在InnoDB引擎中，常见有这些页类型：</p>
+<ul>
+<li>数据页</li>
+<li>undo页</li>
+<li>系统页，数据事务页</li>
+<li>插入缓冲位图页，插入缓冲空闲列表页</li>
+<li>未压缩二进制大对象页，压缩的二进制大对象页</li>
+</ul>
+<h4 id="行-row"><a href="#行-row" class="headerlink" title="行 row"></a>行 row</h4><p>InnoDB 存储引擎是 <strong>row-oriented</strong> 的，这意味着数据按行存放（面向列）。</p>
+<h3 id="4-3-InnoDB-行记录格式"><a href="#4-3-InnoDB-行记录格式" class="headerlink" title="4.3 InnoDB 行记录格式"></a>4.3 InnoDB 行记录格式</h3><h2 id="第5章-索引与算法"><a href="#第5章-索引与算法" class="headerlink" title="第5章 索引与算法"></a>第5章 索引与算法</h2><h2 id="第8章-备份与恢复"><a href="#第8章-备份与恢复" class="headerlink" title="第8章 备份与恢复"></a>第8章 备份与恢复</h2><h2 id="第9章-性能调优"><a href="#第9章-性能调优" class="headerlink" title="第9章 性能调优"></a>第9章 性能调优</h2>
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://syameimarukibou.github.io/about">Kibou</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://syameimarukibou.github.io/2021/02/14/mysql-innodb-note(ongoing)/">https://syameimarukibou.github.io/2021/02/14/mysql-innodb-note(ongoing)/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2021/02/24/leetcode-note-raw/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">LeetCode刷题笔记（归档1） </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2021/01/11/C++-prime-plus-zh-note(ongoing)/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">《C++ prime plus 中文第5版》 读书笔记（进行中） </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="lv-container" data-id="city" data-uid="MTAyMC81Mjg5OS8yOTM3Ng==">
+    <script>
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') {
+          return;
+        }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.defer = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  </div>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E3%80%8AMySQL%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95-InnoDB%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E-%E7%AC%AC2%E7%89%88%E3%80%8B-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%88%E8%BF%9B%E8%A1%8C%E4%B8%AD%EF%BC%89"><span class="toc-text">《MySQL技术内幕 InnoDB存储引擎 第2版》 读书笔记（进行中）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC1%E7%AB%A0-MySQL%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E"><span class="toc-text">第1章 MySQL体系结构与存储引擎</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL%E4%B8%BB%E8%A6%81%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="toc-text">MySQL主要体系结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E4%BB%8B%E7%BB%8D"><span class="toc-text">主要存储引擎介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#InnoDB"><span class="toc-text">InnoDB</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MyISAM"><span class="toc-text">MyISAM</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#NDB"><span class="toc-text">NDB</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Memory"><span class="toc-text">Memory</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Archive"><span class="toc-text">Archive</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Maria"><span class="toc-text">Maria</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL-%E8%BF%9E%E6%8E%A5%E6%96%B9%E5%BC%8F"><span class="toc-text">MySQL 连接方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC2%E7%AB%A0-InnoDB%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E6%A6%82%E8%BF%B0"><span class="toc-text">第2章 InnoDB存储引擎概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%88%E6%9C%AC"><span class="toc-text">版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%93%E7%B3%BB%E6%9E%B6%E6%9E%84"><span class="toc-text">体系架构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%8E%E5%8F%B0%E7%BA%BF%E7%A8%8B"><span class="toc-text">后台线程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E5%AD%98"><span class="toc-text">内存</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BC%93%E5%86%B2%E6%B1%A0"><span class="toc-text">缓冲池</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%87%8D%E5%81%9A%E6%97%A5%E5%BF%97%E7%BC%93%E5%86%B2"><span class="toc-text">重做日志缓冲</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%A2%9D%E5%A4%96%E5%86%85%E5%AD%98%E6%B1%A0"><span class="toc-text">额外内存池</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Checkpoint-%E6%8A%80%E6%9C%AF"><span class="toc-text">Checkpoint 技术</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Master-Thread-%E5%B7%A5%E4%BD%9C%E6%96%B9%E5%BC%8F"><span class="toc-text">Master Thread 工作方式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#InnoDB-1-0-x-%E7%89%88%E6%9C%AC%E4%B9%8B%E5%89%8D%E7%9A%84-Master-Thread"><span class="toc-text">InnoDB 1.0.x 版本之前的 Master Thread</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%BB%E5%BE%AA%E7%8E%AF"><span class="toc-text">主循环</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%90%8E%E5%8F%B0%E5%BE%AA%E7%8E%AF%E5%92%8C%E5%88%B7%E6%96%B0%E5%BE%AA%E7%8E%AF"><span class="toc-text">后台循环和刷新循环</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#InnoDB-1-2-x-%E7%89%88%E6%9C%AC%E4%B9%8B%E5%89%8D%E7%9A%84-Master-Thread"><span class="toc-text">InnoDB 1.2.x 版本之前的 Master Thread</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#InnoDB-1-2-x-%E7%89%88%E6%9C%AC%E7%9A%84-Master-Thread"><span class="toc-text">InnoDB 1.2.x 版本的 Master Thread</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#InnoDB%E5%85%B3%E9%94%AE%E7%89%B9%E6%80%A7"><span class="toc-text">InnoDB关键特性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Insert-Buffer-%E6%8F%92%E5%85%A5%E7%BC%93%E5%86%B2"><span class="toc-text">Insert Buffer 插入缓冲</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Insert-Buffer"><span class="toc-text">Insert Buffer</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Async-IO-%E5%BC%82%E6%AD%A5%E5%86%99"><span class="toc-text">Async IO 异步写</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Flush-Neighbor-Page-%E5%88%B7%E6%96%B0%E9%82%BB%E6%8E%A5%E9%A1%B5"><span class="toc-text">Flush Neighbor Page 刷新邻接页</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Apative-Hash-Index-%E8%87%AA%E9%80%82%E5%BA%94%E5%93%88%E5%B8%8C%E7%B4%A2%E5%BC%95-AHI"><span class="toc-text">Apative Hash Index 自适应哈希索引 AHI</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Double-Write-%E4%B8%A4%E6%AC%A1%E5%86%99"><span class="toc-text">Double Write 两次写</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC4%E7%AB%A0-%E8%A1%A8"><span class="toc-text">第4章 表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-InnoDB-%E9%80%BB%E8%BE%91%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84"><span class="toc-text">4.2 InnoDB 逻辑存储结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%A8%E7%A9%BA%E9%97%B4-Tablespace"><span class="toc-text">表空间 Tablespace</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5-Sagment"><span class="toc-text">段 Sagment</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8C%BA-Extent"><span class="toc-text">区 Extent</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5-Page"><span class="toc-text">页 Page</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%8C-row"><span class="toc-text">行 row</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-InnoDB-%E8%A1%8C%E8%AE%B0%E5%BD%95%E6%A0%BC%E5%BC%8F"><span class="toc-text">4.3 InnoDB 行记录格式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC5%E7%AB%A0-%E7%B4%A2%E5%BC%95%E4%B8%8E%E7%AE%97%E6%B3%95"><span class="toc-text">第5章 索引与算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC8%E7%AB%A0-%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D"><span class="toc-text">第8章 备份与恢复</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC9%E7%AB%A0-%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98"><span class="toc-text">第9章 性能调优</span></a></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/author_icon.png" class="author-img">
+
+<p class="author-name">Kibou</p>
+<p class="author-description">因为相信而竭尽全力的普通人 <p class="author-description"><a href="/about">关于我</a></p></p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>7</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>6</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>13</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E3%80%8AMySQL%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95-InnoDB%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E-%E7%AC%AC2%E7%89%88%E3%80%8B-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%88%E8%BF%9B%E8%A1%8C%E4%B8%AD%EF%BC%89"><span class="toc-text">《MySQL技术内幕 InnoDB存储引擎 第2版》 读书笔记（进行中）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC1%E7%AB%A0-MySQL%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E"><span class="toc-text">第1章 MySQL体系结构与存储引擎</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL%E4%B8%BB%E8%A6%81%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="toc-text">MySQL主要体系结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E4%BB%8B%E7%BB%8D"><span class="toc-text">主要存储引擎介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#InnoDB"><span class="toc-text">InnoDB</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MyISAM"><span class="toc-text">MyISAM</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#NDB"><span class="toc-text">NDB</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Memory"><span class="toc-text">Memory</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Archive"><span class="toc-text">Archive</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Maria"><span class="toc-text">Maria</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL-%E8%BF%9E%E6%8E%A5%E6%96%B9%E5%BC%8F"><span class="toc-text">MySQL 连接方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC2%E7%AB%A0-InnoDB%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E6%A6%82%E8%BF%B0"><span class="toc-text">第2章 InnoDB存储引擎概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%88%E6%9C%AC"><span class="toc-text">版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%93%E7%B3%BB%E6%9E%B6%E6%9E%84"><span class="toc-text">体系架构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%8E%E5%8F%B0%E7%BA%BF%E7%A8%8B"><span class="toc-text">后台线程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E5%AD%98"><span class="toc-text">内存</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BC%93%E5%86%B2%E6%B1%A0"><span class="toc-text">缓冲池</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%87%8D%E5%81%9A%E6%97%A5%E5%BF%97%E7%BC%93%E5%86%B2"><span class="toc-text">重做日志缓冲</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%A2%9D%E5%A4%96%E5%86%85%E5%AD%98%E6%B1%A0"><span class="toc-text">额外内存池</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Checkpoint-%E6%8A%80%E6%9C%AF"><span class="toc-text">Checkpoint 技术</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Master-Thread-%E5%B7%A5%E4%BD%9C%E6%96%B9%E5%BC%8F"><span class="toc-text">Master Thread 工作方式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#InnoDB-1-0-x-%E7%89%88%E6%9C%AC%E4%B9%8B%E5%89%8D%E7%9A%84-Master-Thread"><span class="toc-text">InnoDB 1.0.x 版本之前的 Master Thread</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%BB%E5%BE%AA%E7%8E%AF"><span class="toc-text">主循环</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%90%8E%E5%8F%B0%E5%BE%AA%E7%8E%AF%E5%92%8C%E5%88%B7%E6%96%B0%E5%BE%AA%E7%8E%AF"><span class="toc-text">后台循环和刷新循环</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#InnoDB-1-2-x-%E7%89%88%E6%9C%AC%E4%B9%8B%E5%89%8D%E7%9A%84-Master-Thread"><span class="toc-text">InnoDB 1.2.x 版本之前的 Master Thread</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#InnoDB-1-2-x-%E7%89%88%E6%9C%AC%E7%9A%84-Master-Thread"><span class="toc-text">InnoDB 1.2.x 版本的 Master Thread</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#InnoDB%E5%85%B3%E9%94%AE%E7%89%B9%E6%80%A7"><span class="toc-text">InnoDB关键特性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Insert-Buffer-%E6%8F%92%E5%85%A5%E7%BC%93%E5%86%B2"><span class="toc-text">Insert Buffer 插入缓冲</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Insert-Buffer"><span class="toc-text">Insert Buffer</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Async-IO-%E5%BC%82%E6%AD%A5%E5%86%99"><span class="toc-text">Async IO 异步写</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Flush-Neighbor-Page-%E5%88%B7%E6%96%B0%E9%82%BB%E6%8E%A5%E9%A1%B5"><span class="toc-text">Flush Neighbor Page 刷新邻接页</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Apative-Hash-Index-%E8%87%AA%E9%80%82%E5%BA%94%E5%93%88%E5%B8%8C%E7%B4%A2%E5%BC%95-AHI"><span class="toc-text">Apative Hash Index 自适应哈希索引 AHI</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Double-Write-%E4%B8%A4%E6%AC%A1%E5%86%99"><span class="toc-text">Double Write 两次写</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC4%E7%AB%A0-%E8%A1%A8"><span class="toc-text">第4章 表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-InnoDB-%E9%80%BB%E8%BE%91%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84"><span class="toc-text">4.2 InnoDB 逻辑存储结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%A8%E7%A9%BA%E9%97%B4-Tablespace"><span class="toc-text">表空间 Tablespace</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5-Sagment"><span class="toc-text">段 Sagment</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8C%BA-Extent"><span class="toc-text">区 Extent</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5-Page"><span class="toc-text">页 Page</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%8C-row"><span class="toc-text">行 row</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-InnoDB-%E8%A1%8C%E8%AE%B0%E5%BD%95%E6%A0%BC%E5%BC%8F"><span class="toc-text">4.3 InnoDB 行记录格式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC5%E7%AB%A0-%E7%B4%A2%E5%BC%95%E4%B8%8E%E7%AE%97%E6%B3%95"><span class="toc-text">第5章 索引与算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC8%E7%AB%A0-%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D"><span class="toc-text">第8章 备份与恢复</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC9%E7%AB%A0-%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98"><span class="toc-text">第9章 性能调优</span></a></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/算法练习">
+        <div class="categories-list-item">
+          算法练习
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/实用工具">
+        <div class="categories-list-item">
+          实用工具
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程思想">
+        <div class="categories-list-item">
+          编程思想
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C++">
+        <div class="categories-list-item">
+          C++
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/面试经验">
+        <div class="categories-list-item">
+          面试经验
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/MySQL">
+        <div class="categories-list-item">
+          MySQL
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\hexo" title="hexo"><div class="tags-list-item">hexo</div></a>
+    
+    <a href="\tags\CI/CD" title="CI/CD"><div class="tags-list-item">CI/CD</div></a>
+    
+    <a href="\tags\实用工具" title="实用工具"><div class="tags-list-item">实用工具</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\读书笔记" title="读书笔记"><div class="tags-list-item">读书笔记</div></a>
+    
+    <a href="\tags\gaming server" title="gaming server"><div class="tags-list-item">gaming server</div></a>
+    
+    <a href="\tags\C++" title="C++"><div class="tags-list-item">C++</div></a>
+    
+    <a href="\tags\编程思想" title="编程思想"><div class="tags-list-item">编程思想</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\MySQL" title="MySQL"><div class="tags-list-item">MySQL</div></a>
+    
+    <a href="\tags\Redis" title="Redis"><div class="tags-list-item">Redis</div></a>
+    
+    <a href="\tags\InnoDB" title="InnoDB"><div class="tags-list-item">InnoDB</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E3%80%8AMySQL%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95-InnoDB%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E-%E7%AC%AC2%E7%89%88%E3%80%8B-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%88%E8%BF%9B%E8%A1%8C%E4%B8%AD%EF%BC%89"><span class="toc-text">《MySQL技术内幕 InnoDB存储引擎 第2版》 读书笔记（进行中）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC1%E7%AB%A0-MySQL%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E"><span class="toc-text">第1章 MySQL体系结构与存储引擎</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL%E4%B8%BB%E8%A6%81%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="toc-text">MySQL主要体系结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E4%BB%8B%E7%BB%8D"><span class="toc-text">主要存储引擎介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#InnoDB"><span class="toc-text">InnoDB</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MyISAM"><span class="toc-text">MyISAM</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#NDB"><span class="toc-text">NDB</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Memory"><span class="toc-text">Memory</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Archive"><span class="toc-text">Archive</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Maria"><span class="toc-text">Maria</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL-%E8%BF%9E%E6%8E%A5%E6%96%B9%E5%BC%8F"><span class="toc-text">MySQL 连接方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC2%E7%AB%A0-InnoDB%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E6%A6%82%E8%BF%B0"><span class="toc-text">第2章 InnoDB存储引擎概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%88%E6%9C%AC"><span class="toc-text">版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%93%E7%B3%BB%E6%9E%B6%E6%9E%84"><span class="toc-text">体系架构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%8E%E5%8F%B0%E7%BA%BF%E7%A8%8B"><span class="toc-text">后台线程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E5%AD%98"><span class="toc-text">内存</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BC%93%E5%86%B2%E6%B1%A0"><span class="toc-text">缓冲池</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%87%8D%E5%81%9A%E6%97%A5%E5%BF%97%E7%BC%93%E5%86%B2"><span class="toc-text">重做日志缓冲</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%A2%9D%E5%A4%96%E5%86%85%E5%AD%98%E6%B1%A0"><span class="toc-text">额外内存池</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Checkpoint-%E6%8A%80%E6%9C%AF"><span class="toc-text">Checkpoint 技术</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Master-Thread-%E5%B7%A5%E4%BD%9C%E6%96%B9%E5%BC%8F"><span class="toc-text">Master Thread 工作方式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#InnoDB-1-0-x-%E7%89%88%E6%9C%AC%E4%B9%8B%E5%89%8D%E7%9A%84-Master-Thread"><span class="toc-text">InnoDB 1.0.x 版本之前的 Master Thread</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%BB%E5%BE%AA%E7%8E%AF"><span class="toc-text">主循环</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%90%8E%E5%8F%B0%E5%BE%AA%E7%8E%AF%E5%92%8C%E5%88%B7%E6%96%B0%E5%BE%AA%E7%8E%AF"><span class="toc-text">后台循环和刷新循环</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#InnoDB-1-2-x-%E7%89%88%E6%9C%AC%E4%B9%8B%E5%89%8D%E7%9A%84-Master-Thread"><span class="toc-text">InnoDB 1.2.x 版本之前的 Master Thread</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#InnoDB-1-2-x-%E7%89%88%E6%9C%AC%E7%9A%84-Master-Thread"><span class="toc-text">InnoDB 1.2.x 版本的 Master Thread</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#InnoDB%E5%85%B3%E9%94%AE%E7%89%B9%E6%80%A7"><span class="toc-text">InnoDB关键特性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Insert-Buffer-%E6%8F%92%E5%85%A5%E7%BC%93%E5%86%B2"><span class="toc-text">Insert Buffer 插入缓冲</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Insert-Buffer"><span class="toc-text">Insert Buffer</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Async-IO-%E5%BC%82%E6%AD%A5%E5%86%99"><span class="toc-text">Async IO 异步写</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Flush-Neighbor-Page-%E5%88%B7%E6%96%B0%E9%82%BB%E6%8E%A5%E9%A1%B5"><span class="toc-text">Flush Neighbor Page 刷新邻接页</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Apative-Hash-Index-%E8%87%AA%E9%80%82%E5%BA%94%E5%93%88%E5%B8%8C%E7%B4%A2%E5%BC%95-AHI"><span class="toc-text">Apative Hash Index 自适应哈希索引 AHI</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Double-Write-%E4%B8%A4%E6%AC%A1%E5%86%99"><span class="toc-text">Double Write 两次写</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC4%E7%AB%A0-%E8%A1%A8"><span class="toc-text">第4章 表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-InnoDB-%E9%80%BB%E8%BE%91%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84"><span class="toc-text">4.2 InnoDB 逻辑存储结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%A8%E7%A9%BA%E9%97%B4-Tablespace"><span class="toc-text">表空间 Tablespace</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5-Sagment"><span class="toc-text">段 Sagment</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8C%BA-Extent"><span class="toc-text">区 Extent</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5-Page"><span class="toc-text">页 Page</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%8C-row"><span class="toc-text">行 row</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-InnoDB-%E8%A1%8C%E8%AE%B0%E5%BD%95%E6%A0%BC%E5%BC%8F"><span class="toc-text">4.3 InnoDB 行记录格式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC5%E7%AB%A0-%E7%B4%A2%E5%BC%95%E4%B8%8E%E7%AE%97%E6%B3%95"><span class="toc-text">第5章 索引与算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC8%E7%AB%A0-%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D"><span class="toc-text">第8章 备份与恢复</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC9%E7%AB%A0-%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98"><span class="toc-text">第9章 性能调优</span></a></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-03-14</div>
+        <a href="/2021/03/14/useful-websites/"><div class="recent-posts-item-content">实用网站与应用分享（一）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-03-14</div>
+        <a href="/2021/03/14/interview-points/"><div class="recent-posts-item-content">Java/后端方向 面试常见知识点整理（未完成）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-03-05</div>
+        <a href="/2021/03/05/hexo-deploy-tarvis/"><div class="recent-posts-item-content">使用 Hexo + Github Pages + Travis 自动部署个人博客</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-02-24</div>
+        <a href="/2021/02/24/leetcode-note-raw/"><div class="recent-posts-item-content">LeetCode刷题笔记（归档1）</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2021
+        </span>
+        <a href="/" class="footer-link">Kibou's blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+
+  
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
+
+</html>
