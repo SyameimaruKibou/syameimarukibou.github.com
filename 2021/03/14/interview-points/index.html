@@ -162,7 +162,7 @@
     
     
     <span class="dot"></span>
-    <span>18.9k 字</span>
+    <span>19.3k 字</span>
     
   </div>
   
@@ -200,7 +200,7 @@
   <div id="section" class="post-content">
     <blockquote>
 <p>前言：</p>
-<p>由个人整理而得，内容来自于参考书籍+各大网络博客+牛客面经等并加上一些个人的简化与理解，仅作为个人知识收集与学习用，如果涉及知识权问题会及时删除（联系email: <a href="mailto:&#122;&#x68;&#97;&#110;&#103;&#x6b;&#x69;&#x62;&#x6f;&#x75;&#50;&#x38;&#51;&#64;&#x66;&#111;&#120;&#x6d;&#x61;&#x69;&#x6c;&#46;&#x63;&#x6f;&#x6d;">&#122;&#x68;&#97;&#110;&#103;&#x6b;&#x69;&#x62;&#x6f;&#x75;&#50;&#x38;&#51;&#64;&#x66;&#111;&#120;&#x6d;&#x61;&#x69;&#x6c;&#46;&#x63;&#x6f;&#x6d;</a>）</p>
+<p>由个人整理而得，内容来自于参考书籍+各大网络博客+牛客面经等并加上一些个人的简化与理解，仅作为个人知识收集与学习用，如果涉及知识权问题会及时删除（联系email: <a href="mailto:&#x7a;&#104;&#x61;&#x6e;&#x67;&#x6b;&#105;&#98;&#111;&#117;&#50;&#56;&#x33;&#x40;&#102;&#111;&#x78;&#x6d;&#x61;&#105;&#x6c;&#46;&#x63;&#x6f;&#109;">&#x7a;&#104;&#x61;&#x6e;&#x67;&#x6b;&#105;&#98;&#111;&#117;&#50;&#56;&#x33;&#x40;&#102;&#111;&#x78;&#x6d;&#x61;&#105;&#x6c;&#46;&#x63;&#x6f;&#109;</a>）</p>
 <p>对于有参考的内容，尽可能地在理解后使用个人语言进行了简化，以知识点的理解为主，缺乏准确性</p>
 <p>推荐活用右侧【目录大纲】功能方便快速查阅（移动版的位置在悬浮按钮上）</p>
 <p>👇参考了这些大牛的个人博客和内容：</p>
@@ -906,7 +906,21 @@ pos +&#x3D; res;
 <p><strong>过滤与转码</strong>：设计页面时，对敏感标签进行过滤，对于常见控制符进行转码</p>
 <p><strong>输入限制</strong>：限制某些可输入项的长度，特殊符号等</p>
 <p>使用<strong>现代浏览器</strong>：现代浏览器可以控制js只能访问自己所在网站的资源</p>
-<h3 id="HTTPS机制"><a href="#HTTPS机制" class="headerlink" title="HTTPS机制"></a>HTTPS机制</h3><h2 id="数据库（MYSQL-amp-Redis）"><a href="#数据库（MYSQL-amp-Redis）" class="headerlink" title="数据库（MYSQL &amp; Redis）"></a>数据库（MYSQL &amp; Redis）</h2><h3 id="1-MySQL-视图"><a href="#1-MySQL-视图" class="headerlink" title="1.MySQL- 视图"></a>1.MySQL- 视图</h3><p>视图的作用：</p>
+<h3 id="HTTPS机制"><a href="#HTTPS机制" class="headerlink" title="HTTPS机制"></a>HTTPS机制</h3><p>HTTPS 被称为 HTTP over TLS，HTTPS 的安全连接主要通过正确地完成 <strong>TLS协议层握手</strong> 来保证：</p>
+<ul>
+<li>当客户端连接到支持 TLS 协议的服务器，要求创建安全连接，同时客户端列出受支持的**密码包(cipher)**（包括加密算法，散列算法等），开始握手</li>
+<li>服务器从该列表决定密码包，并通知客户端</li>
+<li>服务器发回其<strong>数字证书</strong>，这个证书通常包括<strong>服务器的名称</strong>、<strong>受信任的证书颁发机构（CA）</strong>和<strong>服务器的公钥</strong></li>
+<li>客户端确认其颁发的<strong>证书的有效性</strong></li>
+<li>为了产生一个用于安全连接的 <strong>session key</strong> ，客户端选择其中以下之一的策略：<ul>
+<li>使用服务器的<strong>公钥加密一个随机数，并将其发送到服务器</strong>，这个数只能通过服务器自己的私钥解密；在会话期间，两边都使用这个随机数来生成一个唯一的 session key ，用于后续的加密和解密</li>
+<li>使用 <strong>Diffile-Hellman 密钥交换方法</strong>安全地生成用于加密和解密的随机唯一会话密钥，这个密钥具有<strong>前向保密性</strong>，即便服务器的密钥在未来被公开，它也无法被用于解密当前（过去）时间点的这个会话（即使这个会话被第三方截取）</li>
+</ul>
+</li>
+<li>TLS协议的握手完成，开始利用产生的 session key 进行加密和解密，从而进行安全连接，握手完毕之后创建的连接是安全的，直到连接关闭</li>
+<li>如果上述任何一个步骤失败，那么 TLS 握手过程就会失败，并且断开所有的连接</li>
+</ul>
+<h2 id="数据库（MYSQL-amp-Redis）"><a href="#数据库（MYSQL-amp-Redis）" class="headerlink" title="数据库（MYSQL &amp; Redis）"></a>数据库（MYSQL &amp; Redis）</h2><h3 id="1-MySQL-视图"><a href="#1-MySQL-视图" class="headerlink" title="1.MySQL- 视图"></a>1.MySQL- 视图</h3><p>视图的作用：</p>
 <p>简化查询</p>
 <p>利于权限控制（比如建立一个开放部分数据的视图，然后再给一个仅能查询该视图的用户）</p>
 <h3 id="2-MySQL-存储过程与函数"><a href="#2-MySQL-存储过程与函数" class="headerlink" title="2.MySQL- 存储过程与函数"></a>2.MySQL- 存储过程与函数</h3><p>存储过程（stored procedure）和函数（stored function）统称为stored routines</p>
@@ -1232,11 +1246,11 @@ pos +&#x3D; res;
 <p class="author-description">因为相信而竭尽全力的普通人 <p class="author-description"><a href="/about">关于我</a></p></p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>7</span>
+    <span>8</span>
     <span>文章</span>
   </a>
   <a class="author-categories-count" href="/categories">
-    <span>6</span>
+    <span>7</span>
     <span>分类</span>
   </a>
   <a class="author-tags-count" href="/tags">
@@ -1305,6 +1319,13 @@ pos +&#x3D; res;
         </div>
       </a>
     
+      <a href="/categories/Redis">
+        <div class="categories-list-item">
+          Redis
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
   </div>
 </div>
   </article>
@@ -1314,13 +1335,13 @@ pos +&#x3D; res;
   <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
   <div class="tags-list">
     
-    <a href="\tags\MySQL" title="MySQL"><div class="tags-list-item">MySQL</div></a>
-    
     <a href="\tags\读书笔记" title="读书笔记"><div class="tags-list-item">读书笔记</div></a>
     
-    <a href="\tags\InnoDB" title="InnoDB"><div class="tags-list-item">InnoDB</div></a>
-    
     <a href="\tags\Redis" title="Redis"><div class="tags-list-item">Redis</div></a>
+    
+    <a href="\tags\MySQL" title="MySQL"><div class="tags-list-item">MySQL</div></a>
+    
+    <a href="\tags\InnoDB" title="InnoDB"><div class="tags-list-item">InnoDB</div></a>
     
     <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
     
