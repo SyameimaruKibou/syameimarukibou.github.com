@@ -146,7 +146,7 @@
 <article class="card card-content">
   <header>
     <h1 class="post-title">
-      用网页实现一个即时多人堆栈游戏[翻译]
+      用网页实现一个即时多人对战游戏[翻译]
     </h1>
   </header>
   <div class="post-meta post-show-meta">
@@ -191,10 +191,10 @@
 <p>（注：本文章演示了基于HTML5的一个小型多人即时在线游戏的demo设计）</p>
 <h2 id="Gameplay部分"><a href="#Gameplay部分" class="headerlink" title="Gameplay部分"></a>Gameplay部分</h2><h3 id="帧速率"><a href="#帧速率" class="headerlink" title="帧速率"></a>帧速率</h3><p>物体的移动不能简单地通过在Update()函数循环+=1来完成（因为存在刷新率的概念，即Update()不一定会在单位时间内以相同频率运行同样的次数），所以需要引入<strong>增量时间（deltaTime）</strong>的概念</p>
 <p>deltaTime 的值为<strong>渲染每一帧所花费的毫秒数（ms per frame）</strong>， 使得每帧移动的像素距离根据帧率变化而变化，从而达到在任何帧率下具有相同速度的效果</p>
-<p><img src="http://buildnewgames.com/assets/article/real-time-multiplayer/deltatime.png" alt="Frame rate independence" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="http://buildnewgames.com/assets/article/real-time-multiplayer/deltatime.png" class="lozad post-image"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/syameimarukibou/imagebox/img/deltatime.png" alt="deltatime" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/syameimarukibou/imagebox/img/deltatime.png" class="lozad post-image"></p>
 <h2 id="多人游戏基本流程"><a href="#多人游戏基本流程" class="headerlink" title="多人游戏基本流程"></a>多人游戏基本流程</h2><p>除了 GamePlay 本身之外，GamePlay 之前的各种准备流程也是需要考虑的部分，包括客户端之间的通讯，客户端与服务端的连接等</p>
 <p>这个基本的流程如图所示</p>
-<p><img src="http://buildnewgames.com/assets/article/real-time-multiplayer/network1.png" alt="Simple multiplayer lobby" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="http://buildnewgames.com/assets/article/real-time-multiplayer/network1.png" class="lozad post-image"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/syameimarukibou/imagebox/img/network1.png" alt="network1" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/syameimarukibou/imagebox/img/network1.png" class="lozad post-image"></p>
 <h2 id="网络与游戏循环"><a href="#网络与游戏循环" class="headerlink" title="网络与游戏循环"></a>网络与游戏循环</h2><p>在这个多人游戏demo中，我们希望在服务器和客户端上能够同时运行相同的游戏逻辑。</p>
 <p>在服务器上，从网络获得的输入将会被执行并实施到所有player上，然后，这一更改将会以一个固定的频率发送给其他player；在客户端上，输入将会被捕捉并发送给server，同时位置将会在在等待服务器回应的同时就进行更新（通过 <strong>客户端预测</strong> 的手段）</p>
 <p>这是一个整体流程的例子：</p>
@@ -206,6 +206,7 @@
 <li>客户端接受消息，并立刻设置这个（具有更高权威性的）player position</li>
 <li>对于返回数据和预测数据之间的误差，客户端应该进行一些平滑处理</li>
 </ol>
+<p><img src="https://cdn.jsdelivr.net/gh/syameimarukibou/imagebox/img/network2.png" alt="network2" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/syameimarukibou/imagebox/img/network2.png" class="lozad post-image"></p>
 <h3 id="游戏服务器建立"><a href="#游戏服务器建立" class="headerlink" title="游戏服务器建立"></a>游戏服务器建立</h3><p>在服务器上，存在两个运行中的 loop：<strong>物理更新循环（Physics updates loop）</strong>和<strong>服务器更新循环/数据广播循环（Server updates loop）</strong></p>
 <ul>
 <li>物理循环：以相对较高的频率更新，主要是为了更新服务器的物理状态</li>
