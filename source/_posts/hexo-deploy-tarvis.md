@@ -1,5 +1,5 @@
 ---
-title: 使用 Hexo + Github Pages + Tarvis 自动部署个人博客
+title: 使用 Hexo + Github Pages + Travis 自动部署个人博客
 date: 2021-03-05 14:55:08
 tags:
 - hexo
@@ -43,8 +43,12 @@ $ npm install -g hexo-cli
 ```powershell
 $ hexo init <folder> # 初始化hexo结构
 $ cd <folder> # 移动到文件夹
-$ npm install # 下载依赖
+$ npm install # 下载必要依赖
 ```
+
+folder 指的是我们希望放置我们的 hexo 博客本体的文件夹位置，如果不存在，hexo 会根据给定的 folder 自动在该目录下创建，我一般命名为 hexo_blog
+
+npm install 会为我们下载并配置一个 hello_world 式使用一个默认主题的 hexo 项目，这使得我们的博客马上就可以投入使用，只需要再简单创建一篇文章即可
 
 完成后，尝试通过指令生成一篇文章
 
@@ -52,7 +56,7 @@ $ npm install # 下载依赖
 $ hexo new [layout] <title>
 ```
 
-[layout]可以不填，这时直接使用默认的 layout，仅需指定标题即可
+[layout]可以不填，这时直接使用默认的 layout（即post），仅需指定标题即可
 
 这时候我们就可以赶紧来看一下我们博客的效果：
 
@@ -101,7 +105,9 @@ hexo本质上来说就是一个，所以我们可以把这些文件分成两部�
 
 ### 使用Github Pages
 
-hexo为我们提供了快速方便的一键部署功能，只要设置好配置就能通过一条指令（`hexo deploy`）完成部署过程（相当于代替我们完成了 git push 的过程）
+**通过hexo配置一键部署**：hexo为我们提供了快速方便的一键部署功能，只要设置好配置就能通过一条指令（`hexo deploy`或`hexo d`）完成部署过程
+
+实际上，hexo d 就相当于代替我们完成了**将本地生成的静态网页 git push -force 上了我们 Pages 托管的 git 仓库**的过程。
 
 由于相当于使用 git 进行 push 操作，本地 git 需要有操作远程操作的权限（设置 SSH-key）。如果没有在本地配置过 SSH-key 则需要先进行 SSH-key 配置。SSH-key 的设置网上有很多教程，这里不再重复。
 
@@ -121,9 +127,20 @@ deploy:
 
 完成之后，在浏览器中输入 `username.github.io`应该就能看到和本地看到的效果一样的网页效果。
 
-### 使用 Tarvis CI 自动部署
+### 使用 Travis CI 自动部署
 
-~~马上就更~~
+到这里为止 hexo 的基本配置与操作已经完成。对于我现在的协作使用体验来说，使用 `hexo d` 一键配置相比 Travis  其实已经足够方便，使用 Tarvis CI 进行部署仅仅只是因为我个人想要从中学习体验一些 CI 过程。
+
+Travis CI 的部署过程 比起 `hexo d` ，相当于更进一步代替我们进行本地的 `hexo g` 的过程：我们这次将自己的 hexo 项目的**源代码**（不是静态页面）上传到 github 上，然后 Tarvis CI 会自动监测指定 github 仓库的变化，Tarvis CI 会为我们启动一个精简的云端Linux系统，根据部署配置文件（.travis.yml）和源代码，**然后 Tarvis CI 在云端的机器上进行 hexo 项目基本构建以及静态页面生成，然后帮我们再部署到 Pages 托管的仓库上。**
+
+所以也可以看得出来，相比云端监听并启动服务代替我们生成静态页面再传回 github pages 的仓库，其实本地的渲染和 git push 要明显更快一些。当然，理解 Travis 这个运作过程可以帮助我们理解一些自动化测试与部署的思想
+
+为了完成这个过程我们要进行这些步骤：
+
+1. 注册 Travis CI 账号，和自己的 github 账号关联，并开放存放hexo博客的仓库的权限
+2. 在自己的 hexo 项目下创建 _travis.yml 配置文件，并输入配置项
+3. 将自己的 hexo 项目本体上传到 github 上，注意和 Pages 托管的【保存静态页面文件】的仓库区分开（一般可以选择在同一个仓库下创建两个分支，一个分支存放源代码，一个分支存放静态页面
+4. 由于 Travis CI 运行结束后需要将静态页面 git push 到 Pages 托管的仓库，需要为 Travis CI 运行过程中提供 允许访问我们仓库的 token 
 
 ### 踩坑记录
 

@@ -1,11 +1,14 @@
 ---
-title: 转载：起源引擎中的多人游戏网络技术
-date: 2021-03-05 23:01:43
-categories: 编程思想
+title: 起源引擎中的多人游戏网络技术[翻译]
+date: 2020-12-03 23:01:43
+categories: 游戏服务端
 tags:
-- gaming server
+- 游戏服务端
+- 翻译
 ---
 
+> 原标题：Source Multiplayer Networking
+>
 > 原文链接：https://developer.valvesoftware.com/wiki/Source_Multiplayer_Networking
 >
 > 由机翻润化

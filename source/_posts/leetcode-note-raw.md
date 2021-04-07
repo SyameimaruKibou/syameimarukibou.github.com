@@ -1,10 +1,9 @@
 ---
-title: LeetCode刷题笔记（归档中）
-category:
-  - 编程笔记
+title: LeetCode刷题笔记（归档1）
 date: 2021-02-24 16:05:02
-categories:
+categories: 算法练习
 tags:
+- 算法
 ---
 
 
@@ -48,6 +47,8 @@ https://leetcode-cn.com/problems/multiply-strings/
 思路：
 
 和标准乘法处理方法（用其中一个数的每一位去乘另一乘数整体）基本一致，只是需要寻找两乘数的位数与结果位数的关系（ num1 的 i 位置数字与 num2 的 j 位数字影响 sum 的 i + j 和 i + j + 1 位）来优化算法  
+
+> 注意：
 
 ```java
 class Solution {
@@ -212,7 +213,7 @@ https://leetcode-cn.com/problems/maximum-subarray/
 
 **思路：**
 
-因为要求连续性，所以不能用贪心的方法（比如动态窗口）
+因为要求连续性，所以不能用贪心的方法（即区间最大不能满足整体最大）
 
 **动态规划**：需要认识到该问题的答案并不是动态规划后f(i)的值本身，而是所有f(i)的最大值，f(i)的最优决策为max( f(i-1)加上n[i]的值 ， 以n[i]独立作为一行新值 ），两个决策都可以保证f(i)的**连续性**。 
 
@@ -542,7 +543,7 @@ https://leetcode-cn.com/problems/combination-sum-ii/
 
 也就是说，存在这样一种情况：数组中重复的数与其他数字多次匹配，导致结果集出现重复结果。
 
-所以，我们需要两步操作：1.对原数组排序 2.在循环-回溯过程中，对于循环过程，若存在*`candidates[i]`* *= `candidiates[i-1]`* 的情况（即该位置数字与上一次循环位置数字相同），跳过该循环，从而也阻止了该重复数组继续向下回溯其他数字的情况。
+所以，我们需要两步操作：1.对原数组**排序** 2.在循环-回溯过程中，对于循环过程，若存在*`candidates[i]`* *= `candidiates[i-1]`* 的情况（即该位置数字与上一次循环位置数字相同），**跳过该循环**，从而也阻止了该重复数组继续向下回溯其他数字的情况。
 
 ```java
 class Solution {
@@ -601,7 +602,7 @@ https://leetcode-cn.com/problems/combination-sum-iii/
 
 与前一题基本类似，同样使用循环选择+回溯。若要阻止重复，由于可选数字中不重复，只要保证每次取数大于前一次取数就行（`for (int i = num_chosen; i < 10; i++)`）
 
-【注意】<u>”判断数字已经选择“的代码应该放在循环内的 continue 中而不是 for 语句中，放到 for 语句中会导致循环 break</u>
+>  <u>”判断数字已经选择“的代码应该放在循环内的 continue 中而不是 for 语句中，放到 for 语句中会导致循环 break</u>
 
 ```java
 import java.util.*;
@@ -737,7 +738,7 @@ class Solution {
             int[] count01 = countZerosOnes(str);
             // 由于当剩余0，1存量不满足str需求时无法+1，所以直接在循环处就判断。
             // 这里的0，1共同相当于0-1背包问题的容量资源
-            // 如果不倒序会导致重复计算问题，所以需要dao'xu
+            // 如果不倒序会导致重复计算问题，所以需要
             for(int zeros = m; zeros >= count01[0]; zeros--) {
                 for(int ones = n; ones >= count01[1]; ones--) {
                     dp[zeros][ones] = Math.max(1+dp[zeros-count01[0]][ones-count01[1]],dp[zeros][ones]);
@@ -757,6 +758,534 @@ class Solution {
                 ans[1]++;
         }
         return ans;
+    }
+}
+```
+
+### 79. 单词搜索
+
+题意：
+
+*给定一个二维网格和一个单词，找出该单词是否存在于网格中。*
+
+标签：
+
+#回溯
+
+思路：
+
+**回溯**（深度优先）
+
+> 写的时候小错误太多，注意事先做好大致规划
+
+```java
+// 改进点：
+// 用list保存当前为止与历史位置没必要，改为传参传递位置即可
+// 通过直接修改原数组来代替 visited数组
+class Solution {
+    int[] dx = {1,0,-1,0};
+    int[] dy = {0,1,0,-1};
+    int height;
+    int width;
+    // 全局
+    boolean flag = false;
+    List<int[]> list = new ArrayList<>();
+
+    public boolean exist(char[][] board, String word) {
+        char[] cword = word.toCharArray();
+        height = board.length;
+        width = board[0].length;
+        boolean[][] isListed = new boolean[height][width];
+        // 任一位置为出发点开始试探，保证从所有位置开始进行过搜索
+        for(int i = 0; i < height; i++) {
+            for(int j = 0; j < width; j++) {
+                if(board[i][j] == cword[0]) {
+                    list.add(new int[]{i,j});
+                    isListed[i][j] = true;
+                    backtrack(cword,isListed,board,1);
+                    isListed[i][j] = false;
+                    list.remove(list.size()-1);
+                }
+            }
+        }
+        return flag;
+    }
+
+    public void backtrack(char[] cword,boolean isListed[][],char[][] board,int p) {
+        if(p == cword.length) {
+            flag = true;
+            return;
+        }
+        if (flag == true) {
+            return;
+        }
+        int[] block = list.get(list.size()-1);
+        for(int j = 0; j < 4; j++) {
+            int addx = block[0] + dx[j];
+            int addy = block[1] + dy[j];
+            if (checkborder(addx,addy,height,width) && !isListed[addx][addy] && board[addx][addy] == cword[p]){
+                list.add(new int[]{addx,addy});
+                isListed[addx][addy] = true;
+                backtrack(cword,isListed,board,p+1);
+                isListed[addx][addy] = false;
+                list.remove(list.size()-1);
+            }
+        }
+    }
+
+    public static boolean checkborder(int x,int y,int h,int w) {
+        if(x >= h || y >= w)
+            return false;
+        if(x < 0 || y < 0)
+            return false;
+        return true;
+    }
+}
+```
+
+另外再提供一种更简洁的python做法
+
+```python
+def exist(self, g: List[List[str]], word: str) -> bool:
+    R, C = len(g), len(g[0])
+
+    def spread(i, j, w):
+        if not w:
+            return True
+        # 将遍历过的点覆盖，保证没法再次踏上该位置
+        original, g[i][j] = g[i][j], '-'
+        spreaded = False
+        for x, y in ((i-1, j), (i+1, j), (i, j-1), (i, j+1)):
+            if (0<=x<R and 0<=y<C and w[0]==g[x][y]
+                    and spread(x, y, w[1:])):
+                spreaded = True
+                break
+        g[i][j] = original
+        return spreaded
+
+    for i in range(R):
+        for j in range(C):
+            if g[i][j] == word[0] and spread(i, j, word[1:]):
+                return True
+    return False
+```
+
+### 解数独
+
+题意：
+
+*给定一个已分配初始值的9x9二维数独图，假设只有唯一解，返回该唯一解的数独图。*
+
+标签：
+
+#回溯
+
+思路：
+
+**dfs回溯**。将给定的图中留空的坐标保存为一个List，回溯时通过遍历该List试探可能的值。
+
+建立三个布尔数组row[][]，line[][]，block[][][]，分别表示某值是否在某个row[i]，line[i]，block[i][j]上出现过，根据该结果决定是否能填入某个值。和 N 皇后基本类似
+
+```java
+class Solution {
+    boolean[][] line = new boolean[9][9];   //y值是否在x列出现过
+    boolean[][] row = new boolean[9][9];    //y值是否在x行出现过
+    boolean[][][] block = new boolean[3][3][9];     //z值是否在位置为(x,y)的块中出现过
+    List<int[]> empty = new ArrayList<>();
+    boolean flag = false;
+    public void solveSudoku(char[][] board) {
+        // 初始化，记录棋盘信息
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if(board[i][j] == '.'){
+                    empty.add(new int[]{i,j});
+                } else {
+                    // int[9][9] 的数组下标实际上为 0~8
+                    // 实际值与位置均需要偏移1
+                    int digit = board[i][j] - '0' - 1;
+                    line[j][digit] = true;
+                    row[i][digit] = true;
+                    block[i/3][j/3][digit] = true;
+                }
+            }
+        }
+
+        backdfs(board,0);
+    }
+
+    public void backdfs(char[][] board,int pos) {
+        if (pos == empty.size()) {
+            flag = true;
+            return;
+        }
+
+        int[] space = empty.get(pos);
+        int x = space[0]; int y = space[1];
+        for (int digit = 0; digit < 9 && !flag; digit ++) {
+            if (!row[x][digit] && !line[y][digit] && !block[x/3][y/3][digit] ) {
+                row[x][digit] = line[y][digit] = block[x / 3][y / 3][digit] = true;
+                board[x][y] = (char) (digit + '0' + 1);
+                backdfs(board, pos + 1);
+                row[x][digit] = line[y][digit] = block[x / 3][y / 3][digit] = false;
+            }
+        }
+    }
+}
+```
+
+### 501.二叉搜索树的众数
+
+题干：
+
+*给定一个有相同值的二叉搜索树（BST），找出BST中的所有众数（以尽量小的空间开销）*
+
+标签：
+
+#二叉搜索树
+
+思路：
+
+不考虑空间：中序遍历扫描出序列结果，然后再一边扫描统计
+
+不使用额外空间，仅递归：因为 BST 中序遍历结果有序，可以通过三个变量（curr，cur_count，max）一次遍历就得出结果
+
+不递归，**Morris**：基本原理：**每次遍历一个节点时，将该节点的前驱节点右指针指向本节点**
+
+其他细节：
+
+1. 如果需要数组输出，可以先使用 **List** 保存结果集，最后统一转换即可
+
+2. 递归（先序遍历等）对**基本类型参数**的修改不正确，最好使用全局类变量
+
+```java
+//Morris 解法
+class Solution {
+    int base, count, maxCount;
+    List<Integer> answer = new ArrayList<Integer>();
+
+    public int[] findMode(TreeNode root) {
+        TreeNode cur = root, pre = null;
+        while (cur != null) {
+            // 当前节点无左子树，遍历该节点，之后移动到右子树
+            if (cur.left == null) {
+                update(cur.val);
+                cur = cur.right;
+                continue;
+            }
+            // 有左子树，设置pre指针搜索左子树前驱节点
+            pre = cur.left;
+            // 不断搜索pre指向节点的右节点，直到pre无右子树或者右节点指向自己为止
+            while (pre.right != null && pre.right != cur) {
+                pre = pre.right;
+            }
+            // 如果遍历到pre无右子树,说明前驱节点就是 pre
+            if (pre.right == null) {
+                pre.right = cur;
+                cur = cur.left;
+            } else {	//如果遍历到右子树指向自己
+                pre.right = null;
+                update(cur.val);
+                cur = cur.right;
+            }
+        }
+        int[] mode = new int[answer.size()];
+        for (int i = 0; i < answer.size(); ++i) {
+            mode[i] = answer.get(i);
+        }
+        return mode;
+    }
+
+    public void update(int x) {
+        if (x == base) {
+            ++count;
+        } else {
+            count = 1;
+            base = x;
+        }
+        if (count == maxCount) {
+            answer.add(base);
+        }
+        if (count > maxCount) {
+            maxCount = count;
+            answer.clear();
+            answer.add(base);
+        }
+    }
+}
+```
+
+### 235. 二叉搜索树的最近公共祖先
+
+题干：
+
+*给定一个二叉搜索树, 找到该树中两个指定节点的最近公共祖先。*
+
+标签：
+
+#二叉搜索树
+
+思路：
+
+基本思路都是根据二叉搜索树性质，从根节点开始根据指定节点信息向下搜索，直到获取到共同信息为止，有两次遍历和一次遍历两种方法
+
+两次遍历：通过两次遍历定位两个节点，并且记录经过的节点。显然，q与p的最近公共子节点就是它们路径上的分岔点，即最后一个相同的节点。所以只需找出最大的编号使其满足：path_p[i] = path_q[i] 即可
+
+**一次遍历**：从根节点向下遍历，如果遍历到的节点值第一次**处于q与p中间（此时q与p第一次处于两个子树）**，那么说明达到分岔点。
+
+```java
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        TreeNode ancestor = root;
+        while (ancestor != null) {
+            if (ancestor.val < p.val && ancestor.val < q.val) {
+                ancestor = ancestor.right;
+            }
+            else if (ancestor.val > p.val && ancestor.val > q.val ) {
+                ancestor = ancestor.left;
+            }
+            else {
+                break;
+            }
+        }
+        return ancestor;
+    }
+}
+```
+
+### J-42. 连续子数组最大和
+
+题意：
+
+*输入一个整型数组，数组中的一个或连续多个整数组成一个子数组。求所有子数组的和的最大值。要求时间复杂度为O(n*)。
+
+标签：
+
+#dp
+
+思路：
+
+注意不能直接用 dp[i] 代表“长度为i的数组的所有子数组和最大值”，信息量不够，而是应该代表**【以元素 nums[i] 为结尾的连续子数组的最大和】** ，最后的结果通过比较 dp[0] ~ dp[n] 得出
+
+dp[i] 可以从 dp[i-1] 过渡而来，dp[i] 可以选择保留 dp[i-1] 或者不保留，即 dp[i] = nums[i] (dp[i-1] <= 0) 或 dp[i-1] + nums[i] (dp[i-1] >= 0)
+
+```java
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int n = nums.length;
+        int[] dp = new int[n];
+        dp[0] = nums[0];
+        int max = dp[0];
+        for (int i = 1; i < n; i++) {
+            dp[i] = dp[i-1] <= 0 ? nums[i] : dp[i-1] + nums[i];
+            max = Math.max(dp[i],max);
+        }
+        return max;
+    }
+}
+```
+
+### 198. 打家劫舍
+
+https://leetcode-cn.com/problems/house-robber
+
+题意：
+
+*你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。给定一个代表每个房屋存放金额的非负整数数组，计算你 不触动警报装置的情况下 ，一夜之内能够偷窃到的最高金额。*
+
+思路：
+
+典型的 0-1 线性的动态规划问题。
+
+对于某个 dp[i]，如果选择了上一个房子就不能选本房子的现金（nums[i]），所以递归公式为：**dp[i]=max(nums[i] + dp[i−2], dp[i−1])**
+
+```java
+public int rob(int[] nums) {
+    int n = nums.length;
+  
+    // 处理当数组为空或者数组只有一个元素的情况
+    if(n == 0) return 0;
+    if(n == 1) return nums[0];
+
+    // 定义一个 dp 数组，dp[i] 表示到第 i 个元素为止我们所能收获到的最大总数
+    int[] dp = new int[n];
+
+    // 初始化 dp[0]，dp[1]
+    dp[0] = nums[0];
+    dp[1] = Math.max(nums[0], nums[1]);
+
+    // 对于每个 nums[i]，考虑两种情况，选还是不选，然后取最大值
+    for (int i = 2; i < n; i++) {
+        dp[i] = Math.max(nums[i] + dp[i - 2], dp[i - 1]);
+    }
+  
+    return dp[n - 1];
+}
+```
+
+### 516. 最长回文子序列
+
+```java
+public static int LPS(String s) {
+    int n = s.length();
+    // 定义 dp 矩阵，dp[i][j] 表示从字符串第 i 个字符到第 j 个字符之间的最长回文
+    int[][] dp = new int[n][n];
+  
+    // 初始化 dp 矩阵，将对角线元素设为 1，即单个字符的回文长度为 1
+    for (int i = 0; i < n; i++) dp[i][i] = 1;
+    
+    // 从长度为 2 开始，尝试将区间扩大，一直扩大到 n
+    for (int len = 2; len <= n; len++) {
+        // 在扩大的过程中，每次都得出区间的其实位置i和结束位置j
+        for (int i = 0; i < n - len + 1; i++) {
+            int j = i + len - 1;
+      
+            // 比较一下区间首尾的字符是否相等，如果相等，就加2；如果不等，从规模更小的字符串中得出最长的回文长度
+            if (s.charAt(i) == s.charAt(j)) {
+                dp[i][j] = 2 + (len == 2 ? 0: dp[i + 1][j - 1]);
+              } else {
+                dp[i][j] = Math.max(dp[i + 1][j], dp[i][j - 1]);
+              }
+        }
+    }
+    return dp[0][n-1];
+}
+```
+
+### 678.有效的括号字符串
+
+题干：
+
+*给定一个只包含三种字符的字符串：`（ `，`）`和`\`，写一个函数来检验这个字符串是否能够组成合法括号组（其中* `*` *可以被视为（，）或空字符串）*
+
+分析：
+
+在原本没有 * 的情况下，在一个从左到右遍历该字符串的过程中，我们会有这样的判断：
+
+- 如果该遍历点（出现的数量大于）的数量，那么可以期待后面出现）来抵消（
+- 如果该遍历点）出现的数量大于（的数量，那么显然这个字符串已经不合法
+
+由此，可以引入一个平衡值的概念，（增加该平衡值，）减少该平衡值，那么对于*，其对平衡值的影响是一段范围，那么就将平衡值设置为一段**范围[low,high]**，则平衡值的改变规则为：
+
+- 遇到左括号：lo++, hi++
+- 遇到星号：lo--, hi++（因为星号有三种情况）
+- 遇到右括号：lo--, hi--
+
+根据之前的合法判断分析，给出两个新的合法判断规则：
+
+- 过程中不能出现 hi < 0，否则（存在无法匹配的右括号）不合法
+- 结果不能出现 lo > 0，否则（有多余的左括号）不合法
+
+```python
+class Solution:
+    def checkValidString(self, s: str) -> bool:
+        lo=0
+        hi=0
+        for c in s:
+            if c=='(':
+                lo+=1
+                hi+=1
+            elif c=='*':
+                if lo>0:lo-=1
+                hi+=1
+            else:
+                if lo>0:lo-=1
+                hi-=1
+            if hi<0:
+                return False
+        return lo==0
+```
+
+
+
+### LRU 实现算法
+
+```java
+public class LRUCache {
+        // 一个 HashMap 作为实际键值存储
+        private HashMap<Integer, Integer> cacheMap = new HashMap<>();
+        // 一个双端队列作为 lru 队列，保存的内容是按访问频度排序的 key
+        private LinkedList<Integer> recentlyList = new LinkedList<>();
+        private int capacity;
+
+        public LRUCache(int capacity) {
+            this.capacity = capacity;
+        }
+
+        public int get(int key) {
+            if (!cacheMap.containsKey(key)) {
+                return -1;
+            }
+            // 从双端lru队列移除所访问的 key，然后再加入，使得其位于队列最新位置
+            recentlyList.remove((Integer) key);
+            recentlyList.add(key);
+            return cacheMap.get(key);
+        }
+
+        public void put(int key, int value) {
+            if (cacheMap.containsKey(key)) {
+                // 和 get 类似，如果包含key，先将访问到的元素移出
+                recentlyList.remove((Integer) key);
+            } else if (cacheMap.size() == capacity) {
+                // 如果 put 了新值同时 cache 又满了
+                // 从双端lru队列移除最末尾的 key ，并且还要根据这个 key 去向存储中移除指定存储
+                cacheMap.remove(recentlyList.removeFirst());
+            }
+            // 将移出的访问元素再加入lru队列
+            // 向存储中放入给定的键值
+            recentlyList.add(key);
+            cacheMap.put(key, value);
+        }
+    }
+```
+
+### 第k大个数
+
+```java
+// 用快排的方式寻找第K大个数
+
+public class FindKthNumber {
+    public int findKthLargest(int[] nums, int k) {
+        return sort(nums, 0, nums.length-1, k);
+    }
+    private int sort (int[] nums,int l, int r, int k) {
+        // 每次分割标准从 nums[l] 开始
+        int base = nums[l];
+        int left = l;
+        int right = r;
+        while (left < right) {
+            // 从右出发遍历到第一个不满足大于 base 的值
+            while (left < right && nums[right] > base) {
+                right--;
+            }
+            // 和left指针交换，同时left前进一位，从left开始找
+            if (left < right) {
+                swap(nums,left,right);
+                left++;
+            }
+            while (left < right && nums[left] < base) {
+                left++;
+            }
+            if (left < right) {
+                swap(nums,left,right);
+                right--;
+            }
+        }
+        // 排序完成之后 left/right 刚好是第 rank 大个数
+        int rank = nums.length - left;
+        // 如果满足直接返回，不满足则根据 k 和 rank 大小关系选择前序列或后序列
+        if (rank == k) {
+            return nums[left];
+        } else if (rank < k) {
+            return sort(nums, l, left - 1, k);
+        } else {
+            return sort(nums, left, right, k);
+        }
+    }
+
+    private void swap(int[] nums,int left,int right) {
+        int temp = nums[left];
+        nums[left] = nums[right];
+        nums[right] = temp;
     }
 }
 ```
