@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.png">
+  <title>Kibou's blog</title>
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn-city.livere.com/js/embed.dist.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+  
+  
+  <link href="/js/lib/prism/prism-tomorrow.min.css" rel="stylesheet" data-prism="prism-tomorrow">
+  
+  
+  
+<link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.png">
+      
+      <span class="navbar-logo-dsc">Kibou's blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">首页 </a>
+    
+    <a href="/archives" class="navbar-menu-item">归档 </a>
+    
+    <a href="/tags" class="navbar-menu-item">标签 </a>
+    
+    <a href="/categories" class="navbar-menu-item">分类 </a>
+    
+    <a href="/about" class="navbar-menu-item">关于 </a>
+    
+    <a href="/links" class="navbar-menu-item">友链 </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+  </div>
+</nav>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      Java NIO 与 netty 浅析
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2021-04-01T01:53:06.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2021-04-01</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/Java/" class="post-meta-link">Java</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.1k 字</span>
+    
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/NIO/" class="post-meta-link">NIO</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/netty/" class="post-meta-link">netty</a>
+      
+    </div>
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <h2 id="Java-NIO"><a href="#Java-NIO" class="headerlink" title="Java NIO"></a>Java NIO</h2><h3 id="基本"><a href="#基本" class="headerlink" title="基本"></a>基本</h3><p>NIO（Non-blocking I/O，在Java领域，也称为New I/O），是一种<strong>同步非阻塞</strong>的I/O模型，也是I/O多路复用的基础，已经被越来越多地应用到大型应用服务器，成为解决高并发与大量连接、I/O处理问题的有效方式。</p>
+<p>于JDK1.4 引入，并且已经基于nio重新实现了旧的I/O包，即使不显式用nio编写代码，nio也已经在旧io中发挥了作用</p>
+<p>其速度的提高是因为nio的结构更适用于操作系统执行I/O的方式：<strong>通道(Channel)</strong> 、<strong>缓冲器(Buffer)**、</strong>多路复用选择器(Selector)**，分别负责传输和存储。</p>
+<p>我们只能与Buffer交互，Channel要么从Buffer获得数据，要么向Buffer发送数据。Selector则是提供一种<strong>单线程非阻塞</strong>的处理<strong>多个连接</strong>的手段（多用于网络）</p>
+<p>Java NIO 将 NIO 抽象为 Channel ，Channel 又可以分为 FileChannel 和 SocketChannel，分别用于文件io和网络io</p>
+<h3 id="非阻塞模型的产生原因和机制"><a href="#非阻塞模型的产生原因和机制" class="headerlink" title="非阻塞模型的产生原因和机制"></a>非阻塞模型的产生原因和机制</h3><p><strong>为什么需要非阻塞模型？为什么NIO可以被称为非阻塞模型？</strong></p>
+<p><strong>非阻塞</strong>的核心主要体现在服务器处理请求的过程上，对此我们可以先观察一下传统的同步阻塞I/O（即BIO）的服务器处理方式：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token punctuation">&#123;</span>
+    <span class="token comment">//线程池</span>
+ 	<span class="token class-name">ExecutorService</span> executor <span class="token operator">=</span> <span class="token class-name">Excutors</span><span class="token punctuation">.</span><span class="token function">newFixedThreadPollExecutor</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 	<span class="token class-name">ServerSocket</span> serverSocket <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ServerSocket</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 	serverSocket<span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span><span class="token number">8088</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 	<span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token class-name">Thread</span><span class="token punctuation">.</span>currentThread<span class="token punctuation">.</span><span class="token function">isInturrupted</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token comment">//主线程死循环等待新连接到来</span>
+ 		<span class="token class-name">Socket</span> socket <span class="token operator">=</span> serverSocket<span class="token punctuation">.</span><span class="token function">accept</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 		executor<span class="token punctuation">.</span><span class="token function">submit</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ConnectIOnHandler</span><span class="token punctuation">(</span>socket<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//为新的连接创建新的线程</span>
+ 	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">ConnectIOnHandler</span> <span class="token keyword">extends</span> <span class="token class-name">Thread</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">private</span> <span class="token class-name">Socket</span> socket<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token class-name">ConnectIOnHandler</span><span class="token punctuation">(</span><span class="token class-name">Socket</span> socket<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+       <span class="token keyword">this</span><span class="token punctuation">.</span>socket <span class="token operator">=</span> socket<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+      <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token class-name">Thread</span><span class="token punctuation">.</span>currentThread<span class="token punctuation">.</span><span class="token function">isInturrupted</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&amp;&amp;</span><span class="token operator">!</span>socket<span class="token punctuation">.</span><span class="token function">isClosed</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+          <span class="token comment">// 死循环处理读写事件</span>
+          <span class="token class-name">String</span> someThing <span class="token operator">=</span> socket<span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token comment">//读取数据</span>
+          <span class="token keyword">if</span><span class="token punctuation">(</span>someThing<span class="token operator">!=</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+             <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token comment">//处理数据</span>
+             socket<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token comment">//写数据</span>
+          <span class="token punctuation">&#125;</span>
+
+      <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>可以看出这是一个典型的一个连接对应一个线程的I/O模式，socket.accept()、socket.read()、socket.write() 全部都是阻塞操作。优点是每个连接专注自己的I/O，模型简单，不需要过多考虑系统过载等问题</p>
+<p>多线程的处理可以使得系统CPU不会因为单个连接的阻塞停止正常运作</p>
+<p>缺点是：1. 线程上下文切换，创建和销毁成本，以及线程本身资源占用消耗较高。2. 每个连接内部花在fd阻塞上的时间远远大于CPU实际操作时间，存在资源的浪费</p>
+<p>BIO最大的问题就是：<strong>函数发起I/O请求的时间点无法得知目标连接（fd）是否处于可读写状态，所以请求函数只能阻塞操作一直到端口变化为止</strong>。这导致一个线程只能管理一个连接的I/O</p>
+<p>而NIO的<strong>读写函数可以立即返回，如果这个连接不能读写也可以立刻返回告知“这个连接不能读写”的信息码（如0）</strong>，这个特性即被我们称为<strong>非阻塞</strong>（这个特性在 FileChannel 读写上不可用）</p>
+<p>NIO的非阻塞机制为我们后续实现真正的单线程非阻塞的I/O复用的服务器运行方式提供了<strong>基础</strong>，为了真正实现<strong>单线程处理多连接</strong>的目标，需要我们结合多路复用I/O模型（或其他模型），即通过<strong>事件分发器（event dispatcher）</strong>将多个连接（fd）管理在一起，统一管理这些fd的读写事件并且转发给相应的逻辑代码处理程序进行I/O处理。在JAVA NIO中，<strong>这个事件分发器就是 Selector 类</strong></p>
+<p>涉及到事件分发器的两种模式称为：<strong>Reactor</strong> 和 <strong>Proactor</strong>。 Reactor模式是基于同步I/O的，而Proactor模式是和异步I/O相关的</p>
+<h3 id="Selector-类和操作系统底层-I-O-模型"><a href="#Selector-类和操作系统底层-I-O-模型" class="headerlink" title="Selector 类和操作系统底层 I/O 模型"></a>Selector 类和操作系统底层 I/O 模型</h3><p>Selector 最关键的部分就是调用 Selector.select() 阻塞方法时，最终如何实现获得就绪事件集的方式。</p>
+<p>在 Java 中，通过调用 Selector.open() 获得 Selector 对象，这个过程会先通过 SelectorProvider 类找到系统对应的 SelectorProvider 实现类（比如Linux系统将返回sun.nio.ch.EPollSelectorProvider 类），每个对应系统的Provider会提供对应的 SelectorImpl 实现类。最终调用 select() 时，会委托给各个实现的 doSelect() 方法，doSelect() 方法中，将会调用各个 OS 对应的底层实现（select，epoll，poll 等）</p>
+<h3 id="NIO的文件读写基本操作过程"><a href="#NIO的文件读写基本操作过程" class="headerlink" title="NIO的文件读写基本操作过程"></a>NIO的文件读写基本操作过程</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 文件写</span>
+
+<span class="token comment">// 1. 从FileStream 获得一个 Channel</span>
+<span class="token class-name">FileChannel</span> fc <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FileOutputStream</span><span class="token punctuation">(</span><span class="token string">"data.txt"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getChannel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 2. 显式调用 allocate() 方法分配 ByteBuffer 的存储空间，可以通过 allocateDirect() 分配更快的堆外内存</span>
+<span class="token class-name">ByteBuffer</span> buff <span class="token operator">=</span> <span class="token class-name">ByteBuffer</span><span class="token punctuation">.</span><span class="token function">allocate</span><span class="token punctuation">(</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 3. 向 buffer 写入数据（包括编码格式）</span>
+buff<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"Some Text"</span><span class="token punctuation">.</span><span class="token function">getBytes</span><span class="token punctuation">(</span><span class="token class-name">StandardCharsets</span><span class="token punctuation">.</span>UTF_8<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment">// 4. 让 ByteBuffer 做好向 Channel 写入数据的准备(position = 0)</span>
+buff<span class="token punctuation">.</span><span class="token function">flip</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 5. 使用ByteBuffer写入Channel</span>
+fc<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span>buff<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 6. 关闭 Channel</span>
+fc<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 文件读</span>
+
+<span class="token comment">// 1. 从FileStream 获得一个 Channel</span>
+<span class="token class-name">FileChannel</span> fc <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FileInputStream</span><span class="token punctuation">(</span><span class="token string">"data.txt"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getChannel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 2. 显式调用 allocate() 方法分配 ByteBuffer 的存储空间，可以通过 allocateDirect() 分配更快的堆外内存</span>
+<span class="token class-name">ByteBuffer</span> buff <span class="token operator">=</span> <span class="token class-name">ByteBuffer</span><span class="token punctuation">.</span><span class="token function">allocate</span><span class="token punctuation">(</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 3. 告知 Channel 向 ByteBuffer 存储字节</span>
+fc<span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span>buff<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 4. 让 ByteBuffer 做好被读取数据的准备(position = 0)</span>
+buff<span class="token punctuation">.</span><span class="token function">flip</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 5. 循环输出 ByteBuffer 中的结果（其中还涉及到格式转换/解码过程）</span>
+<span class="token keyword">while</span><span class="token punctuation">(</span>buff<span class="token punctuation">.</span><span class="token function">hasRemaining</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token punctuation">)</span>buff<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="分配-ByteBuffer-的三种方式"><a href="#分配-ByteBuffer-的三种方式" class="headerlink" title="分配 ByteBuffer 的三种方式"></a>分配 ByteBuffer 的三种方式</h3><p><strong>mmap（内存映射），allocateDirect（直接内存）</strong>，allocate（堆内内存）</p>
+<p>mmap 构造时将绑定一个 fd，使得读写数据时不需要再经过<strong>内核空间到用户空间的copy交换</strong>，两个空间将映射到同一个内存上</p>
+<p>读写速度上 mmap -&gt; allocateDirect -&gt; allocate</p>
+<h2 id="Netty"><a href="#Netty" class="headerlink" title="Netty"></a>Netty</h2><h3 id="关键组件"><a href="#关键组件" class="headerlink" title="关键组件"></a>关键组件</h3><h4 id="BootStrap、ServerBootstrap"><a href="#BootStrap、ServerBootstrap" class="headerlink" title="BootStrap、ServerBootstrap"></a>BootStrap、ServerBootstrap</h4><p>作用是引导和配置一个 Netty 应用，<strong>串联各个组件</strong></p>
+<h4 id="Future、ChannelFuture"><a href="#Future、ChannelFuture" class="headerlink" title="Future、ChannelFuture"></a>Future、ChannelFuture</h4><p>用于保存异步处理结果，它们可以<strong>注册一个监听</strong>，当操作失败或成功时会自动触发注册的监听事件</p>
+<h4 id="Channel"><a href="#Channel" class="headerlink" title="Channel"></a>Channel</h4><p>Netty 网络通信的组件，用于<strong>执行网络 I/O 操作</strong></p>
+<p>可以通过 Channel 获得当前网络连接的通道状态，配置参数等。</p>
+<p>对于异步网络调用将立即返回一个 ChannelFuture 实例，通过在 ChannelFuture 上注册监听器，可以在 I/O 操作有回应时通知调用者</p>
+<p>可以有不同协议和不同阻塞类型的 Channel（TCP、UDP等）</p>
+<h4 id="Selector"><a href="#Selector" class="headerlink" title="Selector"></a>Selector</h4><p>Netty 基于 Selector 对象实现 I/O 多路复用，通过 Selector，<strong>一个线程可以监听多个连接的 Channel 事件。</strong></p>
+<p>向一个 Selector 中注册若干个 Channel，Selector 内部机制就可以不断查询（select）注册的 Channel 中是否含有已经就绪的 I/O 事件（可读写，网络事件完成等），使得程序可以简单地使用一个线程高效管理多个 Channel</p>
+<p>同时，对 selector 中的 selectedKey 集合进行了替换，替换为了自己实现的 set 集合，效率更高</p>
+<h4 id="ChannelHandler及其实现类"><a href="#ChannelHandler及其实现类" class="headerlink" title="ChannelHandler及其实现类"></a>ChannelHandler及其实现类</h4><p>一个接口，<strong>用于处理 I/O 事件或者拦截 I/O 操作，并将其转发到 ChannelPipeline (业务处理链) 中的下一个处理程序</strong></p>
+<p>由于接口包括的方法太多，经常使用其他实现类（处理<strong>入站I/O</strong>：<code>ChannelInboundHandler</code>，处理<strong>出站I/O</strong>：<code>ChannelOutboundHandler</code>），通常是自行定义一个 Handler 类去继承 ChannelInboundHandlerAdapter，需要自行实现各种方法来实现业务逻辑</p>
+<p>方法实现通常包括 通道注册事件、通道取消注册事件、通道就绪事件、通道读取数据事件、通道数据读取完毕事件、通道异常事件等</p>
+<h4 id="Pipeline、ChannelPipeline"><a href="#Pipeline、ChannelPipeline" class="headerlink" title="Pipeline、ChannelPipeline"></a>Pipeline、ChannelPipeline</h4><p>是一个由 Handler 组成的 List，负责处理和拦截 inbound 或者 outbound 的事件和操作，相当于一个贯穿 Netty 的链</p>
+<p>每个 Channel 有且仅有一个 ChannelPipeLine 对应</p>
+<p>入站事件和出站事件在一个双向链表中，入站事件会从链表 <strong>head 往后传递</strong>到最后一个入站的 handler，出站事件会从链表 <strong>tail 往前传递</strong>到最前一个出站的 handler，两种类型的 handler 互不干扰</p>
+<h4 id="EventLoopGroup、NioEventLoopGroup"><a href="#EventLoopGroup、NioEventLoopGroup" class="headerlink" title="EventLoopGroup、NioEventLoopGroup"></a>EventLoopGroup、NioEventLoopGroup</h4><p>用于更好地利用多核 CPU 资源，实现 Reactor 模型。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/syameimarukibou/imagebox/img/image-20210404193227509.png" alt="image-20210404193227509" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/syameimarukibou/imagebox/img/image-20210404193227509.png" class="lozad post-image"></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">EventLoopGroup</span> bossGroup <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">NioEventLoopGroup</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">EventLoopGroup</span> workerGroup <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">NioEventLoopGroup</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">ServerBootstrap</span> b <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ServerBootstrap</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+b<span class="token punctuation">.</span><span class="token function">group</span><span class="token punctuation">(</span>bossGroup<span class="token punctuation">,</span> workerGroup<span class="token punctuation">)</span>
+ <span class="token punctuation">.</span><span class="token function">channel</span><span class="token punctuation">(</span><span class="token class-name">NioServerSocketChannel</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+ <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>bossGroup 中只有一个线程, 而 workerGroup 中的线程是 CPU 核心数乘以2, 因此对应的到 Reactor 线程模型中, 我们知道, 这样设置的 NioEventLoopGroup 其实就是 Reactor 多线程模型。</p>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://syameimarukibou.github.io/about">Kibou</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://syameimarukibou.github.io/2021/04/01/deep-into-nio-and-netty/">https://syameimarukibou.github.io/2021/04/01/deep-into-nio-and-netty/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  
+  <div class="nav-item-next">
+    <a href="/2021/03/14/useful-websites/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">实用网站与应用分享（一） </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="lv-container" data-id="city" data-uid="MTAyMC81Mjg5OS8yOTM3Ng==">
+    <script>
+      (function (d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') {
+          return;
+        }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.defer = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  </div>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java-NIO"><span class="toc-text">Java NIO</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC"><span class="toc-text">基本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E9%98%BB%E5%A1%9E%E6%A8%A1%E5%9E%8B%E7%9A%84%E4%BA%A7%E7%94%9F%E5%8E%9F%E5%9B%A0%E5%92%8C%E6%9C%BA%E5%88%B6"><span class="toc-text">非阻塞模型的产生原因和机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Selector-%E7%B1%BB%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82-I-O-%E6%A8%A1%E5%9E%8B"><span class="toc-text">Selector 类和操作系统底层 I&#x2F;O 模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NIO%E7%9A%84%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E8%BF%87%E7%A8%8B"><span class="toc-text">NIO的文件读写基本操作过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E9%85%8D-ByteBuffer-%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="toc-text">分配 ByteBuffer 的三种方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Netty"><span class="toc-text">Netty</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E7%BB%84%E4%BB%B6"><span class="toc-text">关键组件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#BootStrap%E3%80%81ServerBootstrap"><span class="toc-text">BootStrap、ServerBootstrap</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Future%E3%80%81ChannelFuture"><span class="toc-text">Future、ChannelFuture</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Channel"><span class="toc-text">Channel</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Selector"><span class="toc-text">Selector</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ChannelHandler%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0%E7%B1%BB"><span class="toc-text">ChannelHandler及其实现类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Pipeline%E3%80%81ChannelPipeline"><span class="toc-text">Pipeline、ChannelPipeline</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#EventLoopGroup%E3%80%81NioEventLoopGroup"><span class="toc-text">EventLoopGroup、NioEventLoopGroup</span></a></li></ol></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/author_icon.png" class="author-img">
+
+<p class="author-name">Kibou</p>
+<p class="author-description">因为相信而竭尽全力的普通人 <p class="author-description"><a href="/about">关于我</a></p></p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>11</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>9</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>16</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java-NIO"><span class="toc-text">Java NIO</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC"><span class="toc-text">基本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E9%98%BB%E5%A1%9E%E6%A8%A1%E5%9E%8B%E7%9A%84%E4%BA%A7%E7%94%9F%E5%8E%9F%E5%9B%A0%E5%92%8C%E6%9C%BA%E5%88%B6"><span class="toc-text">非阻塞模型的产生原因和机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Selector-%E7%B1%BB%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82-I-O-%E6%A8%A1%E5%9E%8B"><span class="toc-text">Selector 类和操作系统底层 I&#x2F;O 模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NIO%E7%9A%84%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E8%BF%87%E7%A8%8B"><span class="toc-text">NIO的文件读写基本操作过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E9%85%8D-ByteBuffer-%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="toc-text">分配 ByteBuffer 的三种方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Netty"><span class="toc-text">Netty</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E7%BB%84%E4%BB%B6"><span class="toc-text">关键组件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#BootStrap%E3%80%81ServerBootstrap"><span class="toc-text">BootStrap、ServerBootstrap</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Future%E3%80%81ChannelFuture"><span class="toc-text">Future、ChannelFuture</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Channel"><span class="toc-text">Channel</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Selector"><span class="toc-text">Selector</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ChannelHandler%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0%E7%B1%BB"><span class="toc-text">ChannelHandler及其实现类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Pipeline%E3%80%81ChannelPipeline"><span class="toc-text">Pipeline、ChannelPipeline</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#EventLoopGroup%E3%80%81NioEventLoopGroup"><span class="toc-text">EventLoopGroup、NioEventLoopGroup</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/算法练习">
+        <div class="categories-list-item">
+          算法练习
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/实用工具">
+        <div class="categories-list-item">
+          实用工具
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C++">
+        <div class="categories-list-item">
+          C++
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/面试经验">
+        <div class="categories-list-item">
+          面试经验
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/MySQL">
+        <div class="categories-list-item">
+          MySQL
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Redis">
+        <div class="categories-list-item">
+          Redis
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/游戏服务端">
+        <div class="categories-list-item">
+          游戏服务端
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/实践">
+        <div class="categories-list-item">
+          实践
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\hexo" title="hexo"><div class="tags-list-item">hexo</div></a>
+    
+    <a href="\tags\CI/CD" title="CI/CD"><div class="tags-list-item">CI/CD</div></a>
+    
+    <a href="\tags\实用工具" title="实用工具"><div class="tags-list-item">实用工具</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\读书笔记" title="读书笔记"><div class="tags-list-item">读书笔记</div></a>
+    
+    <a href="\tags\C++" title="C++"><div class="tags-list-item">C++</div></a>
+    
+    <a href="\tags\编程思想" title="编程思想"><div class="tags-list-item">编程思想</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\MySQL" title="MySQL"><div class="tags-list-item">MySQL</div></a>
+    
+    <a href="\tags\Redis" title="Redis"><div class="tags-list-item">Redis</div></a>
+    
+    <a href="\tags\InnoDB" title="InnoDB"><div class="tags-list-item">InnoDB</div></a>
+    
+    <a href="\tags\游戏服务端" title="游戏服务端"><div class="tags-list-item">游戏服务端</div></a>
+    
+    <a href="\tags\翻译" title="翻译"><div class="tags-list-item">翻译</div></a>
+    
+    <a href="\tags\NIO" title="NIO"><div class="tags-list-item">NIO</div></a>
+    
+    <a href="\tags\netty" title="netty"><div class="tags-list-item">netty</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java-NIO"><span class="toc-text">Java NIO</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC"><span class="toc-text">基本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E9%98%BB%E5%A1%9E%E6%A8%A1%E5%9E%8B%E7%9A%84%E4%BA%A7%E7%94%9F%E5%8E%9F%E5%9B%A0%E5%92%8C%E6%9C%BA%E5%88%B6"><span class="toc-text">非阻塞模型的产生原因和机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Selector-%E7%B1%BB%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82-I-O-%E6%A8%A1%E5%9E%8B"><span class="toc-text">Selector 类和操作系统底层 I&#x2F;O 模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NIO%E7%9A%84%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E8%BF%87%E7%A8%8B"><span class="toc-text">NIO的文件读写基本操作过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E9%85%8D-ByteBuffer-%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="toc-text">分配 ByteBuffer 的三种方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Netty"><span class="toc-text">Netty</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E7%BB%84%E4%BB%B6"><span class="toc-text">关键组件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#BootStrap%E3%80%81ServerBootstrap"><span class="toc-text">BootStrap、ServerBootstrap</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Future%E3%80%81ChannelFuture"><span class="toc-text">Future、ChannelFuture</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Channel"><span class="toc-text">Channel</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Selector"><span class="toc-text">Selector</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ChannelHandler%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0%E7%B1%BB"><span class="toc-text">ChannelHandler及其实现类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Pipeline%E3%80%81ChannelPipeline"><span class="toc-text">Pipeline、ChannelPipeline</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#EventLoopGroup%E3%80%81NioEventLoopGroup"><span class="toc-text">EventLoopGroup、NioEventLoopGroup</span></a></li></ol></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-04-01</div>
+        <a href="/2021/04/01/deep-into-nio-and-netty/"><div class="recent-posts-item-content">Java NIO 与 netty 浅析</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-03-14</div>
+        <a href="/2021/03/14/useful-websites/"><div class="recent-posts-item-content">实用网站与应用分享（一）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-03-14</div>
+        <a href="/2021/03/14/interview-points/"><div class="recent-posts-item-content">Java/后端方向 面试常见知识点整理（未完成）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-03-05</div>
+        <a href="/2021/03/05/hexo-deploy-tarvis/"><div class="recent-posts-item-content">使用 Hexo + Github Pages + Travis 自动部署个人博客</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2021
+        </span>
+        <a href="/" class="footer-link">Kibou's blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+
+  
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
+
+</html>
