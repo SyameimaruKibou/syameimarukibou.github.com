@@ -239,11 +239,11 @@ $ hexo server <span class="token comment"># 或简写 hexo s，用于启动本�
 <p>实际上，hexo d 就相当于代替我们完成了<strong>将本地生成的静态网页 git push -force 上了我们 Pages 托管的 git 仓库</strong>的过程。</p>
 <p>由于相当于使用 git 进行 push 操作，本地 git 需要有操作远程操作的权限（设置 SSH-key）。如果没有在本地配置过 SSH-key 则需要先进行 SSH-key 配置。SSH-key 的设置网上有很多教程，这里不再重复。</p>
 <p>设置好后，在 hexo 项目下的 _config.yml 修改 deploy 项配置即可，如下：</p>
-<pre class="line-numbers language-yml" data-language="yml"><code class="language-yml">deploy:
-  type: git
-  repo: &lt;repository url&gt; #git@github.com:SyameimaruKibou&#x2F;syameimarukibou.github.io
-  branch: [branch]	#master
-  message: [message]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-yml" data-language="yml"><code class="language-yml"><span class="token key atrule">deploy</span><span class="token punctuation">:</span>
+  <span class="token key atrule">type</span><span class="token punctuation">:</span> git
+  <span class="token key atrule">repo</span><span class="token punctuation">:</span> &lt;repository url<span class="token punctuation">></span> <span class="token comment">#git@github.com:SyameimaruKibou/syameimarukibou.github.io</span>
+  <span class="token key atrule">branch</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>branch<span class="token punctuation">]</span>	<span class="token comment">#master</span>
+  <span class="token key atrule">message</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>message<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
 <p>注意 repo 与 branch：由于我们通过 SSH-key 进行鉴权，所以 repo url 应该输入 ssh 形式的 url 而不是https形式的url（https需要每次输入账户密码）；对于branch，Pages 默认解析 username.github.io 下的 master 分支，那么要注意 branch 的选择，一般填 master， 而 hexo 对 github 默认值为 gh-pages</p>
 </blockquote>
@@ -295,11 +295,11 @@ $ hexo server <span class="token comment"># 或简写 hexo s，用于启动本�
   
   
   <div class="nav-item-next">
-    <a href="/2021/02/24/leetcode-note-raw/" class="nav-link">
+    <a href="/2021/02/24/leetcode-note-raw-2/" class="nav-link">
       <div>
         <div class="nav-label">下一篇</div>
         
-        <div class="nav-title">LeetCode刷题笔记（归档1） </div>
+        <div class="nav-title">LeetCode刷题笔记（归档2） </div>
         
       </div>
       <i class="iconfont icon-right nav-next-icon"></i>
@@ -380,13 +380,6 @@ $ hexo server <span class="token comment"># 或简写 hexo s，用于启动本�
         </div>
       </a>
     
-      <a href="/categories/实用工具">
-        <div class="categories-list-item">
-          实用工具
-          <span class="categories-list-item-badge">1</span>
-        </div>
-      </a>
-    
       <a href="/categories/Java">
         <div class="categories-list-item">
           Java
@@ -401,23 +394,16 @@ $ hexo server <span class="token comment"># 或简写 hexo s，用于启动本�
         </div>
       </a>
     
+      <a href="/categories/实践">
+        <div class="categories-list-item">
+          实践
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
       <a href="/categories/面试经验">
         <div class="categories-list-item">
           面试经验
-          <span class="categories-list-item-badge">1</span>
-        </div>
-      </a>
-    
-      <a href="/categories/MySQL">
-        <div class="categories-list-item">
-          MySQL
-          <span class="categories-list-item-badge">1</span>
-        </div>
-      </a>
-    
-      <a href="/categories/Redis">
-        <div class="categories-list-item">
-          Redis
           <span class="categories-list-item-badge">1</span>
         </div>
       </a>
@@ -429,9 +415,9 @@ $ hexo server <span class="token comment"># 或简写 hexo s，用于启动本�
         </div>
       </a>
     
-      <a href="/categories/实践">
+      <a href="/categories/MySQL">
         <div class="categories-list-item">
-          实践
+          MySQL
           <span class="categories-list-item-badge">1</span>
         </div>
       </a>
@@ -439,6 +425,20 @@ $ hexo server <span class="token comment"># 或简写 hexo s，用于启动本�
       <a href="/categories/图形学">
         <div class="categories-list-item">
           图形学
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/实用工具">
+        <div class="categories-list-item">
+          实用工具
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Redis">
+        <div class="categories-list-item">
+          Redis
           <span class="categories-list-item-badge">1</span>
         </div>
       </a>
@@ -464,15 +464,13 @@ $ hexo server <span class="token comment"># 或简写 hexo s，用于启动本�
     
     <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
     
+    <a href="\tags\实用工具" title="实用工具"><div class="tags-list-item">实用工具</div></a>
+    
     <a href="\tags\VFX" title="VFX"><div class="tags-list-item">VFX</div></a>
     
     <a href="\tags\Shaderlab" title="Shaderlab"><div class="tags-list-item">Shaderlab</div></a>
     
     <a href="\tags\Unity" title="Unity"><div class="tags-list-item">Unity</div></a>
-    
-    <a href="\tags\netty" title="netty"><div class="tags-list-item">netty</div></a>
-    
-    <a href="\tags\NIO" title="NIO"><div class="tags-list-item">NIO</div></a>
     
     <a href="\tags\InnoDB" title="InnoDB"><div class="tags-list-item">InnoDB</div></a>
     
@@ -480,9 +478,11 @@ $ hexo server <span class="token comment"># 或简写 hexo s，用于启动本�
     
     <a href="\tags\编程思想" title="编程思想"><div class="tags-list-item">编程思想</div></a>
     
-    <a href="\tags\C++" title="C++"><div class="tags-list-item">C++</div></a>
+    <a href="\tags\CI/CD" title="CI/CD"><div class="tags-list-item">CI/CD</div></a>
     
-    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    <a href="\tags\hexo" title="hexo"><div class="tags-list-item">hexo</div></a>
+    
+    <a href="\tags\C++" title="C++"><div class="tags-list-item">C++</div></a>
     
   </div>
 </div>
