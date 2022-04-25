@@ -258,8 +258,8 @@ buff<span class="token punctuation">.</span><span class="token function">flip</s
 <h3 id="分配-ByteBuffer-的三种方式"><a href="#分配-ByteBuffer-的三种方式" class="headerlink" title="分配 ByteBuffer 的三种方式"></a>分配 ByteBuffer 的三种方式</h3><p><strong>mmap（内存映射），allocateDirect（直接内存）</strong>，allocate（堆内内存）</p>
 <p>mmap 构造时将绑定一个 fd，使得读写数据时不需要再经过<strong>内核空间到用户空间的copy交换</strong>，两个空间将映射到同一个内存上</p>
 <p>读写速度上 mmap -&gt; allocateDirect -&gt; allocate</p>
-<h2 id="Netty"><a href="#Netty" class="headerlink" title="Netty"></a>Netty</h2><h3 id="关键组件"><a href="#关键组件" class="headerlink" title="关键组件"></a>关键组件</h3><h4 id="BootStrap、ServerBootstrap"><a href="#BootStrap、ServerBootstrap" class="headerlink" title="BootStrap、ServerBootstrap"></a>BootStrap、ServerBootstrap</h4><p>作用是引导和配置一个 Netty 应用，<strong>串联各个组件</strong></p>
-<h4 id="Future、ChannelFuture"><a href="#Future、ChannelFuture" class="headerlink" title="Future、ChannelFuture"></a>Future、ChannelFuture</h4><p>用于保存异步处理结果，它们可以<strong>注册一个监听</strong>，当操作失败或成功时会自动触发注册的监听事件</p>
+<h2 id="Netty"><a href="#Netty" class="headerlink" title="Netty"></a>Netty</h2><h3 id="关键组件"><a href="#关键组件" class="headerlink" title="关键组件"></a>关键组件</h3><h4 id="BootStrap-ServerBootstrap"><a href="#BootStrap-ServerBootstrap" class="headerlink" title="BootStrap/ServerBootstrap"></a>BootStrap/ServerBootstrap</h4><p>作用是引导和配置一个 Netty 应用，<strong>串联各个组件</strong></p>
+<h4 id="Future-ChannelFuture"><a href="#Future-ChannelFuture" class="headerlink" title="Future/ChannelFuture"></a>Future/ChannelFuture</h4><p>用于保存异步处理结果，它们可以<strong>注册一个监听</strong>，当操作失败或成功时会自动触发注册的监听事件</p>
 <h4 id="Channel"><a href="#Channel" class="headerlink" title="Channel"></a>Channel</h4><p>Netty 网络通信的组件，用于<strong>执行网络 I/O 操作</strong></p>
 <p>可以通过 Channel 获得当前网络连接的通道状态，配置参数等。</p>
 <p>对于异步网络调用将立即返回一个 ChannelFuture 实例，通过在 ChannelFuture 上注册监听器，可以在 I/O 操作有回应时通知调用者</p>
@@ -295,6 +295,18 @@ b<span class="token punctuation">.</span><span class="token function">group</spa
   </div>
 </article>
 <div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2022/04/25/unity-vfx-simple-data-transfer-line/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">Unity Shader 实现数据流动态效果 </div>
+        
+      </div>
+    </a>
+  </div>
   
   
   <div class="nav-item-next">
@@ -333,7 +345,7 @@ b<span class="token punctuation">.</span><span class="token function">group</spa
 
 <div class="card card-content toc-card" id="mobiletoc">
   <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java-NIO"><span class="toc-text">Java NIO</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC"><span class="toc-text">基本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E9%98%BB%E5%A1%9E%E6%A8%A1%E5%9E%8B%E7%9A%84%E4%BA%A7%E7%94%9F%E5%8E%9F%E5%9B%A0%E5%92%8C%E6%9C%BA%E5%88%B6"><span class="toc-text">非阻塞模型的产生原因和机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Selector-%E7%B1%BB%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82-I-O-%E6%A8%A1%E5%9E%8B"><span class="toc-text">Selector 类和操作系统底层 I&#x2F;O 模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NIO%E7%9A%84%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E8%BF%87%E7%A8%8B"><span class="toc-text">NIO的文件读写基本操作过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E9%85%8D-ByteBuffer-%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="toc-text">分配 ByteBuffer 的三种方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Netty"><span class="toc-text">Netty</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E7%BB%84%E4%BB%B6"><span class="toc-text">关键组件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#BootStrap%E3%80%81ServerBootstrap"><span class="toc-text">BootStrap、ServerBootstrap</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Future%E3%80%81ChannelFuture"><span class="toc-text">Future、ChannelFuture</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Channel"><span class="toc-text">Channel</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Selector"><span class="toc-text">Selector</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ChannelHandler%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0%E7%B1%BB"><span class="toc-text">ChannelHandler及其实现类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Pipeline%E3%80%81ChannelPipeline"><span class="toc-text">Pipeline、ChannelPipeline</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#EventLoopGroup%E3%80%81NioEventLoopGroup"><span class="toc-text">EventLoopGroup、NioEventLoopGroup</span></a></li></ol></li></ol></li></ol>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java-NIO"><span class="toc-text">Java NIO</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC"><span class="toc-text">基本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E9%98%BB%E5%A1%9E%E6%A8%A1%E5%9E%8B%E7%9A%84%E4%BA%A7%E7%94%9F%E5%8E%9F%E5%9B%A0%E5%92%8C%E6%9C%BA%E5%88%B6"><span class="toc-text">非阻塞模型的产生原因和机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Selector-%E7%B1%BB%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82-I-O-%E6%A8%A1%E5%9E%8B"><span class="toc-text">Selector 类和操作系统底层 I&#x2F;O 模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NIO%E7%9A%84%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E8%BF%87%E7%A8%8B"><span class="toc-text">NIO的文件读写基本操作过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E9%85%8D-ByteBuffer-%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="toc-text">分配 ByteBuffer 的三种方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Netty"><span class="toc-text">Netty</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E7%BB%84%E4%BB%B6"><span class="toc-text">关键组件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#BootStrap-ServerBootstrap"><span class="toc-text">BootStrap&#x2F;ServerBootstrap</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Future-ChannelFuture"><span class="toc-text">Future&#x2F;ChannelFuture</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Channel"><span class="toc-text">Channel</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Selector"><span class="toc-text">Selector</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ChannelHandler%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0%E7%B1%BB"><span class="toc-text">ChannelHandler及其实现类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Pipeline%E3%80%81ChannelPipeline"><span class="toc-text">Pipeline、ChannelPipeline</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#EventLoopGroup%E3%80%81NioEventLoopGroup"><span class="toc-text">EventLoopGroup、NioEventLoopGroup</span></a></li></ol></li></ol></li></ol>
 </div></main>
           <aside class="left-column">
             
@@ -345,15 +357,15 @@ b<span class="token punctuation">.</span><span class="token function">group</spa
 <p class="author-description">因为相信而竭尽全力的普通人 <p class="author-description"><a href="/about">关于我</a></p></p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>11</span>
+    <span>12</span>
     <span>文章</span>
   </a>
   <a class="author-categories-count" href="/categories">
-    <span>9</span>
+    <span>10</span>
     <span>分类</span>
   </a>
   <a class="author-tags-count" href="/tags">
-    <span>16</span>
+    <span>19</span>
     <span>标签</span>
   </a>
 </div>
@@ -366,7 +378,7 @@ b<span class="token punctuation">.</span><span class="token function">group</spa
   <article class="display-when-two-columns spacer">
     <div class="card card-content toc-card">
       <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java-NIO"><span class="toc-text">Java NIO</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC"><span class="toc-text">基本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E9%98%BB%E5%A1%9E%E6%A8%A1%E5%9E%8B%E7%9A%84%E4%BA%A7%E7%94%9F%E5%8E%9F%E5%9B%A0%E5%92%8C%E6%9C%BA%E5%88%B6"><span class="toc-text">非阻塞模型的产生原因和机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Selector-%E7%B1%BB%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82-I-O-%E6%A8%A1%E5%9E%8B"><span class="toc-text">Selector 类和操作系统底层 I&#x2F;O 模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NIO%E7%9A%84%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E8%BF%87%E7%A8%8B"><span class="toc-text">NIO的文件读写基本操作过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E9%85%8D-ByteBuffer-%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="toc-text">分配 ByteBuffer 的三种方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Netty"><span class="toc-text">Netty</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E7%BB%84%E4%BB%B6"><span class="toc-text">关键组件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#BootStrap%E3%80%81ServerBootstrap"><span class="toc-text">BootStrap、ServerBootstrap</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Future%E3%80%81ChannelFuture"><span class="toc-text">Future、ChannelFuture</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Channel"><span class="toc-text">Channel</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Selector"><span class="toc-text">Selector</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ChannelHandler%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0%E7%B1%BB"><span class="toc-text">ChannelHandler及其实现类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Pipeline%E3%80%81ChannelPipeline"><span class="toc-text">Pipeline、ChannelPipeline</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#EventLoopGroup%E3%80%81NioEventLoopGroup"><span class="toc-text">EventLoopGroup、NioEventLoopGroup</span></a></li></ol></li></ol></li></ol>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java-NIO"><span class="toc-text">Java NIO</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC"><span class="toc-text">基本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E9%98%BB%E5%A1%9E%E6%A8%A1%E5%9E%8B%E7%9A%84%E4%BA%A7%E7%94%9F%E5%8E%9F%E5%9B%A0%E5%92%8C%E6%9C%BA%E5%88%B6"><span class="toc-text">非阻塞模型的产生原因和机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Selector-%E7%B1%BB%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82-I-O-%E6%A8%A1%E5%9E%8B"><span class="toc-text">Selector 类和操作系统底层 I&#x2F;O 模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NIO%E7%9A%84%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E8%BF%87%E7%A8%8B"><span class="toc-text">NIO的文件读写基本操作过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E9%85%8D-ByteBuffer-%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="toc-text">分配 ByteBuffer 的三种方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Netty"><span class="toc-text">Netty</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E7%BB%84%E4%BB%B6"><span class="toc-text">关键组件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#BootStrap-ServerBootstrap"><span class="toc-text">BootStrap&#x2F;ServerBootstrap</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Future-ChannelFuture"><span class="toc-text">Future&#x2F;ChannelFuture</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Channel"><span class="toc-text">Channel</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Selector"><span class="toc-text">Selector</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ChannelHandler%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0%E7%B1%BB"><span class="toc-text">ChannelHandler及其实现类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Pipeline%E3%80%81ChannelPipeline"><span class="toc-text">Pipeline、ChannelPipeline</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#EventLoopGroup%E3%80%81NioEventLoopGroup"><span class="toc-text">EventLoopGroup、NioEventLoopGroup</span></a></li></ol></li></ol></li></ol>
     </div>
   </article>
   
@@ -439,6 +451,13 @@ b<span class="token punctuation">.</span><span class="token function">group</spa
         </div>
       </a>
     
+      <a href="/categories/图形学">
+        <div class="categories-list-item">
+          图形学
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
   </div>
 </div>
   </article>
@@ -448,37 +467,37 @@ b<span class="token punctuation">.</span><span class="token function">group</spa
   <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
   <div class="tags-list">
     
-    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
-    
-    <a href="\tags\hexo" title="hexo"><div class="tags-list-item">hexo</div></a>
-    
-    <a href="\tags\CI/CD" title="CI/CD"><div class="tags-list-item">CI/CD</div></a>
-    
-    <a href="\tags\实用工具" title="实用工具"><div class="tags-list-item">实用工具</div></a>
-    
-    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
-    
     <a href="\tags\读书笔记" title="读书笔记"><div class="tags-list-item">读书笔记</div></a>
-    
-    <a href="\tags\C++" title="C++"><div class="tags-list-item">C++</div></a>
-    
-    <a href="\tags\编程思想" title="编程思想"><div class="tags-list-item">编程思想</div></a>
-    
-    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
-    
-    <a href="\tags\MySQL" title="MySQL"><div class="tags-list-item">MySQL</div></a>
-    
-    <a href="\tags\Redis" title="Redis"><div class="tags-list-item">Redis</div></a>
-    
-    <a href="\tags\InnoDB" title="InnoDB"><div class="tags-list-item">InnoDB</div></a>
-    
-    <a href="\tags\游戏服务端" title="游戏服务端"><div class="tags-list-item">游戏服务端</div></a>
     
     <a href="\tags\翻译" title="翻译"><div class="tags-list-item">翻译</div></a>
     
-    <a href="\tags\NIO" title="NIO"><div class="tags-list-item">NIO</div></a>
+    <a href="\tags\游戏服务端" title="游戏服务端"><div class="tags-list-item">游戏服务端</div></a>
+    
+    <a href="\tags\Redis" title="Redis"><div class="tags-list-item">Redis</div></a>
+    
+    <a href="\tags\MySQL" title="MySQL"><div class="tags-list-item">MySQL</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\VFX" title="VFX"><div class="tags-list-item">VFX</div></a>
+    
+    <a href="\tags\Shaderlab" title="Shaderlab"><div class="tags-list-item">Shaderlab</div></a>
+    
+    <a href="\tags\Unity" title="Unity"><div class="tags-list-item">Unity</div></a>
     
     <a href="\tags\netty" title="netty"><div class="tags-list-item">netty</div></a>
+    
+    <a href="\tags\NIO" title="NIO"><div class="tags-list-item">NIO</div></a>
+    
+    <a href="\tags\InnoDB" title="InnoDB"><div class="tags-list-item">InnoDB</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\编程思想" title="编程思想"><div class="tags-list-item">编程思想</div></a>
+    
+    <a href="\tags\C++" title="C++"><div class="tags-list-item">C++</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
     
   </div>
 </div>
@@ -493,7 +512,7 @@ b<span class="token punctuation">.</span><span class="token function">group</spa
   
   <article class="card card-content toc-card">
     <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java-NIO"><span class="toc-text">Java NIO</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC"><span class="toc-text">基本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E9%98%BB%E5%A1%9E%E6%A8%A1%E5%9E%8B%E7%9A%84%E4%BA%A7%E7%94%9F%E5%8E%9F%E5%9B%A0%E5%92%8C%E6%9C%BA%E5%88%B6"><span class="toc-text">非阻塞模型的产生原因和机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Selector-%E7%B1%BB%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82-I-O-%E6%A8%A1%E5%9E%8B"><span class="toc-text">Selector 类和操作系统底层 I&#x2F;O 模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NIO%E7%9A%84%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E8%BF%87%E7%A8%8B"><span class="toc-text">NIO的文件读写基本操作过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E9%85%8D-ByteBuffer-%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="toc-text">分配 ByteBuffer 的三种方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Netty"><span class="toc-text">Netty</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E7%BB%84%E4%BB%B6"><span class="toc-text">关键组件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#BootStrap%E3%80%81ServerBootstrap"><span class="toc-text">BootStrap、ServerBootstrap</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Future%E3%80%81ChannelFuture"><span class="toc-text">Future、ChannelFuture</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Channel"><span class="toc-text">Channel</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Selector"><span class="toc-text">Selector</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ChannelHandler%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0%E7%B1%BB"><span class="toc-text">ChannelHandler及其实现类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Pipeline%E3%80%81ChannelPipeline"><span class="toc-text">Pipeline、ChannelPipeline</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#EventLoopGroup%E3%80%81NioEventLoopGroup"><span class="toc-text">EventLoopGroup、NioEventLoopGroup</span></a></li></ol></li></ol></li></ol>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java-NIO"><span class="toc-text">Java NIO</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC"><span class="toc-text">基本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E9%98%BB%E5%A1%9E%E6%A8%A1%E5%9E%8B%E7%9A%84%E4%BA%A7%E7%94%9F%E5%8E%9F%E5%9B%A0%E5%92%8C%E6%9C%BA%E5%88%B6"><span class="toc-text">非阻塞模型的产生原因和机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Selector-%E7%B1%BB%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BA%95%E5%B1%82-I-O-%E6%A8%A1%E5%9E%8B"><span class="toc-text">Selector 类和操作系统底层 I&#x2F;O 模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NIO%E7%9A%84%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E8%BF%87%E7%A8%8B"><span class="toc-text">NIO的文件读写基本操作过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E9%85%8D-ByteBuffer-%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="toc-text">分配 ByteBuffer 的三种方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Netty"><span class="toc-text">Netty</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E7%BB%84%E4%BB%B6"><span class="toc-text">关键组件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#BootStrap-ServerBootstrap"><span class="toc-text">BootStrap&#x2F;ServerBootstrap</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Future-ChannelFuture"><span class="toc-text">Future&#x2F;ChannelFuture</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Channel"><span class="toc-text">Channel</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Selector"><span class="toc-text">Selector</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ChannelHandler%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0%E7%B1%BB"><span class="toc-text">ChannelHandler及其实现类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Pipeline%E3%80%81ChannelPipeline"><span class="toc-text">Pipeline、ChannelPipeline</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#EventLoopGroup%E3%80%81NioEventLoopGroup"><span class="toc-text">EventLoopGroup、NioEventLoopGroup</span></a></li></ol></li></ol></li></ol>
   </article>
   
   
@@ -501,6 +520,11 @@ b<span class="token punctuation">.</span><span class="token function">group</spa
     <div class="recent-posts-card">
   <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
   <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-04-25</div>
+        <a href="/2022/04/25/unity-vfx-simple-data-transfer-line/"><div class="recent-posts-item-content">Unity Shader 实现数据流动态效果</div></a>
+      </div>
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2021-04-01</div>
@@ -515,11 +539,6 @@ b<span class="token punctuation">.</span><span class="token function">group</spa
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2021-03-14</div>
         <a href="/2021/03/14/interview-points/"><div class="recent-posts-item-content">Java/后端方向 面试常见知识点整理（未完成）</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2021-03-05</div>
-        <a href="/2021/03/05/hexo-deploy-tarvis/"><div class="recent-posts-item-content">使用 Hexo + Github Pages + Travis 自动部署个人博客</div></a>
       </div>
     
   </div>
@@ -542,7 +561,7 @@ b<span class="token punctuation">.</span><span class="token function">group</spa
           
           2020 -
           
-          2021
+          2022
         </span>
         <a href="/" class="footer-link">Kibou's blog </a>
       </div>

@@ -570,9 +570,9 @@ save 60 10000 &#x2F;&#x2F; 当服务器10000秒内对服务器进行了60次以�
 <h4 id="文件事件处理器（File-Event-Hanler）的构成"><a href="#文件事件处理器（File-Event-Hanler）的构成" class="headerlink" title="文件事件处理器（File Event Hanler）的构成"></a>文件事件处理器（File Event Hanler）的构成</h4><p><img src="https://cdn.jsdelivr.net/gh/syameimarukibou/imagebox/img/image-20210322002505811.png" alt="image-20210322002505811" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/syameimarukibou/imagebox/img/image-20210322002505811.png" class="lozad post-image"></p>
 <p>文件事件处理器包括四个部分：<strong>套接字，多路复用程序，文件事件派发器（dispatcher），以及事件处理器</strong></p>
 <p><strong>文件事件</strong>是对<strong>套接字</strong>操作的抽象（下文的套接字=文件事件，每当一个套接字准备好执行连接应答（accept），读取（read），写入（write），关闭（close）等操作时，就会产生相应的文件事件，这些事件可能并发出现</p>
-<p>多路复用程序负责监听多个套接字，并向 dispatcher 传送那些产生了事件的套接字</p>
+<p>多路复用程序负责监听多个套接字，并向 dispatcher <strong>传送那些产生了事件的套接字</strong></p>
 <p>尽管多个文件事件可能并发出现，但是多路复用程序总是会将所有产生d的套接字放到一个<strong>队列</strong>里，通过这个队列，以有序（sequentially）、同步（sychronously）、每次一个套接字的方式向 dispatcher 传送套接字。当上一个套接字被响应处理器处理完毕之后，复用程序才会继续向 dispatcher 传送下一个套接字</p>
-<p>dispatcher 接收复用程序传来的套接字，会根据套接字产生事件的类型，调用相应的事件处理器，服务器会为不同任务关联不同事件处理器，也就是一个个函数</p>
+<p>dispatcher <strong>接收复用程序传来的套接字，会根据套接字产生事件的类型，调用相应的事件处理器</strong>，服务器会为不同任务关联不同事件处理器，也就是一个个函数</p>
 <h4 id="I-O-多路复用程序的实现"><a href="#I-O-多路复用程序的实现" class="headerlink" title="I/O 多路复用程序的实现"></a>I/O 多路复用程序的实现</h4><p>Redis 的 I/O 多路复用程序的所有功能都是通过包装常见的 <strong>select epoll evport 和 kqueue</strong> 这些 I/O 多路复用函数库来实现的，每个 I/O 多路复用函数库在 Redis 源码中都对应一个单独的文件，比如 ae_select.c、ae_epoll.c ae_kqueue.c 等</p>
 <p>Redis 为每个多路复用函数库都实现了相同的 API ，所以 多路复用程序的底层实现（select epoll等）可以互换，这使得程序在编译时可以自动选择性能最高的多路复用函数库来作为 Redis 多路复用程序（优先级为：<strong>evport -&gt; epoll -&gt; kqueue -&gt; select</strong> ）</p>
 <h4 id="事件类型"><a href="#事件类型" class="headerlink" title="事件类型"></a>事件类型</h4><p>当一个套接字同时产生读写事件时，Dispatcher 会优先处理一个套接字的读事件，然后再是写事件</p>
@@ -758,15 +758,15 @@ $ redis-server &#x2F;path&#x2F;to&#x2F;your&#x2F;sentinel.conf --sentinel<span a
 <p class="author-description">因为相信而竭尽全力的普通人 <p class="author-description"><a href="/about">关于我</a></p></p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>11</span>
+    <span>12</span>
     <span>文章</span>
   </a>
   <a class="author-categories-count" href="/categories">
-    <span>9</span>
+    <span>10</span>
     <span>分类</span>
   </a>
   <a class="author-tags-count" href="/tags">
-    <span>16</span>
+    <span>19</span>
     <span>标签</span>
   </a>
 </div>
@@ -852,6 +852,13 @@ $ redis-server &#x2F;path&#x2F;to&#x2F;your&#x2F;sentinel.conf --sentinel<span a
         </div>
       </a>
     
+      <a href="/categories/图形学">
+        <div class="categories-list-item">
+          图形学
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
   </div>
 </div>
   </article>
@@ -861,37 +868,37 @@ $ redis-server &#x2F;path&#x2F;to&#x2F;your&#x2F;sentinel.conf --sentinel<span a
   <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
   <div class="tags-list">
     
-    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
-    
-    <a href="\tags\hexo" title="hexo"><div class="tags-list-item">hexo</div></a>
-    
-    <a href="\tags\CI/CD" title="CI/CD"><div class="tags-list-item">CI/CD</div></a>
-    
-    <a href="\tags\实用工具" title="实用工具"><div class="tags-list-item">实用工具</div></a>
-    
-    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
-    
     <a href="\tags\读书笔记" title="读书笔记"><div class="tags-list-item">读书笔记</div></a>
-    
-    <a href="\tags\C++" title="C++"><div class="tags-list-item">C++</div></a>
-    
-    <a href="\tags\编程思想" title="编程思想"><div class="tags-list-item">编程思想</div></a>
-    
-    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
-    
-    <a href="\tags\MySQL" title="MySQL"><div class="tags-list-item">MySQL</div></a>
-    
-    <a href="\tags\Redis" title="Redis"><div class="tags-list-item">Redis</div></a>
-    
-    <a href="\tags\InnoDB" title="InnoDB"><div class="tags-list-item">InnoDB</div></a>
-    
-    <a href="\tags\游戏服务端" title="游戏服务端"><div class="tags-list-item">游戏服务端</div></a>
     
     <a href="\tags\翻译" title="翻译"><div class="tags-list-item">翻译</div></a>
     
-    <a href="\tags\NIO" title="NIO"><div class="tags-list-item">NIO</div></a>
+    <a href="\tags\游戏服务端" title="游戏服务端"><div class="tags-list-item">游戏服务端</div></a>
+    
+    <a href="\tags\Redis" title="Redis"><div class="tags-list-item">Redis</div></a>
+    
+    <a href="\tags\MySQL" title="MySQL"><div class="tags-list-item">MySQL</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\VFX" title="VFX"><div class="tags-list-item">VFX</div></a>
+    
+    <a href="\tags\Shaderlab" title="Shaderlab"><div class="tags-list-item">Shaderlab</div></a>
+    
+    <a href="\tags\Unity" title="Unity"><div class="tags-list-item">Unity</div></a>
     
     <a href="\tags\netty" title="netty"><div class="tags-list-item">netty</div></a>
+    
+    <a href="\tags\NIO" title="NIO"><div class="tags-list-item">NIO</div></a>
+    
+    <a href="\tags\InnoDB" title="InnoDB"><div class="tags-list-item">InnoDB</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\编程思想" title="编程思想"><div class="tags-list-item">编程思想</div></a>
+    
+    <a href="\tags\C++" title="C++"><div class="tags-list-item">C++</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
     
   </div>
 </div>
@@ -916,6 +923,11 @@ $ redis-server &#x2F;path&#x2F;to&#x2F;your&#x2F;sentinel.conf --sentinel<span a
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-04-25</div>
+        <a href="/2022/04/25/unity-vfx-simple-data-transfer-line/"><div class="recent-posts-item-content">Unity Shader 实现数据流动态效果</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
         <div class="recent-posts-item-title">2021-04-01</div>
         <a href="/2021/04/01/deep-into-nio-and-netty/"><div class="recent-posts-item-content">Java NIO 与 netty 浅析</div></a>
       </div>
@@ -928,11 +940,6 @@ $ redis-server &#x2F;path&#x2F;to&#x2F;your&#x2F;sentinel.conf --sentinel<span a
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2021-03-14</div>
         <a href="/2021/03/14/interview-points/"><div class="recent-posts-item-content">Java/后端方向 面试常见知识点整理（未完成）</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2021-03-05</div>
-        <a href="/2021/03/05/hexo-deploy-tarvis/"><div class="recent-posts-item-content">使用 Hexo + Github Pages + Travis 自动部署个人博客</div></a>
       </div>
     
   </div>
@@ -955,7 +962,7 @@ $ redis-server &#x2F;path&#x2F;to&#x2F;your&#x2F;sentinel.conf --sentinel<span a
           
           2020 -
           
-          2021
+          2022
         </span>
         <a href="/" class="footer-link">Kibou's blog </a>
       </div>
